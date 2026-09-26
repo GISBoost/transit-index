@@ -1,0 +1,18 @@
+<!-- @dsCard group="Components" viewport="700x640" name="Transit" -->
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css"><style>body{margin:0;padding:24px;font-family:var(--font-sans);color:var(--ink)}.lab{font-family:var(--font-condensed);font-size:12px;color:var(--ink-3)}</style><script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script><script src="../../_ds_bundle.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+const NS=window.TransitIndexDesignSystem_923c60;
+const Row=({children,label})=><div style={{display:'flex',alignItems:'center',gap:12,flexWrap:'wrap',marginBottom:14}}>{label&&<span style={{width:84,fontSize:11,fontWeight:700,color:'var(--ink-3)',textTransform:'uppercase',letterSpacing:'.08em',fontFamily:'var(--font-condensed)'}}>{label}</span>}{children}</div>;
+const {LineBullet,LineSwatch,RouteStrip,StationSign,SignArrow,LineBundle}=NS;
+function App(){return <div>
+<Row label="Bullets"><LineBullet label="01" line="vermilion"/><LineBullet label="02" line="orange"/><LineBullet label="T" line="yellow" size="lg"/><LineBullet label="7" line="violet" shape="diamond" size="lg"/><LineBullet label="S" line="black" shape="square"/><LineBullet label="PL" line="blue" size="sm"/></Row>
+<div style={{display:'flex',gap:16,marginBottom:10}}>
+<StationSign style={{flex:1}} metaLeft="Stacja" metaRight="Wydanie 01" title="Świętokrzyska" subtitle="Odcinek → Nowy Świat" lines={[{label:'T',line:'yellow'},{label:'M',line:'vermilion'}]} exit="Pl. Kopernika"/>
+<div style={{display:'flex',flexDirection:'column',gap:6,width:240,justifyContent:'center'}}><LineSwatch line="vermilion" label="A" labelWidth={20}/><LineSwatch line="yellow" label="B" labelWidth={20} marker/><LineSwatch line="sky" label="C" labelWidth={20}/>
+<div style={{display:'flex',gap:8,marginTop:6,alignItems:'center'}}><SignArrow direction="se" size={52}/><SignArrow direction="nw" line="blue" size={52} arrowColor="#fff"/><LineBundle points={[[0,10],[40,10],[70,40],[70,60]]} lines={['vermilion','orange','yellow']} width={5} gap={2} style={{width:90}}/></div></div></div>
+<RouteStrip line="vermilion" current={3} stops={[{name:'Kabaty',terminus:true},{name:'Natolin'},{name:'Wilanowska'},{name:'Politechnika'},{name:'Centrum'},{name:'Świętokrzyska',lines:[{label:'M2',line:'yellow'}]},{name:'Dworzec Gdański'},{name:'Młociny',terminus:true}]}/>
+</div>;}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

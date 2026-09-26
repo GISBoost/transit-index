@@ -1,0 +1,53 @@
+<!-- @dsCard group="Landing" viewport="1280x900" name="Landing — scroll journey" subtitle="Hero, the number, ranking, map teaser, limits, footer · PL/EN · day/night" -->
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transit Index — wydanie 01</title>
+<link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../styles.css">
+<script>try{if(localStorage.getItem('ti-theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(e){}</script>
+<style>
+html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{overflow-x:hidden}
+.hdr{position:sticky;top:0;z-index:20;background:var(--paper);border-top:8px solid var(--ink);border-bottom:2px solid var(--ink)}
+.hdr-in{height:60px;display:flex;align-items:center;gap:28px;padding:0 max(24px,6vw) 0 max(24px,6vw)}
+.hdr-nav{display:flex;gap:20px;flex:1}.hdr-nav a{font-weight:700;font-size:15px;text-decoration:none}.hdr-nav a:hover{text-decoration:underline}
+.col{margin-left:max(24px,6vw);width:min(56vw,760px);position:relative}
+.sec{position:relative;padding:130px 0}.hero{padding-top:110px}
+.kicker{font:700 13px/1 var(--font-condensed);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.h1{font:700 clamp(44px,6.6vw,104px)/.92 var(--font-sans);letter-spacing:-0.04em;margin:22px 0 0;text-wrap:balance}
+.h2{font:700 clamp(32px,4.2vw,58px)/1 var(--font-sans);letter-spacing:-0.035em;margin:22px 0 0;text-wrap:balance;max-width:720px}
+.lead{font-size:clamp(17px,1.35vw,20px);line-height:1.45;max-width:560px;margin:20px 0 0;text-wrap:pretty}
+.small{font-size:15px;line-height:1.5;max-width:560px;margin:14px 0 0;text-wrap:pretty}
+.stamp{position:absolute;right:0;top:-6px;width:104px;height:104px;border-radius:50%;border:2px solid var(--ink);background:var(--paper-2);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-9deg);font:700 11px/1.1 var(--font-condensed);letter-spacing:.08em;text-transform:uppercase}
+.stamp b{font:700 38px/1 var(--font-sans);letter-spacing:-0.03em;margin:2px 0}
+.stop{position:absolute;top:22px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:3px solid var(--ink);box-sizing:border-box;z-index:1}
+.stopname{position:absolute;top:48px;transform:translateX(-50%);font:400 12px/1.2 var(--font-condensed);white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px;padding-top:20px;border-top:2px solid var(--ink)}
+.limits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px;margin-top:32px}
+.foot-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px}
+.foot{padding-bottom:64px}
+@media (max-width:860px){.col{margin-left:52px;width:auto;margin-right:20px}.hdr-nav{display:none}.hdr-in{padding:0 16px}.kpis,.limits,.foot-cols{grid-template-columns:1fr}.sec{padding:88px 0}.stamp{width:78px;height:78px}.stamp b{font-size:28px}}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>if(window.gsap&&window.ScrollTrigger)gsap.registerPlugin(ScrollTrigger);</script>
+<script src="../../_ds_bundle.js"></script><script src="copy.js"></script><script src="journey.js"></script>
+<script type="text/babel" src="Sections.jsx"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+function App(){
+  const [lang,setLang]=React.useState(()=>localStorage.getItem('ti-lang')||'pl');
+  const [night,setNight]=React.useState(()=>localStorage.getItem('ti-theme')==='night');
+  React.useEffect(()=>{document.documentElement.lang=lang;localStorage.setItem('ti-lang',lang);window.TIJourney.schedule();},[lang]);
+  React.useEffect(()=>{const h=document.documentElement;if(night)h.setAttribute('data-theme','night');else h.removeAttribute('data-theme');localStorage.setItem('ti-theme',night?'night':'day');},[night]);
+  React.useEffect(()=>{if(document.fonts)document.fonts.ready.then(()=>window.TIJourney.schedule());},[]);
+  const t=window.TI_COPY[lang];
+  return <>
+    <svg id="journey" aria-hidden="true" style={{position:'absolute',left:0,top:0,pointerEvents:'none',zIndex:0,overflow:'visible'}}></svg>
+    <Header t={t} lang={lang} setLang={setLang} night={night} setNight={setNight}/>
+    <main style={{position:'relative',zIndex:1}}><Hero t={t} lang={lang}/><NumberSec t={t} lang={lang}/><Ranking t={t} lang={lang}/><MapSec t={t}/><Limits t={t}/><Footer t={t}/></main>
+  </>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

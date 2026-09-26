@@ -1,0 +1,33 @@
+:root{
+/* paper & ink = theme ground & figure (flip in night edition) */
+--paper:#EFE8D8;--paper-2:#E5DCC7;--paper-3:#D3C6AA;--white:#FBF8F1;
+--ink:#1E1D26;--ink-2:#34333F;--ink-3:#5F5C68;--ink-4:#9A96A0;
+/* poster primaries */
+--poster-red:#D2382F;--poster-red-dark:#AE2A23;--poster-petrol:#2E5E6F;--poster-mustard:#EAB141;
+/* line palette — BRAND / DECORATION ONLY, never encodes data */
+--line-vermilion:#E4412F;--line-orange:#F28A1E;--line-yellow:#F5C62B;--line-green:#3DAA4C;--line-sky:#35AEE0;--line-blue:#1F5BB5;--line-violet:#9A45B8;--line-black:#1E1D26;
+/* speed scale — DATA ONLY. 1 = slowest … 5 = fastest. Sequential by lightness, blue→plum, no red/green.
+   Light theme: slow = darkest. Every class ≥3:1 vs --map-base. */
+--map-base:#F4F0E6;--map-street:#E2DBCB;
+--speed-1:#3B0A3A;--speed-2:#7A1F6A;--speed-3:#5B4C9E;--speed-4:#3F6FA6;--speed-5:#4A8BB0;
+--speed-nodata:#BCB6A8;--speed-thin-gap:var(--map-base);
+/* semantic */
+--success:var(--line-green);--warning:var(--line-yellow);--danger:var(--poster-red);--info:var(--line-blue);
+--surface-page:var(--paper);--surface-raised:var(--white);--surface-sunken:var(--paper-2);--surface-sign:var(--ink);
+--text-body:var(--ink);--text-muted:var(--ink-3);--text-on-dark:var(--paper);--text-on-accent:#FFFFFF;
+--border-strong:var(--ink);--border-subtle:var(--paper-3);
+--accent:var(--poster-red);--accent-hover:var(--poster-red-dark);--focus-ring:var(--line-blue);
+--scrim:rgba(30,29,38,.62);
+}
+[data-theme="night"]{
+--paper:#121827;--paper-2:#1A2133;--paper-3:#2A3247;--white:#1B2236;
+--ink:#EFE8D8;--ink-2:#D8D1BF;--ink-3:#A7A594;--ink-4:#6F7285;
+--poster-red:#E24A3A;--poster-red-dark:#C73A2C;--poster-petrol:#3F7D93;--poster-mustard:#EAB141;
+--line-vermilion:#F0553F;--line-orange:#F59A3A;--line-yellow:#F7D046;--line-green:#4CBC5A;--line-sky:#5BC0EB;--line-blue:#5B8FE8;--line-violet:#C27BDB;--line-black:#E9E2D0;
+/* night: slow = brightest */
+--map-base:#161C2E;--map-street:#222A40;
+--speed-1:#FFE0B8;--speed-2:#F2A6C2;--speed-3:#D98AD8;--speed-4:#8C82E0;--speed-5:#4478B0;
+--speed-nodata:#4A5063;
+--scrim:rgba(5,8,16,.72);
+color-scheme:dark;
+}

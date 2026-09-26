@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Social card — city result" description="Share card for one city's result: 1200×630 (OG) and 1080×1350 (4:5), day or night edition" -->
+<helmet><script src="./ds-base.js"></script></helmet>
+<div data-theme="{{ themeAttr }}" style="position:relative;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--font-sans)">
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><div style="position:relative;width:1200px;height:630px">
+<div style="position:absolute;inset:0">
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.LineBundle" points="{{ wa }}" lines="{{ keysA }}" width="{{ 14 }}" gap="{{ 6 }}" view-box="0 0 1200 630" svg-width="1200" svg-height="630" style="position:absolute;inset:0" hint-size="1200px,630px"></x-import>
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.LineBundle" points="{{ wb }}" lines="{{ keysB }}" width="{{ 14 }}" gap="{{ 6 }}" view-box="0 0 1200 630" svg-width="1200" svg-height="630" style="position:absolute;inset:0" hint-size="1200px,630px"></x-import>
+<div style="position:absolute;left:804px;top:318px;width:132px;height:28px;border-radius:14px;background:var(--paper);border:3px solid var(--ink);box-sizing:border-box"></div>
+</div>
+<div style="position:absolute;left:72px;top:64px;bottom:56px;width:660px;display:flex;flex-direction:column">
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.Logo" size="{{ 34 }}" hint-size="260px,34px"></x-import>
+<div style="font:700 18px/1 var(--font-condensed);letter-spacing:.08em;text-transform:uppercase;margin-top:44px">{{ edition }}</div>
+<div style="font-weight:700;font-size:96px;line-height:.9;letter-spacing:-0.045em;margin-top:14px">{{ city }}</div>
+<div style="display:flex;align-items:baseline;gap:14px;margin-top:18px">
+<span style="position:relative;display:inline-block;font-weight:700;font-size:200px;line-height:.82;letter-spacing:-0.05em;font-variant-numeric:tabular-nums"><span aria-hidden="true" style="position:absolute;left:7px;top:6px;color:var(--poster-red)">{{ speed }}</span><span style="position:relative">{{ speed }}</span></span>
+<span style="font-weight:700;font-size:44px;letter-spacing:-0.02em">km/h</span>
+</div>
+<div style="margin-top:auto;display:flex;gap:28px;align-items:baseline;font-family:var(--font-condensed);font-size:24px;font-variant-numeric:tabular-nums;border-top:3px solid var(--ink);padding-top:14px">
+<span><b>#{{ rank }}</b> z {{ total }} miast</span><span><b>{{ slowdown }}</b> vs szybkie przejazdy</span>
+</div>
+</div>
+</div></sc-if>
+<sc-if value="{{ tall }}" hint-placeholder-val="{{ false }}"><div style="position:relative;width:1080px;height:1350px">
+<div style="position:absolute;inset:0">
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.LineBundle" points="{{ ta }}" lines="{{ keysA }}" width="{{ 16 }}" gap="{{ 6 }}" view-box="0 0 1080 1350" svg-width="1080" svg-height="1350" style="position:absolute;inset:0" hint-size="1080px,1350px"></x-import>
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.LineBundle" points="{{ tb }}" lines="{{ keysB }}" width="{{ 16 }}" gap="{{ 6 }}" view-box="0 0 1080 1350" svg-width="1080" svg-height="1350" style="position:absolute;inset:0" hint-size="1080px,1350px"></x-import>
+</div>
+<div style="position:absolute;left:80px;right:80px;top:600px;bottom:72px;display:flex;flex-direction:column">
+<div style="font:700 22px/1 var(--font-condensed);letter-spacing:.08em;text-transform:uppercase">{{ edition }}</div>
+<div style="font-weight:700;font-size:128px;line-height:.9;letter-spacing:-0.045em;margin-top:18px">{{ city }}</div>
+<div style="display:flex;align-items:baseline;gap:16px;margin-top:24px">
+<span style="position:relative;display:inline-block;font-weight:700;font-size:260px;line-height:.82;letter-spacing:-0.05em;font-variant-numeric:tabular-nums"><span aria-hidden="true" style="position:absolute;left:9px;top:8px;color:var(--poster-red)">{{ speed }}</span><span style="position:relative">{{ speed }}</span></span>
+<span style="font-weight:700;font-size:56px;letter-spacing:-0.02em">km/h</span>
+</div>
+<div style="margin-top:auto;display:flex;gap:32px;align-items:baseline;font-family:var(--font-condensed);font-size:30px;font-variant-numeric:tabular-nums;border-top:3px solid var(--ink);padding-top:18px">
+<span><b>#{{ rank }}</b> z {{ total }} miast</span><span><b>{{ slowdown }}</b> vs szybkie przejazdy</span>
+</div>
+<div style="margin-top:28px;display:flex;justify-content:space-between;align-items:center">
+<x-import component-from-global-scope="TransitIndexDesignSystem_923c60.Logo" size="{{ 40 }}" credit="{{ true }}" hint-size="320px,52px"></x-import>
+</div>
+</div>
+</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:630},&quot;format&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1200x630&quot;,&quot;1080x1350&quot;],&quot;default&quot;:&quot;1200x630&quot;,&quot;tsType&quot;:&quot;'1200x630' | '1080x1350'&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;day&quot;,&quot;night&quot;],&quot;default&quot;:&quot;day&quot;,&quot;tsType&quot;:&quot;'day' | 'night'&quot;},&quot;city&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Warszawa&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;speed&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;17,0&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;rank&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8,&quot;tsType&quot;:&quot;number&quot;},&quot;total&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;tsType&quot;:&quot;number&quot;},&quot;slowdown&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;−22%&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;edition&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Wydanie 01 · wrzesień 2026&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const tall = (p.format ?? '1200x630') === '1080x1350';
+    return {
+      wide: !tall, tall,
+      w: tall ? 1080 : 1200, h: tall ? 1350 : 630,
+      themeAttr: (p.theme ?? 'day') === 'night' ? 'night' : 'day',
+      city: p.city ?? 'Warszawa', speed: p.speed ?? '17,0', rank: p.rank ?? 8, total: p.total ?? 12,
+      slowdown: p.slowdown ?? '−22%', edition: p.edition ?? 'Wydanie 01 · wrzesień 2026',
+      keysA: ['vermilion', 'orange', 'yellow'], keysB: ['sky', 'blue'],
+      wa: [[1260, 90], [930, 90], [870, 150], [870, 680]],
+      wb: [[1080, -40], [1080, 260], [780, 560], [780, 680]],
+      ta: [[-40, 150], [380, 150], [560, 330], [1120, 330]],
+      tb: [[700, -40], [700, 120], [400, 420], [-40, 420]]
+    };
+  }
+}
+</script>
+</body>
+</html>

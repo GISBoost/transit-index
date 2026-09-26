@@ -1,0 +1,12 @@
+<!-- @dsCard group="Spacing" viewport="700x300" name="Line geometry — bends & crossings" subtitle="Concentric arcs r=1.6×bundle, casing cuts the gap" -->
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css"><style>body{margin:0;padding:24px;font-family:var(--font-sans);color:var(--ink)}.lab{font-family:var(--font-condensed);font-size:12px;color:var(--ink-3)}</style><script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script><script src="../_ds_bundle.js"></script></head><body><div id="root"></div><script type="text/babel">const NS=window.TransitIndexDesignSystem_923c60;
+const {LineBundle}=NS;
+function App(){const w=10,g=4;return <div style={{display:'flex',gap:24,alignItems:'center'}}>
+<svg viewBox="0 0 420 250" style={{width:420,height:250,flex:'none'}}>
+<LineBundle as="g" points={[[20,40],[200,40],[300,140],[300,250]]} lines={['vermilion','orange','yellow']} width={w} gap={g}/>
+<LineBundle as="g" points={[[420,70],[360,70],[260,170],[20,170]]} lines={['sky','blue']} width={w} gap={g}/>
+</svg>
+<div style={{fontSize:13,lineHeight:1.5}}><b>Rules</b><br/>stroke {w}px uniform · gap {g}px<br/>angles 0 / 45 / 90° only<br/>bend r = 1.6 × bundle width<br/>inner r, r+14, r+28 (concentric)<br/>round caps & joins<br/>upper line: paper casing +{g}px each side<br/>paths from TransitGeometry, never by hand</div></div>;}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);</script></body></html>
