@@ -1,0 +1,34 @@
+<!-- @dsCard group="Mapa" height=720 subtitle="Sekcja scrollytellingu: przypięta mapa, kroki, wskaźnik „linia i przystanek”" -->
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"></head>
+<body class="idx-pv">
+<div class="idx-row" style="margin-bottom:var(--idx-space-3)"><span class="idx-ph">dane zastępcze</span><span class="idx-caption idx-mute">Przewiń ramkę: mapa jest przypięta, krok aktywuje węzeł na linii.</span></div>
+<div id="sc" style="height:560px;overflow:auto;border:1px solid var(--border);border-radius:var(--idx-radius-md);background:var(--bg);padding:var(--idx-space-5)">
+<div class="idx-scrolly idx-frame" style="container-type:inline-size">
+<div class="idx-scrolly__stage"><div class="idx-map" style="height:320px"><div id="sm" class="idx-fly" style="height:100%"></div></div></div>
+<div class="idx-scrolly__steps"><section class="idx-step" aria-labelledby="st1"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><div class="idx-step__body"><p class="idx-cap" style="margin:0">Krok 1 z 3</p><h3 id="st1" class="idx-display-md" style="margin-top:var(--idx-space-2)">Sieć jako całość.</h3><p class="idx-body idx-mute" style="margin-top:var(--idx-space-3)">Każdy odcinek między przystankami ma kolor klasy prędkości zmierzonej.</p></div></section><section class="idx-step" aria-labelledby="st2"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><div class="idx-step__body"><p class="idx-cap" style="margin:0">Krok 2 z 3</p><h3 id="st2" class="idx-display-md" style="margin-top:var(--idx-space-2)">Wolne odcinki skupiają się w centrum.</h3><p class="idx-body idx-mute" style="margin-top:var(--idx-space-3)">Zostają tylko klasy 1 i 2. Reszta sieci przygasa, nie znika.</p></div></section><section class="idx-step" aria-labelledby="st3"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><div class="idx-step__body"><p class="idx-cap" style="margin:0">Krok 3 z 3</p><h3 id="st3" class="idx-display-md" style="margin-top:var(--idx-space-2)">Brak danych też jest wynikiem.</h3><p class="idx-body idx-mute" style="margin-top:var(--idx-space-3)">Odcinki bez danych rysujemy linią przerywaną i podpisujemy w legendzie.</p></div></section></div></div></div>
+<script>
+(function () {
+  var D = window.IDX; if (!D) return;
+
+  var host = document.getElementById('sm'); D.demo.mockMap(host, { seed: 3, label: 'Schemat sieci. Dane zastępcze.' });
+  var wrap = host.closest('.idx-map'), scroller = document.getElementById('sc'), steps = Array.prototype.slice.call(document.querySelectorAll('.idx-step'));
+  function act(i) {
+    steps.forEach(function (s, k) { s.classList.toggle('is-active', k === i); s.classList.toggle('is-done', k < i); });
+    Array.prototype.forEach.call(host.querySelectorAll('.m-seg'), function (s) {
+      var c = s.getAttribute('data-cls'), on = i === 0 || (i === 1 && (c === '1' || c === '2')) || (i === 2 && c === 'nd');
+      s.classList.toggle('on', on);
+    });
+    wrap.classList.toggle('is-dim', i > 0);
+  }
+  act(0);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) act(steps.indexOf(e.target)); }); }, { root: scroller, rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+    steps.forEach(function (s) { io.observe(s); });
+  }
+  steps.forEach(function (s, i) { s.setAttribute('tabindex', '0'); s.addEventListener('focus', function () { act(i); }); });
+
+  D.hydrate(); D.motion();
+})();
+</script>
+</body></html>

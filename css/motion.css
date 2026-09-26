@@ -1,0 +1,56 @@
+/* Ruch serwisu. Tylko transform i opacity, do idx-dur-reveal (600 ms), czasy i krzywe z tokenów, zero pętli poza loaderem.
+   Wszystko pod prefers-reduced-motion: no-preference i pod klasą .idx-js (dodaje ją skrypt w <head>): bez JS albo przy
+   reduced-motion treść jest od razu w stanie końcowym. Sterowanie: src/motion.ts. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* nagłówki wchodzą liniami: słowa dostają numer wiersza (--l) */
+  .idx-js [data-lines]:not([data-split]) { opacity: 0; }
+  .idx-js [data-lines] .idx-w { display: inline-block; opacity: 0; transform: translateY(0.35em); }
+  .idx-js .is-in [data-lines] .idx-w, .idx-js [data-lines].is-in .idx-w { opacity: 1; transform: none; transition: opacity var(--idx-dur-slow) var(--idx-ease-out), transform var(--idx-dur-slow) var(--idx-ease-out); transition-delay: calc(var(--l, 0) * 70ms); }
+
+  /* kaskada dzieci (karty, kafle) */
+  .idx-js [data-stagger] > * { opacity: 0; transform: translateY(8px); }
+  .idx-js [data-stagger].is-in > * { opacity: 1; transform: none; transition: opacity var(--idx-dur-slow) var(--idx-ease-out), transform var(--idx-dur-slow) var(--idx-ease-out); transition-delay: calc(var(--i, 0) * 50ms); }
+
+  /* separator „linia i przystanek”: linia rysuje się od lewej, węzły pojawiają się kolejno */
+  .idx-js .idx-rule::before { transform: scaleX(0); transform-origin: left; }
+  .idx-js .idx-rule > .idx-node { opacity: 0; transform: scale(0.6); }
+  .idx-js .idx-rule.is-in::before { transform: none; transition: transform var(--idx-dur-reveal) var(--idx-ease-out); }
+  .idx-js .idx-rule.is-in > .idx-node { opacity: 1; transform: none; transition: opacity var(--idx-dur-base) var(--idx-ease-out), transform var(--idx-dur-base) var(--idx-ease-out); }
+  .idx-js .idx-rule.is-in > .idx-node:nth-child(1) { transition-delay: 0ms; }
+  .idx-js .idx-rule.is-in > .idx-node:nth-child(2) { transition-delay: 480ms; }
+  .idx-js .idx-rule.is-in > .idx-node:nth-child(3) { transition-delay: 640ms; }
+
+  /* łącznik pionowy w rankingu: przebyta część rośnie od góry, wiersz po wierszu */
+  .idx-js .idx-rank .idx-conn::before { transform: scaleY(0); transform-origin: top; }
+  .idx-js .idx-rank.is-in .idx-conn::before { transform: none; transition: transform var(--idx-dur-slow) var(--idx-ease-out); transition-delay: calc(var(--i, 0) * 30ms); }
+  .idx-js .idx-rank .idx-conn.idx-conn--last::before { transform-origin: top; }
+
+  /* kroki scrollytellingu: węzeł aktywnego kroku rośnie (kolor przebytej części daje bundle.css) */
+  .idx-step .idx-conn > .idx-node { transition: scale var(--idx-dur-base) var(--idx-ease-out); }
+  .idx-step.is-active .idx-conn > .idx-node { scale: 1.3; }
+
+  /* przejścia między stronami: crossfade + lekki translateY (View Transitions między dokumentami, tam gdzie są) */
+  @keyframes idx-vt-out { to { opacity: 0; transform: translateY(-4px); } }
+  @keyframes idx-vt-in { from { opacity: 0; transform: translateY(8px); } }
+  ::view-transition-old(root) { animation: idx-vt-out var(--idx-dur-base) var(--idx-ease-out) both; }
+  ::view-transition-new(root) { animation: idx-vt-in var(--idx-dur-base) var(--idx-ease-out) both; }
+
+  /* przelot kamery sterowany scrollem (moment 2): transform mapy zależy od położenia całej sekcji.
+     Tam, gdzie brak animation-timeline (Firefox stable), robi to GSAP ScrollTrigger (client/scrolly.ts). */
+  @supports (animation-timeline: view()) {
+    .idx-scrolly { view-timeline: --idx-scr block; }
+    .idx-scrolly .idx-fly { animation: idx-flight var(--idx-ease-linear) both; animation-timeline: --idx-scr; animation-range: cover 0% cover 100%; transform-origin: 40% 50%; }
+    @keyframes idx-flight {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.55) translate(-6%, 4%); }
+      100% { transform: scale(1.2) translate(5%, -3%); }
+    }
+  }
+}
+
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

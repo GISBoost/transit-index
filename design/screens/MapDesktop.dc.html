@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Mapa odcinków, desktop</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/idx/tokens.css">
+<link rel="stylesheet" href="ds/idx/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div class="idx-pv" data-theme="{{theme}}" style="width: 1280px; height: 800px; padding: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--font-sans)">
+<header class="idx-topbar" style="padding: 4px 24px">
+<div class="idx-topbar__brand"><a class="idx-topbar__mark" href="#">GISBoost</a><a class="idx-topbar__sub" href="#">/ indeks prędkości</a></div>
+<nav class="idx-topbar__nav" aria-label="Główna"><a class="idx-topbar__link" href="#">Ranking</a><a class="idx-topbar__link" href="#" aria-current="page">Mapa</a><a class="idx-topbar__link" href="#">Dane</a><a class="idx-topbar__link" href="#">Metodyka</a>
+<div class="idx-lang idx-lang--chrome" role="group" aria-label="Język"><button type="button" aria-pressed="true">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false">EN</button></div></nav>
+</header>
+<div style="display: grid; grid-template-columns: 360px minmax(0, 1fr); flex-grow: 1; min-height: 0">
+<aside class="idx-mapctl" style="background: var(--surface); border-right: 1px solid var(--border); padding: 24px; overflow: hidden" aria-label="Filtry mapy">
+<div><p class="idx-eyebrow" style="color: var(--ink-muted); margin: 0">Łódź</p><h1 class="idx-display-md" style="margin: 8px 0 0">Prędkość na odcinkach.</h1><p class="idx-caption" style="margin: 8px 0 0; color: var(--ink-muted)">Zmierzone (rekonstrukcja z GTFS-RT). <span class="idx-ph">dane zastępcze</span></p></div>
+<div><span class="idx-cap idx-seg-label">Rodzaj</span><div class="idx-seg" role="radiogroup" aria-label="Rodzaj"><button type="button" role="radio" aria-checked="true" class="idx-seg__opt">Tramwaje</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Autobusy</button></div></div>
+<div><span class="idx-cap idx-seg-label">Pora</span><div class="idx-seg" role="radiogroup" aria-label="Pora"><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Dzień</button><button type="button" role="radio" aria-checked="true" class="idx-seg__opt">Szczyt</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Poza szczytem</button></div></div>
+<div><label class="idx-cap idx-seg-label" for="hr">Godzina: <span class="idx-board" style="text-transform: none; letter-spacing: 0">8:00–9:00</span></label><input id="hr" class="idx-range" type="range" min="0" max="23" value="8"><div class="idx-range__ticks idx-label" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div></div>
+<div><span class="idx-cap idx-seg-label">Percentyl prędkości</span><div class="idx-seg idx-seg--sm" role="radiogroup" aria-label="Percentyl"><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">P15</button><button type="button" role="radio" aria-checked="true" class="idx-seg__opt">P50</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">P85</button></div></div>
+<div class="idx-legend" role="group" aria-label="Legenda prędkości">
+<div class="idx-legend__ramp"><span class="idx-s1" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s2" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s3" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s4" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s5" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s6" style="display: block; height: 10px; border-radius: 3px"></span></div>
+<div class="idx-legend__ticks"><span class="idx-label" style="--p: 16.67">8</span><span class="idx-label" style="--p: 33.33">12</span><span class="idx-label" style="--p: 50">16</span><span class="idx-label" style="--p: 66.67">20</span><span class="idx-label" style="--p: 83.33">26</span></div>
+<div class="idx-legend__nd"><i></i><span class="idx-caption">brak danych · km/h</span></div></div>
+<button type="button" class="idx-btn idx-btn--secondary" aria-pressed="false" style="justify-self: start">Widok tabeli</button>
+</aside>
+<div class="idx-map" style="border-radius: 0; border: 0; height: 100%" tabindex="0" role="application" aria-label="Mapa odcinków. Strzałki przełączają odcinki, Enter otwiera szczegóły.">
+<svg viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schemat sieci, dane zastępcze.">
+<rect class="m-land" width="640" height="400"/>
+<path class="m-water" d="M-10 300 C 90 250, 170 330, 260 300 S 420 230, 520 270 S 620 330, 660 300 L 660 340 C 610 372, 540 316, 500 312 S 330 290, 260 350 S 60 320, -10 340 Z"/>
+<ellipse class="m-bound" cx="300" cy="200" rx="270" ry="170" stroke-width="1.2"/>
+<path class="m-seg k1" d="M300 200 L360 196 M300 200 L340 165 M300 200 L298 160 M300 200 L262 168 M300 200 L240 204 M300 200 L262 236 M300 200 L304 244 M300 200 L340 232"/>
+<path class="m-seg k2" d="M360 196 L420 190 M340 165 L380 130 M298 160 L302 120 M262 168 L226 138 M240 204 L180 198 M262 236 L228 270 M304 244 L298 286 M340 232 L382 262"/>
+<path class="m-seg k3" d="M420 190 L480 196 M380 130 L420 98 M302 120 L296 80 M226 138 L190 110 M180 198 L120 206 M228 270 L190 300 M298 286 L306 330 M382 262 L420 296"/>
+<path class="m-seg k4" d="M480 196 L540 186 M420 98 L450 60 M296 80 L300 30 M190 110 L150 70 M190 300 L150 338"/>
+<path class="m-seg k5" d="M540 186 L600 180 M306 330 L300 372"/>
+<path class="m-seg k6" d="M420 296 L470 340"/>
+<path class="m-seg nd" d="M120 206 L50 200 M150 70 L130 40"/>
+<path class="m-seg k2" d="M370 200 L350 150 L300 130 L250 150 L230 200 L250 250"/>
+<path class="m-seg k1" d="M250 250 L300 270 L350 250 L370 200"/>
+<path class="m-seg k3" d="M450 196 L430 128 L368 94 L300 86 L232 94"/>
+<path class="m-seg k4" d="M232 94 L170 128 L150 196 L170 268"/>
+<path class="m-seg k5" d="M170 268 L232 304 L300 314 L368 304 L430 268 L450 196"/>
+<circle class="m-sel" cx="400" cy="193" r="11"/>
+<text class="m-label" x="308" y="190">centrum</text>
+</svg>
+<div class="idx-pop" style="position: absolute; left: 60%; top: 24%; width: 300px" role="dialog" aria-label="Szczegóły odcinka">
+<p class="idx-cap" style="margin: 0">Odcinek</p>
+<div class="idx-row" style="gap: 8px"><span class="idx-badge">11</span><span class="idx-ui-strong">A → B</span></div>
+<div class="idx-pop__grid" style="border-top: 0; padding-top: 0"><div><p class="idx-cap" style="margin: 0">Zmierzone (P50)</p><p class="idx-figure-md">14<span class="idx-comma">,</span>2<span class="idx-ui" style="font-family: var(--font-sans); font-weight: 400; color: var(--ink-muted)"> km/h</span></p></div><div><p class="idx-cap" style="margin: 0">Rozkładowe</p><p class="idx-figure-md">16<span class="idx-comma">,</span>0<span class="idx-ui" style="font-family: var(--font-sans); font-weight: 400; color: var(--ink-muted)"> km/h</span></p></div></div>
+<span class="idx-q idx-q--ranked"><i class="idx-node idx-node--sm"></i>dane wystarczające · n = XX</span>
+</div>
+<p class="idx-caption" style="position: absolute; right: 8px; bottom: 6px; margin: 0; padding: 2px 6px; background: var(--surface); color: var(--ink-muted); border-radius: 3px">© współtwórcy OpenStreetMap</p>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light","tsType":"string"},"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+renderVals() {
+return { theme: this.props.theme ?? 'light' };
+}
+}
+</script>
+</body>
+</html>

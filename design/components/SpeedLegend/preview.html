@@ -1,0 +1,34 @@
+<!-- @dsCard group="Dane" height=640 subtitle="Legenda: 6 klas prędkości, brak danych, skala rozbieżna" -->
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"></head>
+<body class="idx-pv">
+<div class="idx-grid idx-grid--2" style="align-items:start">
+<div class="idx-stack">
+<div class="idx-cap">Prędkość zmierzona, km/h (najedź na klasę)</div>
+<div class="idx-legend" role="group" aria-label="Legenda prędkości"><div class="idx-legend__ramp"><button type="button" class="idx-legend__cls" data-cls="1" aria-label="klasa 1"><span class="idx-s1"></span></button><button type="button" class="idx-legend__cls" data-cls="2" aria-label="klasa 2"><span class="idx-s2"></span></button><button type="button" class="idx-legend__cls" data-cls="3" aria-label="klasa 3"><span class="idx-s3"></span></button><button type="button" class="idx-legend__cls" data-cls="4" aria-label="klasa 4"><span class="idx-s4"></span></button><button type="button" class="idx-legend__cls" data-cls="5" aria-label="klasa 5"><span class="idx-s5"></span></button><button type="button" class="idx-legend__cls" data-cls="6" aria-label="klasa 6"><span class="idx-s6"></span></button></div><div class="idx-legend__ticks" id="ticks"></div>
+<div class="idx-legend__nd"><i></i><span class="idx-caption">brak danych</span></div></div>
+<div class="idx-cap">Skala rozbieżna: zmierzone kontra rozkładowe</div>
+<div class="idx-legend idx-legend--div" role="group" aria-label="Legenda różnicy"><div class="idx-legend__ramp"><span class="idx-d1" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d2" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d3" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d4" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d5" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d6" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span><span class="idx-d7" style="height:10px;border-radius:var(--idx-radius-xs);display:block"></span></div>
+<div class="idx-legend__ticks"><span class="idx-caption">zmierzone wolniej</span><span class="idx-caption">bez zmiany</span><span class="idx-caption">zmierzone szybciej</span></div></div>
+<div class="idx-cap">Wczytywanie i brak danych</div>
+<div class="idx-legend" aria-busy="true"><div class="idx-skel" style="height:10px"></div><div class="idx-skel" style="height:12px;width:60%"></div></div>
+<p class="idx-caption idx-mute">Brak legendy = brak wyniku: gdy warstwa nie ma danych, legenda ustępuje komunikatowi „za mało danych”.</p></div>
+<div class="idx-map" style="min-height:300px"><div id="lmap"></div></div></div>
+<script>
+(function () {
+  var D = window.IDX; if (!D) return;
+
+  var host = document.getElementById('lmap'); var segs = D.demo.mockMap(host, { seed: 11 });
+  var wrap = host.closest('.idx-map');
+  function on(cls) { Array.prototype.forEach.call(host.querySelectorAll('.m-seg'), function (s) { s.classList.toggle('on', cls == null || s.getAttribute('data-cls') === String(cls)); }); wrap.classList.toggle('is-dim', cls != null); Array.prototype.forEach.call(document.querySelectorAll('.idx-legend__cls'), function (b) { b.classList.toggle('is-dim', cls != null && b.getAttribute('data-cls') !== String(cls)); }); }
+  Array.prototype.forEach.call(document.querySelectorAll('.idx-legend__cls'), function (b) {
+    ['mouseenter', 'focus'].forEach(function (ev) { b.addEventListener(ev, function () { on(b.getAttribute('data-cls')); }); });
+    ['mouseleave', 'blur'].forEach(function (ev) { b.addEventListener(ev, function () { on(null); }); });
+  });
+  var cs = getComputedStyle(document.documentElement), lab = [];
+  document.getElementById('ticks').innerHTML = [1,2,3,4,5].map(function (i) { return '<span class="idx-label" style="--p:' + (i * 100 / 6).toFixed(2) + '">' + cs.getPropertyValue('--idx-speed-t' + i).trim() + '</span>'; }).join('');
+
+  D.hydrate(); D.motion();
+})();
+</script>
+</body></html>

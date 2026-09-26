@@ -1,0 +1,216 @@
+/* Warstwa serwisu nad design/: układ stron i to, czego bundle.css nie daje. Bez kolorów i hexów: wszystko z tokenów.
+   Animacje: css/motion.css. Progi układu jak w systemie: 640 i 1024 px kontenera (.idx-frame). */
+
+body { margin: 0; background: var(--bg); }
+.idx-pv { padding: 0; min-height: 100vh; display: flex; flex-direction: column; --gutter: var(--idx-space-4); --topbar-h: 52px; }
+.idx-pv > main { flex: 1 0 auto; display: block; }
+.idx-pv > .idx-footer { margin-top: auto; }
+main:focus { outline: none; }
+/* kontener nie stylizuje samego siebie: margines ustawiamy na jego dzieciach (topbar, main, stopka) */
+@container idx (min-width: 640px) { .idx-pv > * { --gutter: var(--idx-space-5); } }
+
+/* skip link */
+.idx-skip { position: absolute; left: var(--idx-space-2); top: -100px; z-index: 100; padding: var(--idx-space-3) var(--idx-space-4); background: var(--surface); color: var(--ink); border: 2px solid var(--focus); border-radius: var(--idx-radius-sm); font: 600 15px/1.2 var(--font-sans); }
+.idx-skip:focus { top: var(--idx-space-2); }
+
+/* szerokość treści: 70 rem + boczne marginesy; topbar wyrównany do tej samej kolumny */
+.idx-wrap { max-width: calc(var(--wide) + 2 * var(--gutter)); padding-inline: var(--gutter); }
+.idx-topbar { position: sticky; top: 0; z-index: 30; padding-inline: max(var(--gutter), calc((100cqw - var(--wide)) / 2)); }
+.idx-topbar a.idx-topbar__link[aria-current="true"] { background: color-mix(in srgb, var(--chrome-ink) 16%, transparent); color: var(--chrome-ink); }
+.idx-topbar button.idx-topbar__link[aria-pressed="true"] { color: var(--chrome-ink); }
+@container idx (max-width: 639px) { .idx-topbar { position: static; } }
+
+/* rytm sekcji: 48 (telefon) / 64 (tablet) / 96 (desktop) */
+.idx-section { padding-top: var(--idx-space-7); }
+.idx-section--tight, .idx-section--snug { padding-top: var(--idx-space-5); }
+.idx-pv > main { padding-bottom: var(--idx-space-7); }
+.idx-pv.idx-pv--map > main { padding-bottom: 0 !important; }
+.idx-block { margin-top: calc(var(--idx-space-6) + var(--idx-space-2)); }
+.idx-legend-wrap { margin-top: var(--idx-space-6); }
+@container idx (min-width: 640px) { .idx-section { padding-top: var(--idx-space-8); } .idx-section--tight { padding-top: var(--idx-space-6); } .idx-pv > main { padding-bottom: var(--idx-space-8); } }
+@container idx (min-width: 1024px) { .idx-section { padding-top: var(--idx-space-9); } .idx-section--tight { padding-top: var(--idx-space-6); } .idx-pv > main { padding-bottom: var(--idx-space-9); } }
+.idx-section.idx-section--snug { padding-top: var(--idx-space-5); }
+.idx-section.idx-section--md { padding-top: var(--idx-space-7); }
+@container idx (min-width: 640px) { .idx-section.idx-section--md { padding-top: var(--idx-space-8); } }
+
+/* hero */
+.idx-hero { padding-block: var(--idx-space-7) var(--idx-space-6); }
+@container idx (min-width: 640px) { .idx-hero { padding-block: var(--idx-space-8) var(--idx-space-7); } }
+@container idx (min-width: 1024px) { .idx-hero { padding-block: var(--idx-space-9) var(--idx-space-7); } }
+.idx-hero__title { margin-top: var(--idx-space-4); }
+@container idx (min-width: 640px) { .idx-hero__title { max-width: 14ch; } }
+.idx-hero .idx-lead { margin-top: var(--idx-space-5); max-width: 36rem; color: var(--ink); }
+.idx-sechead { margin: var(--idx-space-3) 0 0; max-width: 18ch; }
+.idx-eyebrow { margin: 0; }
+.idx-copy { margin-top: var(--idx-space-4); max-width: 30rem; }
+
+/* hero miasta: telefon = jedna kolumna (nagłówek, liczba, zdanie), desktop = liczba po prawej */
+.idx-cityhero { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "eyebrow" "title" "fig" "lead" "defs"; }
+.idx-cityhero__eyebrow { grid-area: eyebrow; }
+.idx-cityhero__title { grid-area: title; }
+@container idx (min-width: 640px) { .idx-hero.idx-cityhero .idx-cityhero__title { max-width: 12ch; } }
+.idx-cityhero__fig { grid-area: fig; margin-top: var(--idx-space-6); }
+.idx-cityhero .idx-lead { grid-area: lead; max-width: 34rem; }
+.idx-cityhero__defs { grid-area: defs; margin-top: var(--idx-space-6); }
+.idx-cityhero__num { display: flex; align-items: baseline; gap: var(--idx-space-3); margin-bottom: var(--idx-space-4); }
+.idx-cityhero__defs .idx-hero__defs { margin-top: 0; max-width: none; }
+@container idx (min-width: 1024px) {
+  .idx-cityhero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: var(--idx-space-8); grid-template-areas: "eyebrow fig" "title fig" "lead fig" "defs defs"; }
+  .idx-cityhero__fig { align-self: end; margin-top: 0; }
+  .idx-cityhero__defs { margin-top: var(--idx-space-7); }
+  .idx-cityhero__defs .idx-hero__defs { grid-template-columns: 1fr 1fr; column-gap: var(--idx-space-8); }
+}
+
+/* siatki */
+.idx-cardgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--idx-space-4); }
+@container idx (min-width: 640px) { .idx-cardgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--idx-space-5); } }
+.idx-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--idx-space-5); }
+@container idx (min-width: 1024px) { .idx-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--idx-space-6); align-items: stretch; } .idx-split--text { column-gap: var(--idx-space-8); align-items: start; } }
+
+/* ranking */
+.idx-rank__state { padding: var(--idx-space-6) var(--idx-space-5); }
+.idx-rank__loading { padding: var(--idx-space-4) var(--idx-space-5); }
+.idx-rank--error { border: 1.5px solid var(--ink); }
+.idx-state__icon { display: inline-flex; flex: none; }
+.idx-rrow--seg { min-height: 64px; }
+@container idx (min-width: 640px) {
+  .idx-rrow--seg { grid-template-columns: 24px 40px minmax(0, 1fr) 120px; grid-template-areas: "conn rank name val"; }
+  .idx-rrow--seg .idx-bar { display: none; }
+}
+.idx-rrow--edition { grid-template-columns: 24px minmax(0, 1fr) auto; grid-template-areas: "conn name val"; min-height: 56px; }
+.idx-rrow--edition .idx-rrow__val { padding-top: 0; display: inline-flex; align-items: center; gap: var(--idx-space-2); }
+.idx-rrow--edition .idx-rrow__name { padding-top: 0; }
+
+/* wykres, szczegóły */
+.idx-chart { padding: var(--idx-space-4) var(--idx-space-3) var(--idx-space-4); }
+@container idx (min-width: 640px) { .idx-chart { padding: var(--idx-space-5) var(--idx-space-5) 20px; } }
+.idx-chart__cap { margin-bottom: var(--idx-space-4); }
+.idx-chart__v--md, .idx-chart__v--lg { display: none; }
+@container idx (min-width: 640px) { .idx-chart__v--sm, .idx-chart__v--lg { display: none; } .idx-chart__v--md { display: block; } }
+@container idx (min-width: 1024px) { .idx-chart__v--md { display: none; } .idx-chart__v--lg { display: block; } }
+.idx-chart__sub { display: block; font: 400 15px/1.45 var(--font-sans); letter-spacing: 0; color: var(--ink-muted); }
+.idx-chart__foot { margin-top: var(--idx-space-3); }
+.idx-chart__none { height: 140px; border: 1px dashed var(--idx-chart-nodata); display: grid; place-items: center; text-align: center; padding: var(--idx-space-3); }
+.idx-details { margin-top: var(--idx-space-4); border-top: var(--idx-line-hair) solid var(--border); padding-top: var(--idx-space-1); }
+.idx-details summary { min-height: var(--idx-tap); display: flex; align-items: center; gap: var(--idx-space-2); cursor: pointer; color: var(--accent-ink); }
+.idx-details .idx-table-scroll { max-height: 420px; overflow: auto; }
+.idx-chart .idx-details .idx-icon { width: 18px; height: 18px; }
+
+/* pole wyboru miasta */
+.idx-select { width: 100%; min-height: var(--idx-tap); padding: 0 var(--idx-space-3); border: 1px solid var(--idx-control-edge); border-radius: var(--idx-radius-sm); background: var(--surface); color: var(--ink); font: 400 15px/1.2 var(--font-sans); }
+
+/* przełącznik segmentowy: wskaźnik ślizga się (transform), zaznaczenie rysuje wskaźnik */
+.idx-seg--anim { position: relative; }
+.idx-seg__ind { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; transform-origin: left; transform: translateX(calc(var(--x, 0) * 1px)) scaleX(var(--w, 0)); background: var(--accent-soft); pointer-events: none; transition: transform var(--idx-dur-base) var(--idx-ease-inout), opacity var(--idx-dur-fast) var(--idx-ease-inout); }
+.idx-seg--anim .idx-seg__opt { z-index: 1; }
+.idx-seg--anim .idx-seg__opt[aria-checked="true"] { background: transparent; }
+.idx-seg--anim .idx-seg__opt:active { transform: scale(0.97); transition: transform var(--idx-dur-fast) var(--idx-ease-out); }
+
+/* topbar: wskaźnik bieżącej strony ślizga się między linkami; przy przewijaniu zawartość lekko się zmniejsza */
+.idx-topbar__nav { position: relative; }
+.idx-topbar__ind { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; transform-origin: left; transform: translateX(calc(var(--x, 0) * 1px)) scaleX(var(--w, 0)); background: color-mix(in srgb, var(--chrome-ink) 16%, transparent); pointer-events: none; transition: transform var(--idx-dur-base) var(--idx-ease-inout), opacity var(--idx-dur-fast) var(--idx-ease-inout); }
+.idx-topbar.idx-topbar--anim a.idx-topbar__link, .idx-topbar.idx-topbar--anim button.idx-topbar__link, .idx-topbar.idx-topbar--anim a.idx-topbar__link[aria-current] { background: transparent; position: relative; z-index: 1; }
+.idx-topbar.idx-topbar--anim .idx-topbar__link:hover { background: transparent; }
+.idx-topbar__brand, .idx-topbar__nav { transition: transform var(--idx-dur-base) var(--idx-ease-out); }
+.idx-topbar__brand { transform-origin: left center; }
+.idx-topbar__nav { transform-origin: right center; }
+.idx-topbar.is-compact .idx-topbar__brand, .idx-topbar.is-compact .idx-topbar__nav { transform: scale(0.94); }
+
+/* karty: obrys accent (bundle) + lekkie uniesienie; wciśnięcie 0,97 */
+.idx-city, .idx-dl, .idx-kpi { transition: translate var(--idx-dur-fast) var(--idx-ease-out), scale var(--idx-dur-fast) var(--idx-ease-out); }
+.idx-city:hover, .idx-dl:hover, .idx-kpi:hover { translate: 0 -2px; }
+.idx-city:active, .idx-dl:active, .idx-kpi:active { scale: 0.97; }
+
+/* wiersze rankingu: najechanie zapala węzeł, „przebyta” część łącznika i przesuwa nazwę */
+.idx-rrow .idx-conn > .idx-node { transition: scale var(--idx-dur-fast) var(--idx-ease-out); }
+.idx-rank .idx-rrow:hover .idx-conn > .idx-node, .idx-rank .idx-rrow.is-lit .idx-conn > .idx-node { scale: 1.35; background: var(--idx-track-done); border-color: var(--idx-track-done); }
+.idx-rrow__name, .idx-rrow__rank { transition: translate var(--idx-dur-fast) var(--idx-ease-out); }
+.idx-rrow:hover .idx-rrow__name { translate: 4px 0; }
+
+/* mapa */
+.idx-map .idx-map__canvas { position: absolute; inset: 0; }
+.idx-map__fallback { position: absolute; inset: 0; }
+.idx-map--live .idx-map__fallback { opacity: 0; pointer-events: none; transition: opacity var(--idx-dur-slow) var(--idx-ease-out); }
+.idx-map--mini { height: 380px; min-height: 320px; }
+.idx-map__attr { position: absolute; right: var(--idx-space-2); bottom: 6px; z-index: 2; margin: 0; padding: 2px 6px; background: var(--surface); color: var(--ink-muted); border-radius: var(--idx-radius-xs); font-size: 12px; }
+.idx-map__notice { position: absolute; left: var(--idx-space-2); top: var(--idx-space-2); z-index: 2; margin: 0; padding: var(--idx-space-1) var(--idx-space-2); max-width: min(46ch, 72%); background: var(--surface); color: var(--ink-muted); border: var(--idx-line-hair) solid var(--border); border-radius: var(--idx-radius-xs); font-size: 12px; line-height: 1.35; }
+.idx-map__over { z-index: 4; transition: opacity var(--idx-dur-base) var(--idx-ease-out); }
+.idx-map--stage { height: 320px; }
+.idx-fly { position: absolute; inset: 0; }
+.idx-map--full { border-radius: 0; border: 0; min-height: 420px; }
+.idx-ring { width: 30px; height: 30px; pointer-events: none; }
+.idx-ring i { display: block; width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--focus); outline: 2px solid var(--surface); }
+.idx-map .maplibregl-canvas { outline: none; }
+.idx-map .idx-icon { width: 20px; height: 20px; } /* bundle: .idx-map svg { width: 100% } is meant for the schematic, not for icons */
+.idx-map:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; }
+
+.idx-topbar__nav { scrollbar-width: none; }
+.idx-topbar__nav::-webkit-scrollbar { display: none; }
+
+/* strona mapy: panel 360 px + mapa; na telefonie panel to dolna szuflada */
+.idx-mapshell--page { position: relative; overflow: hidden; gap: 0; min-height: calc(100dvh - var(--topbar-h)); }
+.idx-mapshell--page > .idx-mapshell__panel { border-radius: 0; border-width: 0 var(--idx-line-hair) 0 0; overflow: auto; }
+.idx-mapctl__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--idx-space-3); }
+.idx-mapview { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.idx-mapview > .idx-map--full { flex: 1; }
+.idx-mapview__table { border-radius: 0; border-width: 0; flex: 1; overflow: auto; }
+.idx-mapview__table .idx-table tbody tr { scroll-margin: var(--idx-space-7); }
+.idx-map__pop { position: absolute; z-index: 5; }
+@container idx (min-width: 1024px) {
+  .idx-mapshell--page { grid-template-columns: var(--idx-panel) minmax(0, 1fr); height: calc(100dvh - var(--topbar-h)); min-height: 560px; }
+  .idx-mapshell--page > .idx-mapshell__panel { min-height: 0; }
+  .idx-mapctl__close, .idx-map__filters { display: none; }
+  .idx-map__pop { right: var(--idx-space-4); top: var(--idx-space-4); width: 320px; }
+  .idx-map__pop.is-left { right: auto; left: var(--idx-space-4); top: 96px; }
+  .idx-pv--map .idx-topbar { padding-inline: var(--idx-space-5); }
+}
+@container idx (max-width: 1023px) {
+  .idx-mapshell--page { display: block; }
+  .idx-mapshell--page > .idx-mapshell__panel { position: absolute; left: 0; right: 0; bottom: 0; z-index: 40; max-height: 82%; border-width: var(--idx-line-hair) 0 0; border-radius: var(--idx-radius-md) var(--idx-radius-md) 0 0; box-shadow: var(--idx-shadow-float); transform: translateY(105%); transition: transform var(--idx-dur-base) var(--idx-ease-out); }
+  .idx-mapshell--page > .idx-mapshell__panel.is-open { transform: none; }
+  .idx-mapview { height: calc(100dvh - var(--topbar-h)); }
+  .idx-map__filters { position: absolute; top: var(--idx-space-3); left: var(--idx-space-3); z-index: 3; background: var(--surface); }
+  .idx-map--full .idx-map__notice { top: calc(var(--idx-tap) + var(--idx-space-4)); }
+  .idx-map__pop { left: 0; right: 0; bottom: 0; width: 100%; max-width: 100%; border-radius: var(--idx-radius-md) var(--idx-radius-md) 0 0; padding-bottom: var(--idx-space-6); }
+}
+
+/* przełącznik motywu: nakładka w kolorze poprzedniego tła znika (opacity) */
+.idx-veil { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+
+/* scrollytelling: kroki czytelne bez JS; przygaszenie dopiero po włączeniu skryptu */
+.idx-step { opacity: 1; }
+.idx-scrolly.is-enhanced .idx-step:not(.is-active) { opacity: 0.55; }
+.idx-scrolly__stage { top: var(--idx-space-3); }
+@container idx (min-width: 640px) { .idx-map--stage { height: 380px; } }
+@container idx (min-width: 1024px) { .idx-map--stage { height: 520px; } .idx-scrolly__stage { top: calc(var(--topbar-h) + var(--idx-space-5)); } }
+.idx-step { scroll-margin-top: var(--idx-space-9); }
+.idx-step:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* drobiazgi */
+.idx-legend-wrap .idx-legend { max-width: 360px; }
+.idx-rank a { text-underline-offset: 3px; }
+
+/* bundle.css przejściuje background-color na hover (przyciski, opcje, wiersze), a reguła ruchu dopuszcza tylko transform i opacity:
+   zostaje samo wciśnięcie (transform), kolor tła zmienia się od razu. */
+.idx-btn { transition-property: transform; }
+.idx-seg__opt, .idx-rrow { transition: none; }
+
+/* bundle.css: `.idx-bar--nd { background: transparent }` (shorthand, declared later) wipes the hatch of `.idx-hatch`,
+   and `.idx-rrow .idx-node { background: var(--surface) }` outranks `.idx-node--solid`. Restore both from tokens. */
+.idx-bar.idx-bar--nd.idx-hatch { background-image: repeating-linear-gradient(135deg, var(--idx-chart-nodata) 0 1px, transparent 1px 7px); }
+.idx-rrow .idx-node.idx-node--solid { background: var(--idx-track-done); border-color: var(--idx-track-done); }
+
+/* przecinek w mono: bundle.css zwęża go do 0,3 em i wyrównuje do lewej, przez co w IBM Plex Mono 500 nachodzi na następną cyfrę.
+   Ink przecinka to 0,18–0,41 em komórki: przesuwamy go tak, żeby leżał w środku wąskiego pola. */
+.idx-comma, .idx-digit--p { text-indent: -0.145em; }
+
+/* notka różnicy w kafelku: zdanie, nie liczba tablicowa (ekran wzorcowy używa zwykłego podpisu) */
+.idx-kpi__note .idx-delta { font: 400 14px/1.43 var(--font-sans); letter-spacing: 0; }
+
+/* topbar: `.idx-topbar a.idx-topbar__link { color: chrome-muted }` (specyficzność 0,2,1) przebija kolor bieżącego linku i hover z bundle.css,
+   a chrome-muted na chrome ma w jasnym motywie 4,49:1 (para z GISBoost). Domieszka chrome-ink przywraca 4,5:1; bieżący link i hover dostają chrome-ink. */
+.idx-topbar a.idx-topbar__link, .idx-topbar button.idx-topbar__link, .idx-topbar__sub, .idx-lang--chrome button { color: color-mix(in srgb, var(--chrome-ink) 20%, var(--chrome-muted)); }
+.idx-topbar a.idx-topbar__link[aria-current], .idx-topbar a.idx-topbar__link:hover, .idx-topbar button.idx-topbar__link:hover, .idx-lang--chrome button[aria-pressed="true"], .idx-lang--chrome button:hover { color: var(--chrome-ink); }
+
+/* nagłówki stopki to h2 (kolejność nagłówków na stronach z samym h1), wyglądają jak h3 z bundle.css */
+.idx-footer h2 { color: var(--ink); margin-bottom: var(--idx-space-3); }

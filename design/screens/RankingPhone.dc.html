@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Ranking miast, telefon</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/idx/tokens.css">
+<link rel="stylesheet" href="ds/idx/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div class="idx-pv" data-theme="{{theme}}" style="width: 390px; height: 2300px; padding: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--font-sans)">
+<header class="idx-topbar">
+<div class="idx-topbar__brand"><a class="idx-topbar__mark" href="#">GISBoost</a><a class="idx-topbar__sub" href="#">/ indeks prędkości</a></div>
+<nav class="idx-topbar__nav" aria-label="Główna"><a class="idx-topbar__link" href="#" aria-current="page">Ranking</a><a class="idx-topbar__link" href="#">Mapa</a><a class="idx-topbar__link" href="#">Dane</a><a class="idx-topbar__link" href="#">Metodyka</a>
+<div class="idx-lang idx-lang--chrome" role="group" aria-label="Język"><button type="button" aria-pressed="true">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false">EN</button></div></nav>
+</header>
+<section style="padding: 48px 16px 0">
+<p class="idx-eyebrow" style="color: var(--ink-muted); margin: 0">Ranking miast</p>
+<h1 class="idx-display-xl" style="margin: 16px 0 0">Które miasta jeżdżą najszybciej.</h1>
+<p class="idx-lead" style="margin: 24px 0 0">Prędkość zmierzona (rekonstrukcja z GTFS-RT). Wyniki są odtworzone, nie zmierzone wprost.</p>
+<div class="idx-rule" aria-hidden="true" style="margin-top: 32px"><i class="idx-node idx-node--solid"></i><i class="idx-node"></i></div>
+<div style="margin-top: 24px"><span class="idx-ph">dane zastępcze</span></div>
+</section>
+<section style="padding: 16px 16px 0">
+<div class="idx-rank">
+<div class="idx-rank__head" style="gap: 16px">
+<div><span class="idx-cap idx-seg-label">Rodzaj</span><div class="idx-seg" role="radiogroup" aria-label="Rodzaj"><button type="button" role="radio" aria-checked="true" class="idx-seg__opt">Tramwaje</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Autobusy</button></div></div>
+<div><span class="idx-cap idx-seg-label">Pora</span><div class="idx-seg" role="radiogroup" aria-label="Pora"><button type="button" role="radio" aria-checked="true" class="idx-seg__opt">Dzień</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Szczyt</button><button type="button" role="radio" aria-checked="false" class="idx-seg__opt">Poza szczytem</button></div></div>
+</div>
+<a class="idx-rrow" href="#"><span class="idx-conn idx-conn--first"><i class="idx-node idx-node--sm idx-node--solid"></i></span><span class="idx-rrow__rank idx-board">1</span><span class="idx-rrow__name"><span class="idx-rrow__city">Warszawa</span><span class="idx-q idx-q--ranked"><i class="idx-node idx-node--sm"></i>w rankingu</span></span><span class="idx-rrow__val idx-figure-md">19<span class="idx-comma">,</span>4<small>km/h</small></span><span class="idx-bar"><span class="idx-bar__fill idx-s5" style="--k: 0.65"></span></span></a>
+<a class="idx-rrow" href="#"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><span class="idx-rrow__rank idx-board">2</span><span class="idx-rrow__name"><span class="idx-rrow__city">Rzeszów</span><span class="idx-q idx-q--ranked"><i class="idx-node idx-node--sm"></i>w rankingu</span></span><span class="idx-rrow__val idx-figure-md">18<span class="idx-comma">,</span>1<small>km/h</small></span><span class="idx-bar"><span class="idx-bar__fill idx-s4" style="--k: 0.6"></span></span></a>
+<a class="idx-rrow" href="#"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><span class="idx-rrow__rank idx-board">3</span><span class="idx-rrow__name"><span class="idx-rrow__city">Łódź</span><span class="idx-q idx-q--ranked"><i class="idx-node idx-node--sm"></i>w rankingu</span></span><span class="idx-rrow__val idx-figure-md">17<span class="idx-comma">,</span>8<small>km/h</small></span><span class="idx-bar"><span class="idx-bar__fill idx-s4" style="--k: 0.59"></span></span></a>
+<a class="idx-rrow" href="#"><span class="idx-conn"><i class="idx-node idx-node--sm"></i></span><span class="idx-rrow__rank idx-board">4</span><span class="idx-rrow__name"><span class="idx-rrow__city">Kielce</span><span class="idx-q idx-q--limited"><i class="idx-node idx-node--sm"></i>ograniczone</span></span><span class="idx-rrow__val idx-figure-md">15<span class="idx-comma">,</span>2<small>km/h</small></span><span class="idx-bar"><span class="idx-bar__fill idx-s3" style="--k: 0.51"></span></span></a>
+<a class="idx-rrow idx-rrow--out" href="#"><span class="idx-conn idx-conn--last"><i class="idx-node idx-node--sm"></i></span><span class="idx-rrow__rank idx-board">–</span><span class="idx-rrow__name"><span class="idx-rrow__city">Miasto E</span><span class="idx-q idx-q--out"><i class="idx-node idx-node--sm"></i>poza rankingiem</span></span><span class="idx-rrow__val idx-figure-md">—<small>km/h</small></span><span class="idx-bar idx-bar--nd idx-hatch" aria-label="brak danych"></span></a>
+<p class="idx-rank__foot idx-caption">Zmierzone (rekonstrukcja z GTFS-RT), mediana prędkości segmentowej.</p>
+</div>
+<div class="idx-legend" style="margin-top: 32px" role="group" aria-label="Legenda prędkości">
+<div class="idx-legend__ramp"><span class="idx-s1" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s2" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s3" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s4" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s5" style="display: block; height: 10px; border-radius: 3px"></span><span class="idx-s6" style="display: block; height: 10px; border-radius: 3px"></span></div>
+<div class="idx-legend__ticks"><span class="idx-label" style="--p: 16.67">8</span><span class="idx-label" style="--p: 33.33">12</span><span class="idx-label" style="--p: 50">16</span><span class="idx-label" style="--p: 66.67">20</span><span class="idx-label" style="--p: 83.33">26</span></div>
+<div class="idx-legend__nd"><i></i><span class="idx-caption">brak danych · km/h</span></div>
+</div>
+</section>
+<footer class="idx-footer" style="margin-top: auto; padding: 40px 16px">
+<div class="idx-footer__cols"><div><p class="idx-display-sm" style="color: var(--ink); margin: 0">Indeks prędkości</p><p class="idx-ui" style="margin: 8px 0 0">Boczny projekt GISBoost. Wyniki są odtworzone z danych GTFS-RT, nie zmierzone wprost.</p></div>
+<div><h3 class="idx-ui-strong">Dane</h3><ul class="idx-ui"><li><a href="#">Dane mapy © współtwórcy OpenStreetMap</a></li><li>Rozkłady i zapisy: operatorzy (XX)</li></ul></div></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light","tsType":"string"},"$preview":{"width":390,"height":2300}}'>
+class Component extends DCLogic {
+renderVals() {
+return { theme: this.props.theme ?? 'light' };
+}
+}
+</script>
+</body>
+</html>

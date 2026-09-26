@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # project site: /<repo>/ ; user/org site (<name>.github.io): /
+      BASE: ${{ endsWith(github.event.repository.name, '.github.io') && '/' || format('/{0}/', github.event.repository.name) }}
+      # optional base-map source: Settings > Secrets and variables > Actions > Variables (never commit keys)
+      VITE_TILES_URL: ${{ vars.VITE_TILES_URL }}
+      VITE_GLYPHS_URL: ${{ vars.VITE_GLYPHS_URL }}
+      VITE_GLYPHS_FONT: ${{ vars.VITE_GLYPHS_FONT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # design/tokens.css is generated from design/tokens.json and committed: fail if it is stale
+      - run: python3 tools/gen_tokens.py && git diff --exit-code design/tokens.css
+      - run: npm run build
+      - run: npm run check
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

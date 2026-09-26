@@ -1,0 +1,16 @@
+<!-- @dsCard group="Nawigacja" height=230 subtitle="Przełącznik PL / EN, dwie pozycje po 44 px" -->
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"></head>
+<body class="idx-pv">
+<div class="idx-grid idx-grid--3">
+<div><div class="idx-cap">Domyślny (PL)</div><div class="idx-lang" role="group" aria-label="Język"><button type="button" aria-pressed="true" lang="pl">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false" lang="en" class="">EN</button></div></div><div><div class="idx-cap">Najechanie na EN</div><div class="idx-lang" role="group" aria-label="Język"><button type="button" aria-pressed="true" lang="pl">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false" lang="en" class="is-hover">EN</button></div></div><div><div class="idx-cap">Fokus na EN</div><div class="idx-lang" role="group" aria-label="Język"><button type="button" aria-pressed="true" lang="pl">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false" lang="en" class=" is-focus">EN</button></div></div></div>
+<div style="margin-top:var(--idx-space-6);background:var(--chrome);padding:var(--idx-space-3) var(--idx-space-4);border-radius:var(--idx-radius-sm);display:inline-block"><div class="idx-lang idx-lang--chrome" role="group" aria-label="Język"><button type="button" aria-pressed="true" lang="pl">PL</button><span class="idx-lang__sep" aria-hidden="true"></span><button type="button" aria-pressed="false" lang="en" class="">EN</button></div></div>
+<p class="idx-caption idx-mute" style="margin-top:var(--idx-space-3)">Wariant na pasie chrome. Aktywny język: podkreślenie 2 px i waga 600, nie sam kolor.</p>
+<script>
+(function () {
+  var D = window.IDX; if (!D) return;
+
+  D.hydrate(); D.motion();
+})();
+</script>
+</body></html>
