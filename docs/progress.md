@@ -42,8 +42,8 @@ py -m venv --system-site-packages .venv && .venv/Scripts/python.exe -m pip insta
 4. **Dni ważne od 7.09 (z 15 dni roboczych, po bramce dnia, brakach release'ów i świętach):** Kraków, Łódź, Poznań, Wilno 15; Gdańsk 13 (1 brak, 1 bramka); Lizbona, Lublana, Praga, Rzym, Szczecin, Warszawa 14; Sofia 13 (2 święta); Bukareszt, Nikozja, Zagrzeb 12; **Turyn 7**. Szczegóły: `docs/data-inventory.generated.md` §2.
 5. **Poligon (D12):** GISCO i OSM zgodne w 19 z 23 miast; różnice: Sofia, Lizbona, Nikozja, Gdańsk (`docs/decisions-needed.md` §1). Filtr obszaru zmienia prędkość autobusów o 0,0–6,2 km/h (prawie wcale w Rzymie, Sofii, Lizbonie, Lublanie) i odcina do 30% obserwacji.
 6. **Statyki zmieniają się prawie codziennie** w większości miast, więc deduplikacja SHA-256 daje małe oszczędności.
-7. **`easy-OTP` w workflow bez `ref`** (checkout `main`). Semantyka tidy jednolita od 2026-08-09; ostatni commit narzędzi `bccb17b` (2026-09-04, `perf`). Rekomendacja pinu w `docs/decisions-needed.md` §4.
-8. **Licencje (statyka i RT, `docs/licenses.md`):** Turyn tylko niekomercyjnie (projekt jest niekomercyjny, więc dopuszczony pod bramką), **Rzym: RT "wyłącznie jako wsparcie podróży", publikacja po zgodzie operatora**, Warszawa ODbL share-alike dla kształtów, 7 miast bez znalezionej licencji statyki, miasta ze zbiorkom.live bez warunków. Lista adresów RT z telefonu jeszcze potrzebna dla pełnego domknięcia.
+7. **`easy-OTP` w workflow bez `ref`** (checkout `main`). Semantyka tidy jednolita od 2026-08-09; ostatni commit narzędzi `bccb17b` (2026-09-04, `perf`). Decyzja właściciela: **bez pinu**, oznaczanie pochodzenia per dzień (ADR-0004, `config/tidy_epochs.yaml`).
+8. **Licencje (statyka i RT, `docs/licenses.md`):** Turyn tylko niekomercyjnie (projekt niekomercyjny, więc dopuszczony pod bramką), Rzym RT "wyłącznie jako wsparcie podróży", Warszawa ODbL share-alike dla kształtów, 7 miast bez znalezionej licencji statyki, miasta ze zbiorkom.live bez warunków. **Właściciel: wyniki na CC BY 4.0, wszystkie miasta publikowane z atrybucją (ADR-0003).** Lista adresów RT z telefonu jeszcze potrzebna dla pełnego domknięcia.
 9. **Wykonalność W10–W12:** `delay_s` i `headway_s` są dostępne w ok. 92–100% wierszy z obserwacją. Linie częste (< 600 s) to 1–3% wierszy w Poznaniu, Nikozji i Łodzi, więc W11 może mieć małą próbę w polskich miastach.
 10. **Poznań:** po filtrze obszaru autobusy nadal 26,6 km/h (Kraków 19,7); do wyjaśnienia w M2.
 11. **Liczba miast w `cities.json`:** 27 (dokumentacja podawała 28; `lka` usunięto 2026-09-09).
@@ -58,9 +58,43 @@ py -m venv --system-site-packages .venv && .venv/Scripts/python.exe -m pip insta
 - Audyt licencji oparty na wyszukiwaniu i stronach operatorów, nie na pełnych regulaminach; RT dla Zagrzebia, Lublany, Nikozji, Rzeszowa i Kielc bez adresu endpointu (jest na telefonie).
 - Nie zmieniano żadnych repo poza tym (`easy-OTP`, `easy-GTFS-RT` czytane tylko do odczytu).
 
+## Ocena ryzyka jakości danych (stan 2026-09-25, wygenerowane z `reports/m0/`)
+
+Pełne dni nagrania od 2026-09-07. Prognoza zakłada, że udział dni ważnych utrzyma się do końca okna pilotażu (2026-12-18; 72–75 dni roboczych na miasto po odjęciu świąt). Progi: `ranked` ≥ 40 dni ważnych, `limited` ≥ 20. Ocena: **OK** = udział dni ważnych ≥ 90% i mediany `crossing_rate` i `ok` co najmniej 0,15 nad progiem; **do obserwacji** = któryś z tych warunków niespełniony; **RYZYKO** = prognoza poniżej progu `ranked`. Nie uwzględnia pokrycia sieci (M2).
+
+| miasto | dni ważne od 09-07 | z dni roboczych | udział od 09-07 | udział ostatnie 2 tyg. | mediana crossing (próg 0.6) | mediana ok (próg 0.55) | prognoza do 12-18 (tempo od 09-07) | prognoza (tempo 2 tyg.) | zapas nad 40 dniami | trend crossing / tydz. | ocena |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| turin | 7 | 15 | 47% | 50% | 0.73 | 0.68 | 35 | 37 | -5 | -0.040 | RYZYKO |
+| bucharest | 12 | 15 | 80% | 70% | 0.69 | 0.62 | 58 | 51 | 18 | +0.006 | do obserwacji |
+| gdansk | 13 | 15 | 87% | 80% | 0.88 | 0.82 | 64 | 59 | 24 | +0.001 | do obserwacji |
+| nicosia | 12 | 15 | 80% | 80% | 0.88 | 0.78 | 58 | 58 | 18 | -0.001 | do obserwacji |
+| zagreb | 12 | 15 | 80% | 90% | 0.87 | 0.77 | 59 | 67 | 19 | -0.001 | do obserwacji |
+| krakow | 15 | 15 | 100% | 100% | 0.78 | 0.71 | 74 | 74 | 34 | +0.010 | OK |
+| lisbon | 14 | 15 | 93% | 100% | 0.83 | 0.78 | 67 | 72 | 27 | +0.004 | OK |
+| ljubljana | 14 | 15 | 93% | 90% | 0.88 | 0.79 | 70 | 68 | 30 | +0.008 | OK |
+| lodz | 15 | 15 | 100% | 100% | 0.86 | 0.81 | 74 | 74 | 34 | -0.004 | OK |
+| poznan | 15 | 15 | 100% | 100% | 0.88 | 0.82 | 74 | 74 | 34 | -0.001 | OK |
+| prague | 14 | 15 | 93% | 90% | 0.88 | 0.78 | 67 | 65 | 27 | +0.001 | OK |
+| rome | 14 | 15 | 93% | 90% | 0.83 | 0.77 | 69 | 67 | 29 | +0.004 | OK |
+| sofia | 13 | 13 | 100% | 100% | 0.89 | 0.84 | 73 | 73 | 33 | +0.000 | OK |
+| szczecin | 14 | 15 | 93% | 90% | 0.87 | 0.81 | 69 | 67 | 29 | +0.004 | OK |
+| vilnius | 15 | 15 | 100% | 100% | 0.84 | 0.77 | 74 | 74 | 34 | +0.002 | OK |
+| warszawa | 14 | 15 | 93% | 90% | 0.88 | 0.81 | 69 | 67 | 29 | -0.001 | OK |
+
+**Zagrożenia przy obecnym tempie:**
+1. **Liczba dni nie jest wąskim gardłem.** Do `ranked` trzeba ok. 40 z ~74 dni, więc miasto może stracić do ok. 45% dni roboczych. Poza Turynem wszystkie mają zapas 18–34 dni.
+2. **Turyn:** 7 z 15 dni ważnych, 4 dni bez release'u, trend jakości spadkowy; prognoza 35–37 dni, czyli `limited`, nie `ranked`.
+3. **Bukareszt:** najwęższe marginesy jakości (mediana `crossing_rate` 0,69 przy progu 0,60, `ok` 0,62 przy 0,55) i 3 dni odrzucone na 15 (09-15 o 0,004 poniżej progu), w ostatnich dwóch tygodniach 70% dni ważnych. To najbardziej prawdopodobne miasto, które wypadnie z `ranked`, jeśli jakość się obniży.
+4. **Nikozja, Zagrzeb, Gdańsk:** po 80–87% dni ważnych; braki to głównie dni bez release'u (Zagrzeb 3, Nikozja i Gdańsk po 1) i pojedyncze dni z niepełnym pokryciem pasm. Jakość dni, które są, jest dobra.
+5. **Pokrycie sieci (drugi próg `city_gate`) nie jest jeszcze zmierzone** (M2). Dla Łodzi przy 9 dniach: 95% długości sieci z odcinkami `ok` (`docs/09` F16), więc progi 0,60 i 0,40 wyglądają na łatwe, ale dla reszty miast to niepotwierdzone.
+6. **Zmiana metody w trakcie okna (ADR-0004).** Jeśli poprawka `family_a` zmieni semantykę tidy między ok. **21.10 a 5.11**, żadna z dwóch epok nie ma osobno ≥ 40 dni ważnych, więc wyniki per epoka byłyby co najwyżej `limited`. Bezpieczniej robić takie zmiany przed ok. 20.10 albo po ok. 6.11 (po zmianie jedna z epok ma wtedy ≥ 40 dni), albo zaakceptować wyniki `limited`.
+7. **Awarie wspólne** (jak 17.09: 11 z 25 miast bez tidy). Jedna taka doba na 15 kosztuje ok. 7% dni; nawet kilkutygodniowa przerwa telefonu mieści się w zapasie (do ok. 34 dni), ale kolejne przerwy nakładałyby się na braki poszczególnych operatorów. Przyczyny 17.09 nie znamy.
+8. **Sezonowość i kalendarz.** Ferie i przerwy szkolne (np. jesienne) nie są jeszcze w `config/calendars/`; dni z mniejszą liczbą kursów odetnie bramka anomalii (M3), co zmniejszy liczbę dni ważnych. Zmiana czasu 25.10 wypada w niedzielę (poza dniami roboczymi). Okno kończy się 18.12, więc okres świąteczny do końca roku nie wchodzi do pilotażu.
+9. **Trend jakości** (`crossing_rate` na tydzień) jest bliski zera we wszystkich miastach poza Turynem (−0,04/tydz.); nie widać powolnej degradacji.
+
 ### Decyzje właściciela po M0 (2026-09-26)
 
-D12: GISCO, przy różnicach preferować mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002). Projekt niekomercyjny, Turyn pod bramką jakości (ADR-0003; pełne warunki GTT w `docs/licenses.md` §2a). Audyt GTFS-RT wykonany (`docs/licenses.md` §2b). Astro (ADR-0001). Zmiany w innych repo tylko po pytaniu. Reszta: `docs/decisions-needed.md`.
+D12: GISCO, przy różnicach preferować mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002). Projekt niekomercyjny, wyniki na CC BY 4.0, wszystkie miasta publikowane z atrybucją źródeł, Turyn pod bramką jakości (ADR-0003; pełne warunki GTT w `docs/licenses.md` §2a). Audyt GTFS-RT wykonany (`docs/licenses.md` §2b). Astro (ADR-0001). Bez pinu `easy-OTP` (ADR-0004). Surowe pozycje są co miesiąc archiwizowane w `easy-GTFS-RT` (`raw-snapshots-*`), dostępne przez `gtfs-dashboard`. Zmiany w innych repo tylko po pytaniu. Reszta: `docs/decisions-needed.md`.
 
 ### Przegląd `milestone-reviewer`
 

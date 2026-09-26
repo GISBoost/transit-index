@@ -57,6 +57,38 @@ def main() -> None:
            f"(`crossing_rate ≥ {gate['min_crossing_rate']}`, udział `ok ≥ {gate['min_ok_share']}`, wiarygodność `service_date ≥ {gate['min_plausible_service_date']}`, "
            f"pokrycie godzin każdego pasma ≥ {gate['min_band_recorded_share']}, gdzie godzina jest pokryta, jeśli ma ≥ 1% wierszy `ok`; to przybliżenie), bez świąt państwowych z `config/calendars/`.\n"]
 
+    m = yaml.safe_load((ROOT / "config" / "metrics.yaml").read_text(encoding="utf-8"))
+    sm, cg2, mm = m["segment_min"], m["city_gate"], m["mode_min"]
+    out.append(f"""## Jak czytać te tabele
+
+**Pojęcia.** *Obserwacja* = jeden przejazd kursu przez parę przystanków (wiersz tidy ze `seg_status = ok`). *Dzień ważny* = dzień, którego dane wolno użyć do indeksu. *Bramka* = zestaw progów jakości; progi żyją w `config/metrics.yaml` (ta sekcja czyta je stamtąd) i są **propozycjami** wyprowadzonymi z progów `family_a` (FA-15, FA-16) oraz z obserwowanych rozkładów w 15 miastach; kalibracja w M3.
+
+**Trzy poziomy bramki (od najdrobniejszego):**
+
+| poziom | co ocenia | próg |
+|---|---|---|
+| dzień (`day_gate`) | czy dzień miasta jest użyteczny | `crossing_rate` ≥ {gate['min_crossing_rate']}; udział `ok` ≥ {gate['min_ok_share']}; wiarygodność daty serwisowej ≥ {gate['min_plausible_service_date']}; każde pasmo pokryte nagraniem w ≥ {gate['min_band_recorded_share']} godzin; liczba kursów na godzinę ≥ {gate['anomaly_min_trip_ratio']} mediany dnia tego samego typu (dni anomalne, liczone w M3) |
+| odcinek × pasmo (`segment_min`) | czy odcinek ma dość obserwacji, by go kolorować | `ok`: ≥ {sm['ok']['n_obs']} obserwacji z ≥ {sm['ok']['n_days']} dni; `thin` (mała próba, szrafowane): ≥ {sm['thin']['n_obs']} obserwacji; poniżej: `none` (szary) |
+| miasto (`city_gate`) | czy miasto trafia do rankingu | `ranked`: ≥ {cg2['ranked']['min_valid_days']} dni ważnych i pokrycie sieci ≥ {cg2['ranked']['min_network_coverage']}; `limited` (na liście z adnotacją): ≥ {cg2['limited']['min_valid_days']} dni i pokrycie ≥ {cg2['limited']['min_network_coverage']}; poniżej: `excluded`. Tryb (autobus, tramwaj) wchodzi, gdy ma ≥ {mm['routes']} linii i ≥ {mm['segments']} odcinków. Rejestr wad (`config/city_defects.yaml`) ma pierwszeństwo |
+
+Inne progi metryk: kara szczytu liczona tylko dla odcinków z ≥ {m['peak_penalty']['min_obs_per_segment']} obserwacjami w paśmie i w odniesieniu; najwolniejsze odcinki: długość ≥ {m['top_segments']['min_length_m']} m; klasy prędkości `{m['speed_classes_kmh']}` km/h (5 klas).
+
+**Co znaczą kolumny:**
+- `crossing_rate`: jaki odsetek rozkładowych przystanków kursów miał zaobserwowany przejazd (`obs_time` niepuste). To miara **pokrycia obserwacjami**: pojazdy, które zniknęły z feedu albo nie zostały dopasowane, obniżają ją. Typowo mediana miasta 0,78–0,89 (2026-09); poniżej {gate['min_crossing_rate']} dzień odpada.
+- udział `ok`: jaki odsetek wierszy przeszedł filtry `family_a` (nie jest pierwszą parą przystanków, nie jest postojem, prędkość wiarygodna, para pingów nie za daleko). Typowo mediana miasta 0,62–0,84 (2026-09); poniżej {gate['min_ok_share']} dzień odpada.
+- pokrycie pasm: pasma to `am_peak` 7–8, `midday` 10–13, `pm_peak` 15–17, `evening` 19–21. Godzina liczy się jako nagrana, jeśli ma ≥ {m['inventory']['hour_covered_min_share']:.0%} wierszy `ok` (przybliżenie); 1.00 = wszystkie godziny pasma, 0.5 = połowa. Dzień odpada, jeśli którekolwiek pasmo ma poniżej {gate['min_band_recorded_share']}. Stąd wczesne dni września (nagranie startowało w ciągu dnia).
+- statyka "liczba różnych wersji": ile różnych zawartości pliku statycznego GTFS pojawiło się w oknie. Jeśli statyka zmienia się co dzień, do każdego dnia trzeba użyć statyki z tego samego dnia.
+
+**Jak czytać sekcje raportu:**
+1. *Pokrycie*: czy plik istnieje. `dni robocze bez tidy` to dni bez danych (luki). Nie mówi nic o jakości.
+2. *Jakość dni*: czy istniejące dni przechodzą bramkę dnia. `dni ważne` = dni z danymi, które przeszły wszystkie progi i nie są świętem. Poniżej lista dni odrzuconych z wartościami.
+3. *Gotowość pod W10–W12*: czy w danych są kolumny potrzebne dla punktualności i regularności (`delay_s`, `headway_s`) i ile jest wierszy linii częstych. To wykonalność, nie wynik.
+4. *Macierz miasto × dzień*: to samo co 2, w widoku dziennym.
+5. *Prognoza kwalifikacji*: jeśli udział dni ważnych od pełnych dni nagrania utrzyma się do końca okna, ile dni ważnych będzie i jaki status miasta z `city_gate` z tego wyjdzie (bez pokrycia sieci, które liczy M2).
+6. *Poligony*: porównanie źródeł granic miast. `iou` = część wspólna / suma (1,0 = ten sam obszar); `gisco_only_share` i `osm_only_share` = jaka część obszaru jednego źródła leży poza drugim.
+7. *Wpływ poligonu*: `obs_share` = jaki odsetek obserwacji zostaje po filtrze obszaru; prędkości pokazują, jak filtr zmienia wynik.
+""")
+
     # ---- coverage (all cities)
     h = heads.copy()
     h["has_tidy"] = h.tidy_bytes.notna()

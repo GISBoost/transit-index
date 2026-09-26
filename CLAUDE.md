@@ -29,7 +29,7 @@ Jeśli czegoś nie wiesz albo dokumenty się wykluczają, **zapytaj autora** zam
 - **Testy wzorcowe:** wyniki zgadzają się z `reference/golden_values.json` (Łódź 2026-09-24: ok = 168 507 wierszy, `ΣL/ΣT` = 17,58 km/h; 9 dni: 17,59). W1–W12 to metryki, M0–M7 kamienie milowe, D1–D14 decyzje.
 - **Brak magicznych liczb.** Progi, pasma, klasy prędkości (5 klas, `[15, 20, 25, 30]`) i bramka żyją w `config/*.yaml`; kod je czyta.
 - **Każda liczba ma `n` i status jakości** (`ok`/`thin`/`none` dla odcinków, `ranked`/`limited`/`excluded` dla miast).
-- **Wersje metody:** wyniki z różnych `method_version` nie są porównywalne. Przypinaj `easy_otp_ref` (tag, nie `main`) w manifeście edycji.
+- **Wersje metody:** wyniki z różnych `method_version` nie są porównywalne. **Nie przypinamy `easy-OTP`** (ADR-0004): dla każdego dnia zapisuj czas budowy tidy i commit `easy-OTP` z tej chwili (epoki: `config/tidy_epochs.yaml`), w manifeście `easy_otp_commits`; dane serwujemy as is.
 - **Brak zmyślonych danych.** Przykłady zawsze z `placeholder: true` i oznaczone na stronie ("dane zastępcze"). Liczby w `design/ui_kits/landing/copy.js` są placeholderami; nie publikuj ich jako wyników.
 
 **Design**
@@ -39,11 +39,11 @@ Jeśli czegoś nie wiesz albo dokumenty się wykluczają, **zapytaj autora** zam
 
 **Licencje i publikacja**
 - `easy-OTP` (`tools/family_a_reconstruction`, `tools/transit_charts`) jest GPL-3.0-or-later: **nie importuj jego kodu**, czytaj tylko dane (`*_tidy_*.csv.gz`, statyczny GTFS). Porównania z jego wykresami: osobny proces, tylko do weryfikacji. Decyzje w `docs/adr/`.
-- Atrybucja OpenStreetMap i operatorów; przed publikacją audyt licencji (`docs/licenses.md`).
+- **Wyniki na CC BY 4.0** (D7, ADR-0003). Projekt jest niekomercyjny: bez reklam i płatnych funkcji. Każde źródło z poprawną atrybucją per miasto (`docs/licenses.md`); OSM (ODbL) przy Warszawie, Sofii i Lizbonie; pliki z kształtami OSM mają własny zapis licencji (`docs/licenses.md` §4).
 - **Niczego nie publikuj bez zgody autora.** Ranking operatorów dopiero po przeglądzie operatorów (`docs/05`). Bez nazwy i wyglądu "Traffic Index" (TomTom).
 - `docs/08` zawiera uwagi prawne i wizerunkowe: nie commituj go do publicznego repo bez przeglądu.
 
-**Git** (obowiązuje też nadrzędny `easy/CLAUDE.md`)
+**Git**
 - Nie twórz branchy, nie commituj i nie pushuj, dopóki autor o to nie poprosi. Conventional Commits, po angielsku, jeden temat na commit; nie omijaj hooków.
 
 ## Konwencje
@@ -75,5 +75,7 @@ Skrót `docs/03` oznacza plik `docs/03-*.md` (analogicznie `docs/01` … `docs/0
 
 ## Źródła danych wejściowych i ograniczenia środowiska
 
+- **Linki do statyk operatorów: `easy-GTFS-RT/config/cities.json`** (`static_gtfs_url`); adresy GTFS-RT są na telefonie nagrywającym (`cities/<miasto>.env`), część w `easy-OTP/docs/handoffs/eu_vehicle_positions_feeds.md`.
 - Release'y `GISBoost/easy-GTFS-RT`: tag `<miasto>-realized-<data>-phone`, załączniki `<miasto>_tidy_<data>.csv.gz` (od 2026-08-03) i `<miasto>_static_gtfs_<data>.zip`. Opis metody: `HOW-IT-WORKS.pl.md` w easy-GTFS-RT; kod rekonstrukcji: `GISBoost/easy-OTP`.
+- Surowe pozycje: dzienne kasowane po zbudowaniu, ale archiwizowane co miesiąc (release `raw-snapshots-<RRRR-MM>` w `easy-GTFS-RT`, przegląd w `gtfs-dashboard`); diagnostyka jakości rekonstrukcji: `docs/02` §8a.
 - API GitHub może być zablokowane; działają bezpośrednie adresy release'ów (`reference/fetch_release_assets.py`) i `git ls-remote --tags`. Nie omijaj polityki sieci.

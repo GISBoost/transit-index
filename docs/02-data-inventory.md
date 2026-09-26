@@ -15,7 +15,7 @@ Dla każdego miasta i dnia release z tagiem `<miasto>-realized-<data>-phone` zaw
 
 Adres pliku: `https://github.com/GISBoost/easy-GTFS-RT/releases/download/<tag>/<asset>`; pobieranie skryptem `reference/fetch_release_assets.py` (brak pliku = 404, zapisywany jako `missing` w manifeście pobrania).
 
-Surowe pozycje (`positions-raw-*`) są kasowane po zbudowaniu; `matched.csv` nigdy nie jest wgrywany. Konsekwencja: **tidy jest jedyną trwałą postacią obserwacji**. Zabezpiecz ją (kopia w release'ach nowego repo).
+Dzienne surowe pozycje (`positions-raw-*`) są kasowane po zbudowaniu dnia, ale **co miesiąc są archiwizowane jako kopia zapasowa** (potwierdzone przez właściciela 2026-09-26): telefon (`easy-OTP/scripts/termux/archive_monthly.sh`, codziennie, nadrabianie przez pierwsze 5 dni miesiąca) pakuje je per miasto do jednego archiwum `<miasto>_snapshots_<RRRR-MM>.tar.xz` (zwarty xz, ok. 10% rozmiaru) i wysyła do release'u **`raw-snapshots-<RRRR-MM>`** w `GISBoost/easy-GTFS-RT`. Istnieją `raw-snapshots-2026-07` (14 plików, 1,1 GB; część jako `.7z`, ręczna archiwizacja zaległości) i `raw-snapshots-2026-08` (31 plików, 7,1 GB); archiwum za wrzesień pojawi się na początku października. Użytkownicy widzą je w `gtfs-dashboard` (workflow `refresh-manifest.yml` rozpoznaje tagi `raw-snapshots-*`). `matched.csv` nie jest wgrywany. **Konsekwencja:** tidy jest trwałą, ale pochodną postacią obserwacji, a **historię można przebudować** nowszym kodem `family_a` z archiwów (nie sprawdzałem zawartości archiwów ani wykonalności przebudowy; to kosztowne: ok. 7 GB na miesiąc). Nasza kopia tidy/L0 w release'ach nowego repo jest dodatkowym zabezpieczeniem, nie jedynym.
 
 ## 2. Pokrycie (tagi realized `-phone`, snapshot 2026-09-25)
 
@@ -115,11 +115,40 @@ Feedy realized P50/P85: kotwiczone na rozkładowym pierwszym odjeździe, kubełk
 - 2026-07-29/30: reguły FA-17→FA-20 (pierwsza para), FA-18 (< 2 km/h), FA-19.
 - 2026-08-03: załącznik tidy w release'ach.
 - 2026-08-09: poprawki D1–D3 i F12 dotyczą `build` (realized), nie tidy.
-- **Workflow easy-GTFS-RT wykonuje checkout `easy-OTP` bez `ref`** (`family_a_build_and_notify_from_phone.yml`, krok "Checkout easy-OTP"), czyli z domyślnej gałęzi `main`: metoda zmienia się po cichu. **Ustalone w M0 (2026-09-26):** ostatni commit zmieniający `tools/family_a_reconstruction` i `tools/transit_charts` to `bccb17bb0066a358fde547dbe215fd50517838b2` (2026-09-04, `perf`, bez zmiany semantyki); ostatnia zmiana semantyki tidy to 2026-08-09 (`88a2e1e`, `86929f6`). Dla okna od 2026-09-01 semantyka jest więc jednolita. **Rekomendacja:** tag w `easy-OTP` na `bccb17b` i `ref:` w workflow (oba repo poza tym projektem, wymaga zgody autora; `docs/decisions-needed.md`), a do manifestu edycji wpisać SHA.
+- **Workflow easy-GTFS-RT wykonuje checkout `easy-OTP` bez `ref`** (`family_a_build_and_notify_from_phone.yml`, krok "Checkout easy-OTP"), czyli z domyślnej gałęzi `main`: metoda zmienia się po cichu. **Ustalone w M0 (2026-09-26):** ostatni commit zmieniający `tools/family_a_reconstruction` i `tools/transit_charts` to `bccb17bb0066a358fde547dbe215fd50517838b2` (2026-09-04, `perf`, bez zmiany semantyki); ostatnia zmiana semantyki tidy to 2026-08-09 (`88a2e1e`, `86929f6`). Dla okna od 2026-09-01 semantyka jest więc jednolita. **Decyzja właściciela (2026-09-26, ADR-0004): bez pinu.** Metoda może się zmieniać (poprawki, ulepszenia); dla każdego dnia zapisujemy czas budowy tidy (`Last-Modified` załącznika) i commit `easy-OTP` z tej chwili, a `config/tidy_epochs.yaml` wskazuje zmiany semantyki. Dane as is.
 
 ## 7. Okno nagrywania i strefy czasowe (rozstrzygnięte)
 
 Nagrywanie trwa ok. 06:00–22:00 **w czasie lokalnym miasta**, a `obs_local` jest lokalne. Wszystkie 10 sprawdzonych miast (9 zagranicznych) ma obserwacje w godzinach lokalnych 6–21, więc problemu stref czasu nie ma. Pasma: `am_peak` 7–8, `midday` 10–13, `pm_peak` 15–17, `evening` 19–21; godziny 6, 9, 14, 18 tylko w wartości całodziennej. **Bramka pasm:** miasto ma pasmo, jeśli nagranie pokrywa ≥ 90% godzin pasma.
+
+## 8a. Diagnostyka Family A w `gtfs-dashboard` (przeczytana 2026-09-26)
+
+Portal `gtfs-dashboard` (lokalny klon, stan z 2026-09-13; nie czytałem żywej strony) ma zakładkę **Diagnostyka** z dwoma raportami inżynierskimi o jakości i rzetelności rekonstrukcji (źródło: `easy-OTP/docs/reviews/family-a_*.md`). Autor zaznacza, że to diagnostyka założeń pipeline'u, nie stwierdzenie, że opublikowane feedy są błędne.
+
+**Raport 1: "Ile nagrywania GTFS-RT wystarczy?"** (9 miast, okna 1–20 dni). Estymata P50/P85 segmentu stabilizuje się po ok. **14 dniach** (mediana zmiany na kroku 14→20 dni: 0,0 s w 4 zdrowych miastach; praktyczne minimum 3 dni). Główne ustalenie: w ok. połowie z 9 miast (4/9) wieloetapowe użycie **jednego pliku statycznego na całe okno** po cichu gubi dane, bo trip_id lub kalendarz w statyce już się zmieniły; objawem są rosnące odrzucenia dopasowania (telemetria FA-15), nie rozrzut.
+
+**Raport 2: przegląd 25 miast/przewoźników (stabilność trip_id, calendar.txt).** 9/25 miast ma niestabilny `trip_id` (jeden statyk nie jest bezpieczny nawet na < 2 tygodnie), 11/25 nie ma `calendar.txt` (tylko `calendar_dates.txt`), Brisbane ma niestabilny `route_id`. `stop_id` jest stabilny (Jaccard ≥ 0,94 wszędzie). Dla naszych kandydatów (Jaccard między 3 migawkami statyki z początku sierpnia; małe rozstawy próbek dają niską pewność):
+
+| miasto | profil | trip_id | route_id | stop_id | okno calendar (dni) |
+|---|---|---|---|---|---|
+| Łódź | trip_id niestabilny | 0,00 | 0,976 | 0,987 | 1–3 |
+| Poznań | trip_id niestabilny | 0,04 | 0,938 | 0,977 | 1–11 |
+| Gdańsk | trip_id niestabilny | 0,12 | 0,961 | 0,981 | 1–9 |
+| Kraków | trip_id niestabilny | 0,14 | 0,979 | 0,988 | 3–7 |
+| Turyn | trip_id niestabilny | 0,22 (do 0,05 po 13–25 dniach) | 0,938 | 0,978 | 12 |
+| Warszawa | trip_id niestabilny | 0,33 | 0,992 | 0,994 | 3–4 |
+| Rzym | trip_id niestabilny | 0,41 | 0,972 | 0,993 | 12–13 |
+| Praga | mieszany | 0,67 | 0,966 | 0,968 | 25 |
+| Wilno | mieszany | 0,67 | 1,000 | 0,986 | 25 |
+| Szczecin, Sofia, Lizbona, Bukareszt | stabilny | 0,81–1,00 | ok. 1,0 | ok. 1,0 | 90–200 |
+| Zagrzeb, Lublana, Nikozja | poza przeglądem | | | | |
+
+**Co to znaczy dla Transit Index:**
+1. **Nasz sposób użycia jest mniej narażony.** Bierzemy tidy budowane **osobno dla każdego dnia** ze statyką tego dnia, więc niestabilność `trip_id` między dniami nie łączy nam różnych namespace'ów. Klucz odcinka opiera się na `stop_id` (`from>to`), który jest stabilny (Jaccard 0,94–1,00), co zgadza się z F9 (Łódź 98,3–99,4%). W M1 sprawdzamy stabilność `stop_id` między dniami dla wszystkich kandydatów.
+2. **Rezydualne ryzyko w obrębie dnia.** Statyka do dopasowania jest pobierana przy budowie (po dniu), więc republikacja lub statyka publikowana z wyprzedzeniem (Poznań) obniża `crossing_rate` tego dnia. Tak najpewniej należy tłumaczyć pojedyncze dni z niskim `crossing_rate` (np. Poznań 2026-09-02: 0,47). Bramka dnia je odrzuca; w `config/city_defects.yaml` miasta niestabilne są oznaczone.
+3. **Dodatkowy sygnał jakości do rozważenia:** odsetek odrzuceń dopasowania FA-15 (nie jest w tidy; nie sprawdzałem, czy jest dostępny per dzień w release'ach). Progi FA-15 (`max_reject_share 0.25`) były podstawą naszej bramki (`docs/03` §6).
+4. **Uzasadnienie progów odcinka:** stabilizacja po ok. 14 dniach i praktyczne minimum 3 dni są zgodne z `segment_min.ok` (≥ 5 dni, ≥ 10 obserwacji). Pilotaż (kilkadziesiąt dni ważnych) jest daleko ponad punktem nasycenia; komórki pasmowe są cieńsze, co sprawdza test czułości w M2.
+5. **Niemonotoniczne wzorce** (GZM, Suwałki, Kielce; wg raportu możliwa cykliczna renumeracja) dotyczą miast poza rankingiem pilotażu (`watch`).
 
 ## 8. Lista kontrolna M0 (stan po weryfikacji)
 

@@ -79,7 +79,7 @@ Pozostałe: W4 prędkość odcinka (mediana, P20, P80; mapa), W5 rozstaw przysta
 ## 6. Edycja roczna (`docs/05`)
 
 - Pilotaż `2026-pilot`: dni robocze 2026-09-01 – 2026-12-18, publikacja w styczniu 2027; zamrożenie definicji `ti-1.0` do 15 listopada 2026.
-- Manifest edycji z przypiętym tagiem `easy_otp_ref` (nie `main`), sumami kontrolnymi wejść i statusem `draft → operator_review → published`; edycje niezmienne, poprawki jako `<id>.1`.
+- Manifest edycji z `easy_otp_commits` (commity `easy-OTP` użyte do tidy, bez pinu, ADR-0004), sumami kontrolnymi wejść i statusem `draft → operator_review → published`; edycje niezmienne, poprawki jako `<id>.1`.
 - Przegląd operatorów (ok. 2 tygodnie embarga) przed publikacją; porównania rok do roku tylko przy tej samej wersji metody.
 
 ## 7. Serwis i design (`docs/06`)
@@ -108,8 +108,8 @@ Po każdym kamieniu: `milestone-reviewer`, dalej dopiero po PASS.
 
 ## 9. Decyzje i ryzyka (`docs/08`)
 
-- **Rozstrzygnięte:** D1 zakres = kilkanaście miast europejskich; D5 stack = Astro + Actions (ADR-0001, wyjątek od "bez build stepu" zapisany w `easy/CLAUDE.md`); D11 model jakości = pięć osobnych wymiarów; **D12 poligony = GISCO, przy różnicach mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002)**; **projekt niekomercyjny, Turyn pod bramką jakości (ADR-0003)**.
-- **Do podjęcia:** D7 licencja wyników (rekomendacja CC BY-NC 4.0), lista miast publikowanych w pilotażu (Rzym po zgodzie operatora), D4 nazwa i adres, D13/D14 copy i nazwy wymiarów w UI, D3/D8/D9; pin `easy-OTP` (wymaga zgody na zmiany w cudzych repo). Pełna lista: `docs/decisions-needed.md`.
+- **Rozstrzygnięte:** D1 zakres = kilkanaście miast europejskich; ADR-0004 = bez pinu `easy-OTP`, oznaczanie pochodzenia per dzień; D5 stack = Astro + Actions (ADR-0001, wyjątek od "bez build stepu" zapisany w `easy/CLAUDE.md`); D11 model jakości = pięć osobnych wymiarów; **D12 poligony = GISCO, przy różnicach mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002)**; **projekt niekomercyjny, wyniki na CC BY 4.0 (D7), wszystkie miasta publikowane z atrybucją, Turyn pod bramką jakości (ADR-0003)**.
+- **Do podjęcia:** licencja plików geometrii z kształtami OSM (Warszawa, ODbL), D4 nazwa i adres, D13/D14 copy i nazwy wymiarów w UI, D3/D8/D9. Pełna lista: `docs/decisions-needed.md`.
 - **Główne ryzyka:** definicja obszaru miasta, statyki zmieniające się między dniami, luki dzienne, jakość feedów (Bukareszt, Turyn), licencje danych operatorów, PMTiles na Pages, pojedynczy punkt awarii (telefon nagrywający), wymiary mogące się wzajemnie "nie zgadzać", oferta odczytana jako pomiar.
 - **Nieweryfikowane:** W11 i W12 nie liczone na danych, W10 tylko 1 dzień; 14 z 15 miast ma tylko jeden dzień próbki; filtr obszaru w próbie to promień, nie poligon; ref `easy-OTP` w workflow; licencje danych, fontów i ikon; progi bramki to propozycja; sformułowanie "pierwszy w Polsce" wymaga sprawdzenia.
 

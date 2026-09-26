@@ -12,7 +12,7 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 | D4 | Nazwa i adres | Robocza: **Transit Index** (z designu), opis "Indeks jakości transportu publicznego"; `gisboost.github.io/transit-index/`. Unikaj "Traffic Index"; sprawdź kolizje nazwy przed publikacją. | przed M5 |
 | D5 | Stack | **Rozstrzygnięte (2026-09-26): Astro + MapLibre + PMTiles (`06`), opcja A.** Build tylko w GitHub Actions, wynik poza gitem. Wyjątek od reguły "bez build stepu" zapisany w `easy/CLAUDE.md` | — |
 | D6 | Tryby | tramwaj, autobus (z trolejbusami), łącznie; metro i kolej poza | M2 |
-| D7 | Licencja wyników | **Częściowo rozstrzygnięte (2026-09-26, ADR-0003):** projekt niekomercyjny, więc licencja wyników zgodna z niekomercyjnością; rekomendacja CC BY-NC 4.0 (decyzja przed publikacją). Audyt licencji źródeł: `docs/licenses.md` | przed publikacją |
+| D7 | Licencja wyników | **Rozstrzygnięte (2026-09-26, ADR-0003): CC BY 4.0**; projekt niekomercyjny; wszystkie miasta publikowane z poprawną atrybucją źródeł. Otwarte tylko: pliki geometrii z kształtami OSM (ODbL, `docs/licenses.md` §4). Audyt: `docs/licenses.md` | — |
 | D8 | GZM: miasto czy metropolia | Osobna etykieta "metropolia", poza rankingiem miast | M3 |
 | D9 | Rytm publikacji | Styczeń (jak TomTom) | przed M7 |
 | D10 | Płatne treści a Pages | Sprzedaż musi być poza Pages | przy monetyzacji |
@@ -34,9 +34,9 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 | Jakość feedów (Bukareszt `crossing_rate` 0,71; Turyn bez `trip_id`; Helsinki) | fałszywe wyniki lub luki | rejestr wad, status `limited`/`excluded` z powodem |
 | **Wymiary jakości mierzą różne rzeczy i mogą się nie zgadzać** (miasto szybkie, ale nieregularne) | wrażenie sprzeczności, presja na jedną liczbę | brak wskaźnika w v1, korelacje rang wymiarów w M2, jasna baza każdego wymiaru |
 | Oferta (W12) to rozkład, nie wykonanie | czytelnik weźmie ją za pomiar | podpis "według rozkładu", brak wniosków o realizacji kursów |
-| Zmiana metody w tle (`easy-OTP` na `main`) | nieporównywalne dni | przypięty tag, `method_version`, manifest |
+| Zmiana metody w tle (`easy-OTP` na `main`; poprawki i ulepszenia są zamierzone) | nieporównywalne dni; stare dni można przeliczyć tylko z miesięcznych archiwów surowych pozycji (`raw-snapshots-*`), co jest kosztowne | oznaczanie pochodzenia per dzień (commit + epoka), `method_version`, manifest `easy_otp_commits`, dane as is (ADR-0004) |
 | Święta i ferie | zaburzenie dni roboczych | biblioteka `holidays` per kraj + ferie z konfiguracji + detekcja dni anomalnych |
-| Utrata danych wejściowych (retencja w easy-GTFS-RT) | brak odtwarzalności | kopia L0 (1,2 MB/dzień/miasto) w release'ach nowego repo, sumy SHA-256 |
+| Utrata danych wejściowych (retencja w easy-GTFS-RT) | brak odtwarzalności | miesięczne archiwa surowych pozycji w easy-GTFS-RT (`raw-snapshots-*`), kopia L0 (1,2 MB/dzień/miasto) w release'ach nowego repo, sumy SHA-256 |
 | Pojedynczy punkt awarii: telefon nagrywający | luki w dniach | monitorowanie brakującego release'u, plan zastępczy |
 
 ## 3. Ryzyka prawne i wizerunkowe

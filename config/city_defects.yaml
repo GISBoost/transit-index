@@ -16,6 +16,18 @@ defects:
   - {city: helsinki,  id: no_trip_id,        detail: "No trip_id at all: unusable (raw tags only, not in cities.json)", action: exclude}
   - {city: "*",       id: first_pair_dwell,  detail: "First stop pair absorbs terminal dwell (median 2.5-12 km/h vs 16-27 mid-trip); FA-20 drops it by default", action: seg_status_filter}
 
+  # From gtfs-dashboard diagnostics (fleet survey of static GTFS stability, 2026-08): trip_id unstable between static
+  # snapshots. Mitigated by using the same-day static for every day (tidy is built per day); residual risk = republication
+  # or early-published static within one day, which lowers crossing_rate and is caught by the day gate.
+  - {city: gdansk,    id: trip_id_unstable,  detail: "trip_id Jaccard 0.12 between static snapshots; stop_id 0.98", action: same_day_static}
+  - {city: krakow,    id: trip_id_unstable,  detail: "trip_id Jaccard 0.14; stop_id 0.99", action: same_day_static}
+  - {city: poznan,    id: trip_id_unstable,  detail: "trip_id Jaccard 0.04; stop_id 0.98", action: same_day_static}
+  - {city: turin,     id: trip_id_unstable,  detail: "trip_id Jaccard 0.22, down to 0.05 after 13-25 days; stop_id 0.98", action: same_day_static}
+  - {city: warszawa,  id: trip_id_unstable,  detail: "trip_id Jaccard 0.33; stop_id 0.99", action: same_day_static}
+  - {city: rome,      id: trip_id_unstable,  detail: "trip_id Jaccard 0.41; stop_id 0.99", action: same_day_static}
+  - {city: prague,    id: trip_id_mixed,     detail: "slow non-monotonic trip_id decline (0.67); stop_id 0.97", action: same_day_static}
+  - {city: vilnius,   id: trip_id_mixed,     detail: "slow trip_id decline (0.67); stop_id 0.99", action: same_day_static}
+
 # Events affecting many cities at once, found by the M0 inventory (reports/m0/, docs/data-inventory.generated.md).
 # They are handled by the day gate (band coverage, crossing rate) or by missing-release accounting, not by city.
 window_events:

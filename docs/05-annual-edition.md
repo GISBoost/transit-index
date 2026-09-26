@@ -37,7 +37,7 @@ Zamrożenie definicji następuje *przed* przebiegiem edycji na pełnym oknie, ż
 
 1. **Definicja edycji** (`config/editions/<id>.yaml`): okno, lista miast kandydatów, kalendarze wyłączeń, `method_version`.
 2. **Przebieg**: `ti aggregate/metrics/gate` → pliki w `data/editions/<id>/`.
-3. **Manifest** (`schemas/edition_manifest.schema.json`): `edition`, `method_version`, okno, `ti_commit`, **`easy_otp_ref` przypięty tag (nie `main`)**, skrót konfiguracji, dla każdego miasta status, liczba dni i **skrót sumy kontrolnej plików wejściowych**. Pozwala odtworzyć wynik.
+3. **Manifest** (`schemas/edition_manifest.schema.json`): `edition`, `method_version`, okno, `ti_commit`, **`easy_otp_commits`** (commity `easy-OTP`, z których zbudowano tidy dni edycji, z zakresami dni i epokami; bez pinu, ADR-0004), skrót konfiguracji, **`license` (CC-BY-4.0) i `attributions` per miasto** (operator lub portal, link, data pobrania, informacja o przetworzeniu; `docs/licenses.md`), dla każdego miasta status, liczba dni i **skrót sumy kontrolnej plików wejściowych**. Pozwala odtworzyć wynik.
 4. **Status** manifestu: `draft` → `operator_review` → `published` → (`superseded`).
 5. **Publikacja niezmienna**: `/edycje/<id>/` nigdy nie zmienia liczb po publikacji. Poprawka to nowa edycja `<id>.1` z wpisem w `errata` i widocznym dziennikiem zmian.
 
@@ -63,7 +63,7 @@ Przed publikacją wyślij każdemu operatorowi/organizatorowi wyniki jego miasta
 
 ## 8. Kryteria gotowości do publikacji (lista kontrolna)
 
-- [ ] Definicja zamrożona i otagowana; `easy_otp_ref` przypięty.
+- [ ] Definicja zamrożona i otagowana; `easy_otp_commits` w manifeście, epoki z `config/tidy_epochs.yaml`, strona metodyki podaje epokę (dane as is).
 - [ ] Każde miasto w rankingu ma status, `n_days`, `n_obs`, pokrycie sieci; wykluczone mają powód.
 - [ ] Test czułości opublikowany na stronie metodyki.
 - [ ] Przegląd operatorów zakończony, odpowiedzi zapisane.

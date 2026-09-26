@@ -9,17 +9,19 @@ Właściciel wszystkich repo: GISBoost (Michał Kaczorowski). Zmiany w innych re
 | D1 | zakres: kilkanaście miast europejskich | `docs/08` |
 | D5 | stack: Astro + MapLibre + PMTiles, build tylko w GitHub Actions; wyjątek od reguły "bez build stepu" zapisany w `easy/CLAUDE.md` | `docs/adr/0001-astro-build-step.md` |
 | D11 | jakość = pięć osobnych wymiarów, wskaźnik złożony w v2 | `docs/03` §1 |
+| ADR-0004 | **bez pinu `easy-OTP`**: metoda może się zmieniać; oznaczamy pochodzenie każdego dnia (czas budowy tidy + commit `easy-OTP` z tej chwili + epoka semantyczna), dane serwujemy as is; żadnych zmian w `easy-OTP` ani `easy-GTFS-RT` | `docs/adr/0004-no-easy-otp-pin.md`, `config/tidy_epochs.yaml` |
+| — | surowe pozycje: **co miesiąc archiwizowane jako kopia zapasowa** w `easy-GTFS-RT` (release `raw-snapshots-<RRRR-MM>`), dostępne przez `gtfs-dashboard`; historię można przebudować | `docs/02` §1 |
 | D12 | poligony miast (W0): GISCO Urban Audit 2024 domyślnie; gdy źródła się różnią, **preferuj mniejszy obszar** (rdzeń miejski); Sofia i Lizbona z OSM; Nikozja i Gdańsk z GISCO | `docs/adr/0002-city-area-polygons.md`, `config/areas/sources.yaml` |
-| licencje | **projekt jest niekomercyjny**; Turyn wchodzi pod bramką jakości (nie jest wyłączony z góry); audyt GTFS-RT wykonany | `docs/adr/0003-licensing-stance.md`, `docs/licenses.md` |
+| licencje, D7 | **projekt niekomercyjny; wyniki na CC BY 4.0; wszystkie miasta publikowane z poprawną atrybucją źródeł**; Turyn pod bramką jakości; audyt GTFS-RT wykonany | `docs/adr/0003-licensing-stance.md`, `docs/licenses.md` |
 
 ## 2. Otwarte, ale nie blokują M1
 
 | # | pytanie | rekomendacja | kiedy |
 |---|---|---|---|
-| D7 | licencja wyników | **CC BY-NC 4.0** (spójna z niekomercyjnością i z warunkami GTT); pliki geometrii dla Warszawy na ODbL z atrybucją OSM | przed publikacją |
-| — | lista miast w pilotażu | tylko z potwierdzoną licencją (wstępnie Szczecin, Gdańsk, Sofia, Praga, Łódź, Zagrzeb, Warszawa, Poznań, Turyn); Rzym po pisemnej zgodzie operatora (RT "wyłącznie jako wsparcie podróży"); reszta po wyjaśnieniu licencji | przed M7 |
-| — | pin `easy-OTP` w workflow `easy-GTFS-RT` (workflow robi checkout bez `ref`, czyli `main`) | tag `tidy-method-2026-09` w `GISBoost/easy-OTP` na `bccb17bb0066a358fde547dbe215fd50517838b2` i `ref:` w `family_a_build_and_notify_from_phone.yml`. **Potrzebuję Twojej zgody na dwie zmiany w cudzych repo** (tag + push w `easy-OTP`; edycja i push workflow w `easy-GTFS-RT`). Bez tego: w manifeście wpisuję SHA i dla całego okna zakładam zgodność z `bccb17b` | najlepiej przed kolejnym commitem w `easy-OTP/tools`; M3 sprawdza |
+| — | pliki geometrii z kształtami OSM (Warszawa): ODbL, share-alike | oznaczyć te pliki atrybucją OSM i licencją ODbL dla bazy geometrii (wyniki nadal CC BY 4.0) | przed publikacją |
+| — | strona `/dane/` z atrybucją per miasto (operator/portal, link, data pobrania, informacja o przetworzeniu) i pole `license` + `attributions` w manifeście edycji | zaplanowane w M3 (manifest) i M5 (strona) | M3, M5 |
 | — | adresy RT z telefonu | na telefonie: `grep -h VEHICLE_POSITIONS_URL ~/easy-gtfs-rt-termux/cities/*.env` (zakryj klucze API); domyka `docs/licenses.md` §2b | przed publikacją |
+| — | (opcjonalnie) SHA commita `easy-OTP` w treści release'u w workflow `easy-GTFS-RT` (jedna linia; zapytam przed zmianą) | zastąpiłoby wnioskowanie z czasu budowy | opcjonalnie |
 | — | alert o brakującym release'ie (luka 2026-09-17: 8 miast bez tagu, 3 z tagiem bez tidy; przyczyna nieustalona) | tani alert w `easy-GTFS-RT` (Twoje repo, zapytam przed zmianą) | opcjonalnie |
 | D4 | nazwa i adres (`Transit Index`, `gisboost.github.io/transit-index/`) | zatwierdzić i sprawdzić kolizje nazwy | przed M5 |
 | D13, D14 | copy landingu do modelu jakości; nazwy wymiarów w UI | Claude Design | przed M5 |
@@ -42,9 +44,9 @@ Właściciel wszystkich repo: GISBoost (Michał Kaczorowski). Zmiany w innych re
 4. **L0:** kolumny z `docs/04` §2, w tym `delay_s`, `headway_s` i pokrewne (W10, W11); flaga `in_area` z poligonu; `share_of_obs_in_area` w raporcie miasto-dzień. Dodatkowo wąska tabela rozkładowa z wierszy tidy (`sched_dep` wszystkich kursów) pod W12; ostateczna definicja W12 w M2.
 5. **Idempotencja i luki:** ponowny przebieg nie zmienia wyników (skróty zawartości); 404 to luka dnia, nie błąd; raport odrzuceń per miasto-dzień.
 6. **Sprawdzę w M1** stabilność `stop_id` między dniami dla wszystkich miast kandydujących (w M0 tylko Łódź).
-7. Nic nie commituję bez Twojej prośby i niczego nie publikuję.
+7. **Pochodzenie:** dla każdego dnia zapisuję czas budowy tidy i commit `easy-OTP` z tej chwili (ADR-0004).
+8. Nic nie commituję bez Twojej prośby i niczego nie publikuję.
 
 **Pytania, na które potrzebuję odpowiedzi przed startem M1:**
 1. **Repo `GISBoost/transit-index` na GitHubie nie istnieje** (lokalne repo nie ma remote'a). Potrzebne do archiwum L0 w release'ach (`docs/04` §6) i później do Pages. Czy mogę je utworzyć jako **prywatne** i wypchnąć historię? (L0 zawiera identyfikatory operatorów, więc prywatne do czasu publikacji.) Jeśli wolisz odłożyć: M1 zapisuje L0 lokalnie, a upload zrobimy później.
 2. Czy zakres M1 (punkt 1 powyżej: 16 miast, wszystkie dni od 1.09) jest OK?
-3. (Nie blokuje) zgoda na pin `easy-OTP` (tabela wyżej).

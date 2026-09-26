@@ -1,0 +1,24 @@
+# Provenance of the tidy files: which easy-OTP code produced them, and when the meaning of the data changed.
+# We do NOT pin easy-OTP (ADR-0004). easy-GTFS-RT checks out easy-OTP `main` at build time, so every daily tidy
+# is built by whatever `main` was at that moment. M1 records, per city-day, the build time (Last-Modified of the
+# tidy asset) and the easy-OTP commit that was current then; this file says which commits change the data.
+#
+# semantic: true   = changes what a tidy row means (filters, speed ceilings, interpolation, columns) -> new epoch
+#           false  = no effect on tidy content (perf, docs, charts, other tools)
+# Classification is from commit messages and file history (tidy.py last touched 2026-08-02); the owner confirms or
+# corrects it. Raw positions are deleted after each build, so old days CANNOT be recomputed with newer code.
+tools_paths: [tools/family_a_reconstruction, tools/transit_charts]
+epochs:
+  - id: t1
+    starts_after_commit: 86929f6d56a6a6d7c14cdbed28a781f0220662a8   # 2026-08-09T09:07:58Z
+    note: "Per-route_type speed ceiling (88a2e1e) and arithmetic fixes (c592e63) in force. Valid for the whole pilot window (2026-09-01 onwards)."
+commits_since_2026_08_01:
+  - {sha: 3d671d81, date: "2026-08-01", subject: "transit_charts: scheduled vs observed", semantic: true,  note: "tidy.py introduced"}
+  - {sha: 308aa2eb, date: "2026-08-01", subject: "family-a: expose per-stop crossings with labelled rejections", semantic: true}
+  - {sha: 4bb155b3, date: "2026-08-02", subject: "transit_charts: regularity charts, --exclude-route", semantic: true, note: "last change of tidy.py"}
+  - {sha: c592e63e, date: "2026-08-09", subject: "family_a: correct three arithmetic defects", semantic: true}
+  - {sha: 88a2e1ef, date: "2026-08-09", subject: "family_a: per-route_type speed ceiling", semantic: true}
+  - {sha: 86929f6d, date: "2026-08-09", subject: "family_a: read vehicle_id, capability matrix", semantic: true, note: "start of epoch t1"}
+  - {sha: bccb17bb, date: "2026-09-04", subject: "family_a: defer pandas/numpy imports (perf)", semantic: false}
+  - {sha: 8ca7220b, date: "2026-08-24", subject: "transit_charts: export scripts", semantic: false}
+  - {sha: c2a28ddf, date: "2026-08-19", subject: "transit_charts: chart dispatch registry", semantic: false}

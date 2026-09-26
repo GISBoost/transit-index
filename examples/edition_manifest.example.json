@@ -4,7 +4,7 @@
   "placeholder": true,
   "status": "draft",
   "window": {"from": "2026-09-01", "to": "2026-12-18", "day_type": "WEEKDAY"},
-  "code": {"ti_commit": "0000000000000000000000000000000000000000", "easy_otp_ref": "ti-pin-2026-11"},
+  "code": {"ti_commit": "0000000000000000000000000000000000000000", "easy_otp_commits": [{"commit": "bccb17bb0066a358fde547dbe215fd50517838b2", "from": "2026-09-04", "to": "2026-12-18", "epoch": "t1", "n_days": 60}]},
   "config_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
   "cities": [
     {"city": "miasto-a", "status": "ranked", "n_valid_days": 42, "n_input_files": 44, "inputs_sha256": "1111111111111111111111111111111111111111111111111111111111111111"},

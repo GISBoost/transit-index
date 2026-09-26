@@ -31,7 +31,7 @@ Wzorce do wykorzystania: Cal-ITP (definicja odcinka, percentyle, podział długi
 
 ## 4. Co masz w ekosystemie GISBoost (zweryfikowane 2026-09-26)
 
-- **easy-GTFS-RT** – telefon (Termux) nagrywa VehiclePositions codziennie ok. 06:00–22:00 co 60 s, jeden proces na miasto; po wysłaniu surowych plików workflow buduje realized GTFS (P50/P85) i publikuje release `<miasto>-realized-<data>-phone`. Od 2026-08-03 do release'u dokładany jest `<miasto>_tidy_<data>.csv.gz` (tabela całego feedu). Raw jest kasowany po zbudowaniu. Dane w release'ach nie są własnością projektu (licencje operatorów).
+- **easy-GTFS-RT** – telefon (Termux) nagrywa VehiclePositions codziennie ok. 06:00–22:00 co 60 s, jeden proces na miasto; po wysłaniu surowych plików workflow buduje realized GTFS (P50/P85) i publikuje release `<miasto>-realized-<data>-phone`. Od 2026-08-03 do release'u dokładany jest `<miasto>_tidy_<data>.csv.gz` (tabela całego feedu). Dzienny raw jest kasowany po zbudowaniu, ale miesięczne archiwa (`raw-snapshots-<RRRR-MM>`, release w easy-GTFS-RT) są zachowane; przegląd w gtfs-dashboard. Dane w release'ach nie są własnością projektu (licencje operatorów).
 - **easy-OTP / tools/transit_charts** – tabela tidy i 18 gotowych wykresów; D14 to mediana prędkości segment × pasmo, H28–H31 rankingi linii, J39 porównanie miast. Tabela tidy ma **już kolumny segmentów**: `seg_time_s`, `seg_dist_m`, `seg_speed_kmh`, `seg_status`, `from_stop_id`. Szczegóły w `02-data-inventory.md`.
 - **easy-OTP / family_a_reconstruction** – rekonstrukcja z filtrami FA-13/14/18/20; licencja GPL-3.0-or-later.
 - **GTFS Dashboard** – katalog nagrań (miasto → miesiąc → dzień), statyczna strona.

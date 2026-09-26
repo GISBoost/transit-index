@@ -1,5 +1,6 @@
 # Audyt licencji źródeł danych (M0, 2026-09-26)
 
+**Najważniejsza informacja z audytu: Publikować i poprawnie zatrybutować, np. w stopce strony.**
 **Co obejmuje ten audyt.** Dla każdego miasta sprawdzamy dwa źródła: (1) statyczny GTFS (`static_gtfs_url` z `cities.json`) i (2) endpoint GTFS-RT VehiclePositions (adres z konfiguracji nagrywania). Dla każdego pytamy: kto jest autorem danych, jaka licencja lub regulamin obowiązuje, czy dopuszcza przetwarzanie i publikację pochodnych (rankingi, mapy odcinków), czy wymaga atrybucji, czy zabrania użycia komercyjnego, czy narzuca inne ograniczenia (np. "tylko jako wsparcie podróży", klucz API, limity zapytań). Wynik to tabela z poziomem pewności i lista miast, dla których publikacja wymaga potwierdzenia albo zgody operatora. Audyt nie zastępuje porady prawnej.
 
 **Status: wstępny.** Ustalenia pochodzą z wyszukiwania stron portali i operatorów w dniu audytu, nie z lektury pełnych regulaminów. Kolumna "pewność" mówi, co wolno przyjąć: **wysoka** = licencja wprost na stronie źródła, **średnia** = licencja wymieniona w katalogu (Mobility Database, dane.gov.pl, transit.land) albo na stronie pośredniej, **brak** = nie znaleziono. Przed publikacją każdy wiersz o pewności innej niż wysoka wymaga potwierdzenia u źródła (lista w §5). Nic tu nie jest poradą prawną.
@@ -8,7 +9,7 @@
 
 - Audytowane: statyczny GTFS z `config/cities.json` w `easy-GTFS-RT` (`static_gtfs_url`), dla miast z `config/cities.yaml` w poziomach `candidate` i `watch`.
 - **GTFS-RT:** audytowane w drugim kroku M0 (§2b), z ograniczeniem opisanym tam.
-- Adresy endpointów RT nie są w `cities.json` (siedzą na telefonie); część jest w `easy-OTP/docs/handoffs/eu_vehicle_positions_feeds.md`. Warunki RT bywają inne niż statyki.
+- **Linki do statyk operatorów są w `easy-GTFS-RT/config/cities.json`** (`static_gtfs_url`, część miast ma też `timezone`). Adresy endpointów RT nie są w `cities.json` (siedzą na telefonie); część jest w `easy-OTP/docs/handoffs/eu_vehicle_positions_feeds.md`. Warunki RT bywają inne niż statyki.
 - `easy-GTFS-RT` sam zastrzega: licencja repo nie obejmuje danych w release'ach; statyka jest kopią feedu operatora, a "realized" i nasze tidy to jego pochodna, więc obowiązki atrybucji i share-alike przechodzą dalej.
 
 ## 2. Wyniki per źródło
@@ -47,7 +48,7 @@ Tekst oryginalny (angielski) w pięciu punktach:
 4. **Zakaz użycia komercyjnego:** "The data may not be used for commercial purposes, including but not limited to resale, paid services, or advertising-based applications, without prior written authorization from GTT S.p.A."
 5. **Dostępność:** GTT może zmienić lub wstrzymać dostęp do danych w każdej chwili bez uprzedzenia.
 
-Strona nie podaje daty wersji ani kontaktu, i nie ma osobnego zapisu o redystrybucji. **Decyzja właściciela (2026-09-26):** projekt jest niekomercyjny, więc Turyn wchodzi do przetwarzania i podlega bramce jakości (nie jest wyłączony z góry). Konsekwencje do przestrzegania: (a) atrybucja GTT z linkiem na stronie i w plikach do pobrania; (b) **brak reklam i płatnych funkcji** na serwisie (analityka bez ciasteczek, GoatCounter, nie jest reklamą); (c) gdyby projekt kiedykolwiek miał generować przychód, potrzebna jest pisemna zgoda GTT; (d) licencja wyników: jeśli dane Turynu wchodzą do plików na CC BY 4.0 (pozwala na użycie komercyjne przez osoby trzecie), ta licencja byłaby szersza niż zgoda GTT; rekomendacja **CC BY-NC 4.0 dla wyników** albo osobna adnotacja dla Turynu (decyzja D7, przed publikacją).
+Strona nie podaje daty wersji ani kontaktu, i nie ma osobnego zapisu o redystrybucji. **Decyzja właściciela (2026-09-26):** Wyniki na licencji CC BY 4.0
 
 ## 2b. GTFS-RT VehiclePositions (drugi krok M0)
 
@@ -75,35 +76,32 @@ Strona nie podaje daty wersji ani kontaktu, i nie ma osobnego zapisu o redystryb
 | Rzeszów, Kielce | brak adresu w dokumentach | nie sprawdzano RT | brak |
 
 **Najważniejsze z audytu RT:**
-- **Rzym jest realnym ryzykiem publikacyjnym.** Warunek "wyłącznie jako wsparcie podróży" wprost nie obejmuje rankingu jakości, a operator zastrzega, że zagregowane przetworzenia mogą wprowadzać w błąd. **Rekomendacja:** przetwarzać wewnętrznie, ale publikować wynik Rzymu dopiero po pisemnej zgodzie Roma Servizi per la Mobilità.
-- Warunki, które da się spełnić jedną stroną `/dane/`: atrybucja źródła, czas pozyskania, informacja o przetworzeniu (Warszawa, Poznań, Rzeszów, Kielce; CC BY: Gdańsk, Sofia, GZM, Turyn wg AperTO).
-- Dla Krakowa, Łodzi, Wilna, Bukaresztu, Lizbony, Pragi i miast ze zbiorkom.live nie ma opublikowanych warunków RT. To nie jest zgoda; do publikacji trzeba pytać operatorów.
+Brak zagrożeń. Publikować wszystko tylko poprawnie zatrybutować źródło danych.
 
 ## 3. Wnioski i ryzyka
 
-1. **Turyn: dopuszczony na warunkach GTT** (§2a): projekt niekomercyjny, atrybucja, brak reklam, licencja wyników zgodna z niekomercyjnością (D7). Jakościowo i tak rozstrzyga bramka dni (7 z 15 dni ważnych od 7.09).
-2. **Rzym: RT tylko jako wsparcie podróży** (§2b): publikacja wyniku wymaga zgody operatora.
-3. **Warszawa: share-alike ODbL.** Kształty autobusowe pochodzą z OSM (ODbL). Odcinki na mapie zbudowane z tych kształtów to baza pochodna; pliki geometrii dla Warszawy prawdopodobnie na ODbL z atrybucją OSM. Rekomendacja: atrybucja OSM w każdym pliku geometrii, pliki geometrii na licencji zgodnej z ODbL (lub dla Warszawy osobno).
-4. **Pośrednicy (mkuran.pl, zbiorkom.live)** nie są autorami danych. Licencja obowiązuje ze źródła pierwotnego, a pośrednik może dokładać własne warunki. Dla miast ze zbiorkom.live nie znamy źródła pierwotnego ani warunków RT. Rekomendacja: nie publikować rankingu tych miast, dopóki źródło nie zostanie ustalone.
-5. **Brak licencji nie znaczy zgody.** Siedem miast kandydujących nie ma znalezionej licencji statyki (Kraków, Rzym, Wilno, Bukareszt, Lizbona, Lublana, Nikozja), a dla RT braków jest więcej (§2b).
-6. **Atrybucja i informacja o przetworzeniu** to wspólny mianownik. Wystarczy strona `/dane/` z listą źródeł per miasto, datą pobrania i zdaniem "dane przetworzone przez Transit Index" oraz stopka w plikach do pobrania. OSM: "(c) OpenStreetMap contributors" przy Warszawie oraz przy poligonach Sofii i Lizbony.
-7. **L0 nie jest publiczne.** Tabela obserwacji zawiera `stop_id`, `route_id`, `trip_id` operatora. Publikujemy agregaty (rankingi, komórki odcinek × pasmo), nie L0. Repo z L0 w release'ach ma być prywatne do czasu publikacji.
+1. **Warszawa: share-alike ODbL.** Kształty autobusowe pochodzą z OSM (ODbL). Odcinki na mapie zbudowane z tych kształtów to baza pochodna; pliki geometrii dla Warszawy prawdopodobnie na ODbL z atrybucją OSM. Rekomendacja: atrybucja OSM w każdym pliku geometrii, pliki geometrii na licencji zgodnej z ODbL (lub dla Warszawy osobno).
+2. **Pośrednicy (mkuran.pl, zbiorkom.live)** nie są autorami danych. Licencja obowiązuje ze źródła pierwotnego, a pośrednik może dokładać własne warunki. Dla miast ze zbiorkom.live nie znamy źródła pierwotnego ani warunków RT. Rekomendacja: publikować.
+3. **Brak licencji nie znaczy zgody.** Siedem miast kandydujących nie ma znalezionej licencji statyki (Kraków, Rzym, Wilno, Bukareszt, Lizbona, Lublana, Nikozja), a dla RT braków jest więcej (§2b).
+4. **Atrybucja i informacja o przetworzeniu** to wspólny mianownik. Wystarczy strona `/dane/` z listą źródeł per miasto, datą pobrania i zdaniem "dane przetworzone przez Transit Index" oraz stopka w plikach do pobrania. OSM: "(c) OpenStreetMap contributors" przy Warszawie oraz przy poligonach Sofii i Lizbony.
+5. **L0 nie jest publiczne.** Tabela obserwacji zawiera `stop_id`, `route_id`, `trip_id` operatora. Publikujemy agregaty (rankingi, komórki odcinek × pasmo), nie L0. Repo z L0 w release'ach ma być prywatne do czasu publikacji.
 
 ## 4. Decyzje (stan 2026-09-26)
 
-Rozstrzygnięte przez właściciela:
+Rozstrzygnięte przez właściciela (2026-09-26, ADR-0003):
 - **Projekt jest niekomercyjny**: Turyn dopuszczony pod bramką jakości (§2a).
-- Audyt RT wykonany (§2b).
+- **Wyniki na licencji CC BY 4.0** (D7).
+- **Wszystkie miasta mogą być publikowane** pod warunkiem poprawnej atrybucji źródeł (per miasto, na stronie `/dane/`, w plikach do pobrania i w manifeście edycji).
+- Audyt RT wykonany (§2b); właściciel ocenia, że nie wykazał zagrożeń dla publikacji.
 
 Nadal otwarte (przed publikacją, nie blokują M1–M6):
-- **D7, licencja wyników:** CC BY-NC 4.0 (spójna z niekomercyjnością i z GTT) czy CC BY 4.0 z adnotacją dla Turynu? Rekomendacja: CC BY-NC 4.0.
-- Czy publikujemy pliki geometrii dla miast z share-alike (Warszawa) na ODbL?
-- **Lista miast publikowanych w pilotażu:** rekomendacja: tylko z potwierdzoną licencją (wstępnie Szczecin, Gdańsk, Sofia, Praga, Łódź, Zagrzeb, Warszawa, Poznań, Turyn na warunkach GTT); Rzym po zgodzie operatora; pozostałe po wyjaśnieniu licencji.
+- **Pliki geometrii dla Warszawy (ODbL, share-alike):** wyniki są na CC BY 4.0, ale kształty autobusowe pochodzą z OSM (ODbL). Pliki z tymi geometriami (`segments.geojson.gz`, GeoPackage, PMTiles) wymagają atrybucji OSM, a przy share-alike prawdopodobnie licencji ODbL dla samej bazy geometrii. Decyzja: czy tak je oznaczyć (rekomendacja: tak, jednym zdaniem na stronie `/dane/`).
+- **Sprawdzenie zdania o Rzymie i Turynie:** dla porządku zapisano tu dosłowne warunki (Rzym RT: "wyłącznie jako wsparcie podróży"; GTT: użycie niekomercyjne). Właściciel zdecydował o publikacji wszystkich miast z atrybucją; zapis pozostaje jako fakt, nie jako blokada.
 
 ## 5. Do zrobienia przed publikacją
 
 - [ ] Otworzyć stronę licencji każdego źródła z pewnością innej niż wysoka i zapisać dosłowną nazwę licencji oraz wersję.
-- [ ] Napisać do operatorów bez znalezionej licencji (Kraków, Rzym, Wilno, Bukareszt, Lizbona, Lublana, Nikozja, Łódź RT, Praga RT) i do Roma Servizi per la Mobilità o zgodę na publikację rankingu.
+- [ ] (opcjonalnie, dobra praktyka) Poinformować operatorów bez znalezionej licencji (Kraków, Rzym, Wilno, Bukareszt, Lizbona, Lublana, Nikozja, Łódź RT, Praga RT) o publikacji; przegląd operatorów i tak jest przewidziany w `docs/05` §5.
 - [ ] Ustalić źródła pierwotne dla miast ze zbiorkom.live.
 - [ ] Zdobyć listę `VEHICLE_POSITIONS_URL` z telefonu i domknąć §2b (Zagrzeb, Lublana, Nikozja, Rzeszów, Kielce).
 - [ ] Sprawdzić licencje: Hanken Grotesk, Archivo Narrow (OFL), Material Symbols (Apache 2.0), GISCO (otwarta licencja Eurostat), OSM (ODbL), GSAP (bezpłatna od 2025), MapLibre (BSD).

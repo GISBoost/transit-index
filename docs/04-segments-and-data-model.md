@@ -81,6 +81,6 @@ docs/adr/              # decyzje (np. wybór metryki nagłówkowej)
 
 ## 6. Trwałość danych pośrednich
 
-Surowe pozycje znikają po zbudowaniu, a tidy leży w release'ach cudzego repo. Ryzyko: usunięcie lub zmiana retencji. Dlatego etap B zapisuje **L0 jako załączniki release'ów nowego repo** (jeden release na miesiąc, np. `obs-2026-10`, jeden plik na miasto-dzień). Z L0 da się odtworzyć dowolną edycję bez ponownego pobierania tidy.
+Dzienne surowe pozycje znikają po zbudowaniu (są tylko w miesięcznych archiwach `raw-snapshots-*`), a tidy leży w release'ach repo `easy-GTFS-RT`. Ryzyko: usunięcie lub zmiana retencji. Dlatego etap B zapisuje **L0 jako załączniki release'ów nowego repo** (jeden release na miesiąc, np. `obs-2026-10`, jeden plik na miasto-dzień). Z L0 da się odtworzyć dowolną edycję bez ponownego pobierania tidy.
 
 Zmierzone rozmiary (`09` F3): tidy 433 MB dziennie dla 15 miast, L0 dla Łodzi 1,2 MB dziennie (16× mniej), więc rok L0 dla 15 miast to rzędu kilku GB, co mieści się w release'ach. Statyki (416 MB dziennie) deduplikuj po SHA-256 i trzymaj tylko unikalne. Limity Pages: opublikowana witryna ≤ 1 GB, więc stare edycje i pełne GeoJSON trzymaj w release'ach.

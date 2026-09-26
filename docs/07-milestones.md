@@ -21,7 +21,7 @@ Wygląd i układ stron: Claude Design, zaimportowany do `design/` (nadrzędny, p
 - **wielokąty miast** (`config/areas/<miasto>.geojson`) dla miast kandydujących i decyzja o źródle (`docs/08`, D12),
 - `config/calendars/<miasto>.yaml` (święta biblioteką `holidays`),
 - `docs/decisions-needed.md`.
-**Kryteria akceptacji:** test regresyjny przechodzi; lista miast kwalifikujących się do pilotażu z liczbą ważnych dni; wskazany ref `easy-OTP` używany przez workflow easy-GTFS-RT (do przypięcia); źródło wielokątów i licencja opisane. Żadnego kodu metryk poza istniejącym w `reference/`.
+**Kryteria akceptacji:** test regresyjny przechodzi; lista miast kwalifikujących się do pilotażu z liczbą ważnych dni; ustalone, z jakiego commitu `easy-OTP` powstaje tidy i jak to oznaczać (bez pinu, ADR-0004); źródło wielokątów i licencja opisane. Żadnego kodu metryk poza istniejącym w `reference/`.
 
 ```text
 Jesteś agentem M0 projektu transit-index. Przeczytaj CLAUDE.md, docs/02, docs/03 i docs/09 oraz uruchom reference/metrics_reference.py i reference/validate_examples.py. Wykonaj tylko M0 z docs/07-milestones.md. Użyj reference/fetch_release_assets.py i reference/probe_release_data.py na miastach kandydujących dla okna od 2026-09-01 (lista tagów: git ls-remote --tags https://github.com/GISBoost/easy-GTFS-RT.git). Zapisz docs/data-inventory.generated.md, docs/licenses.md, config/, kalendarze i wielokąty miast. Ustal, jaki ref easy-OTP jest używany w workflow easy-GTFS-RT. Nie pisz kodu produkcyjnego metryk. Pytania do Michała zapisz w docs/decisions-needed.md. Na koniec uruchom milestone-reviewer.
@@ -64,7 +64,7 @@ Jesteś agentem M2. Przeczytaj CLAUDE.md, docs/03, docs/04, docs/09 i reference/
 
 **Cel:** kwalifikacja dni i miast, ranking z niepewnością, manifest edycji.
 **Wejście:** `docs/03` §6–§7, `docs/05`, `schemas/`.
-**Wyjście:** `ti gate`; detekcja dni anomalnych; `ranking.json`, `summary.json`, `hourly.json`, `lines.csv`, `quality.json`, `manifest.json` walidowane względem `schemas/`; bootstrap po dniach; oznaczanie miast nierozróżnialnych; rankingi per wymiar (W1, W3, W10, W11, W12) ze statusem wymiaru.
+**Wyjście:** `ti gate`; detekcja dni anomalnych; `ranking.json`, `summary.json`, `hourly.json`, `lines.csv`, `quality.json`, `manifest.json` (z `license` i `attributions` per miasto) walidowane względem `schemas/`; bootstrap po dniach; oznaczanie miast nierozróżnialnych; rankingi per wymiar (W1, W3, W10, W11, W12) ze statusem wymiaru.
 **Kryteria akceptacji:** wszystkie pliki przechodzą walidację schematów; miasta z rejestru wad mają wykluczenie z powodem; brak release'u w dniu liczony jako dzień nieważny; skrót wejść w manifeście odtwarza się; pliki z `placeholder: true` nie przechodzą do edycji.
 
 ```text
