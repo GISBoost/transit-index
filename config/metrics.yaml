@@ -1,0 +1,53 @@
+# The only place for numbers (CLAUDE.md: no magic numbers). Spec: docs/03-metrics-spec.md.
+# Values marked [PROPOSAL] are backed by data but need confirmation on the full window (M2/M3).
+method_version: "ti-1.0-draft"
+
+# 5 classes = --speed-1..5 tokens in design/. Class i (0-based) -> --speed-{i+1}.  [PROPOSAL, freeze after M2]
+speed_classes_kmh: [15, 20, 25, 30]
+
+# Local city hours (obs_local). Hours 6, 9, 14, 18 belong to all_day only.
+bands:
+  am_peak: [7, 8]
+  midday: [10, 11, 12, 13]
+  pm_peak: [15, 16, 17]
+  evening: [19, 20, 21]
+band_min_recorded_share: 0.90        # a city has a band if the recording covers >= 90% of its hours
+
+area:
+  require_polygon: true              # radius fallback is for internal tests only, never published
+
+segment_min:
+  ok:   {n_obs: 10, n_days: 5}
+  thin: {n_obs: 3}
+
+# W3 peak penalty
+peak_penalty: {ref_bands: [midday, evening], min_obs_per_segment: 10}
+
+# W10 punctuality (thresholds from transit_charts C11)
+punctuality: {on_time_s: [-60, 180], late_s: 600, exclude_first_stop: true}
+
+# W11 regularity (EWT); threshold to be calibrated in M2
+regularity: {frequent_headway_s: 600, min_headways_per_cell: null}
+
+# W12 service (scheduled departures per hour per stop)
+service: {band: midday, min_stop_departures: 1}
+
+top_segments: {min_length_m: 100}
+
+# Thresholds used only by the M0 inventory scripts (scripts/m0_*.py), not by the metrics.
+inventory:
+  hour_covered_min_share: 0.01       # a local hour counts as recorded if it holds >= 1% of the ok rows (approximation of the band rule)
+  min_obs_for_speed: 500             # smaller groups get no speed in the area-effect report
+
+day_gate:
+  min_crossing_rate: 0.60            # 15 cities on 2026-09-24: 0.71-0.89
+  min_ok_share: 0.55                 # 15 cities on 2026-09-24: 0.64-0.84
+  min_plausible_service_date: 0.90
+  min_band_recorded_share: 0.90
+  anomaly_min_trip_ratio: 0.70
+
+city_gate:                           # pilot thresholds; the annual edition needs different ones
+  ranked:   {min_valid_days: 40, min_network_coverage: 0.60}
+  limited:  {min_valid_days: 20, min_network_coverage: 0.40}
+
+mode_min: {routes: 3, segments: 50}

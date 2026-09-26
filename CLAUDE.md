@@ -14,7 +14,7 @@ Jeśli czegoś nie wiesz albo dokumenty się wykluczają, **zapytaj autora** zam
 
 ## Zanim cokolwiek zrobisz
 
-1. Przeczytaj `docs/07-milestones.md` i wykonaj **tylko bieżący kamień milowy** (stan: M0 nie rozpoczęty). Nie wybiegaj naprzód.
+1. Przeczytaj `docs/07-milestones.md` i wykonaj **tylko bieżący kamień milowy** (stan: M0 wykonany, `docs/progress.md`; następny M1). Nie wybiegaj naprzód.
 2. Czytaj dokumenty, na które wskazuje prompt kamienia.
 3. Na końcu każdego kamienia uruchom subagenta `milestone-reviewer` i zapisz krótki wpis w `docs/progress.md`.
 

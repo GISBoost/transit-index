@@ -1,0 +1,192 @@
+source_default: gisco
+status: decided_2026-09-26
+rule: 'Default source GISCO Urban Audit. Where two sources disagree materially, prefer
+  the source giving the SMALLER (urban-core) area, as long as it is a valid administrative
+  city polygon (owner decision 2026-09-26). Exceptions are listed per city (source:
+  osm).'
+gisco:
+  dataset: Eurostat GISCO Urban Audit 2024, URAU_RG_100K_2024_4326_CITIES.geojson
+  licence: 'Eurostat/GISCO open data licence (attribution: (c) EuroGeographics / Eurostat
+    GISCO)'
+  url: https://gisco-services.ec.europa.eu/distribution/v2/urau/
+osm:
+  licence: ODbL, (c) OpenStreetMap contributors
+  note: Used for sofia and lisbon (attribution (c) OpenStreetMap contributors, ODbL).
+    Other raw OSM polygons stay in data/m0_polygons/osm (not versioned).
+cities:
+  lodz:
+    gisco_code: PL002C
+    gisco_km2: 293.3
+    osm_relation: 2907537
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 293.3
+  warszawa:
+    gisco_code: PL001C
+    gisco_km2: 517.2
+    osm_relation: 336075
+    iou_gisco_vs_osm: 1.0
+    source: gisco
+    area_km2: 517.2
+  krakow:
+    gisco_code: PL003C
+    gisco_km2: 326.8
+    osm_relation: 2768921
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 326.8
+  gdansk:
+    gisco_code: PL006C
+    gisco_km2: 261.7
+    osm_relation: 1553098
+    iou_gisco_vs_osm: 0.383
+    note: OSM boundary includes sea waters (682 km2 vs 262 km2); numerically identical
+      result, but OSM would need a land clip.
+    source: gisco
+    area_km2: 261.7
+  poznan:
+    gisco_code: PL005C
+    gisco_km2: 261.9
+    osm_relation: 2456294
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 261.9
+  szczecin:
+    gisco_code: PL007C
+    gisco_km2: 300.6
+    osm_relation: 2873415
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 300.6
+  prague:
+    gisco_code: CZ001C
+    gisco_km2: 496.4
+    osm_relation: 435514
+    iou_gisco_vs_osm: 0.996
+    source: gisco
+    area_km2: 496.4
+  rome:
+    gisco_code: IT001C
+    gisco_km2: 1286.0
+    osm_relation: 41485
+    iou_gisco_vs_osm: 0.995
+    source: gisco
+    area_km2: 1286.0
+  turin:
+    gisco_code: IT004C
+    gisco_km2: 130.1
+    osm_relation: 43992
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 130.1
+  vilnius:
+    gisco_code: LT001C
+    gisco_km2: 400.5
+    osm_relation: 1529146
+    iou_gisco_vs_osm: 0.988
+    source: gisco
+    area_km2: 400.5
+  sofia:
+    gisco_code: BG001C
+    gisco_km2: 1341.8
+    osm_relation: 4283101
+    iou_gisco_vs_osm: 0.338
+    note: 'Urban core chosen by the owner (2026-09-26): OSM municipality polygon instead
+      of the larger GISCO polygon (1341.8 km2). GISCO = capital municipality (1342
+      km2, incl. outlying villages); OSM city polygon is 454 km2. Definition differs:
+      obs kept 99.6% vs 88.1%, bus 18.7 vs 17.4 km/h (2026-09-24). Decision pending.'
+    source: osm
+    area_km2: 454.1
+    osm_admin_level: '8'
+  bucharest:
+    gisco_code: RO001C
+    gisco_km2: 238.9
+    osm_relation: 377733
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 238.9
+  lisbon:
+    gisco_code: PT001C
+    gisco_km2: 636.7
+    osm_relation: 5400890
+    iou_gisco_vs_osm: 0.136
+    note: 'Urban core chosen by the owner (2026-09-26): OSM municipality polygon instead
+      of the larger GISCO polygon (636.7 km2). GISCO polygon (637 km2) is much larger
+      than the OSM municipality (87 km2): obs kept 100% vs 93.5%. Carris feed serves
+      the municipality, so GISCO filters nothing here. Decision pending.'
+    source: osm
+    area_km2: 86.8
+    osm_admin_level: '7'
+  zagreb:
+    gisco_code: HR001C
+    gisco_km2: 641.4
+    osm_relation: 226224
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 641.4
+  ljubljana:
+    gisco_code: SI001C
+    gisco_km2: 275.0
+    osm_relation: 1675898
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 275.0
+  nicosia:
+    gisco_code: CY001C
+    gisco_km2: 219.9
+    osm_relation: 3264382
+    iou_gisco_vs_osm: 0.077
+    note: GISCO = "Lefkosia (greater city)" 220 km2; OSM auto-match returned the whole
+      district (1928 km2) and is not usable. GISCO keeps 71.2% of obs (bus 21.0 km/h
+      vs 27.2 unfiltered).
+    source: gisco
+    area_km2: 219.9
+  lublin:
+    gisco_code: PL009C
+    gisco_km2: 147.4
+    osm_relation: 2206549
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 147.4
+  rzeszow:
+    gisco_code: PL015C
+    gisco_km2: 126.6
+    osm_relation: 446049
+    iou_gisco_vs_osm: 0.98
+    source: gisco
+    area_km2: 126.6
+  kielce:
+    gisco_code: PL012C
+    gisco_km2: 109.7
+    osm_relation: 2904506
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 109.7
+  radom:
+    gisco_code: PL025C
+    gisco_km2: 111.8
+    osm_relation: 2904795
+    iou_gisco_vs_osm: 0.971
+    source: gisco
+    area_km2: 111.8
+  rybnik:
+    gisco_code: PL060C
+    gisco_km2: 148.3
+    osm_relation: 2425998
+    iou_gisco_vs_osm: 0.998
+    source: gisco
+    area_km2: 148.3
+  elblag:
+    gisco_code: PL063C
+    gisco_km2: 79.8
+    osm_relation: 1600068
+    iou_gisco_vs_osm: 0.994
+    source: gisco
+    area_km2: 79.8
+  suwalki:
+    gisco_code: PL021C
+    gisco_km2: 65.5
+    osm_relation: 3891982
+    iou_gisco_vs_osm: 0.999
+    source: gisco
+    area_km2: 65.5

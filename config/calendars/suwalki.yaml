@@ -1,0 +1,16 @@
+city: suwalki
+country: PL
+window:
+  from: '2026-09-01'
+  to: '2026-12-18'
+source: python-holidays 0.105, country-level (no regional holidays)
+public_holidays:
+- date: '2026-11-01'
+  name: All Saints' Day
+  weekday: Sun
+- date: '2026-11-11'
+  name: National Independence Day
+  weekday: Wed
+school_breaks: []
+weekdays_in_window: 79
+weekdays_minus_public_holidays: 78

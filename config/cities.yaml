@@ -1,0 +1,38 @@
+# Cities known to easy-GTFS-RT (config/cities.json there, 27 entries on 2026-09-26) and their role in Transit Index.
+# tier:
+#   candidate    - deep-checked in M0, may enter the pilot ranking (subject to the quality gate)
+#   watch        - recorded, inventoried by file presence only; may be promoted later
+#   out_of_scope - not a European city (D1)
+# kind: city | metropolis (D8: metropolis gets its own label and is never mixed into the city ranking)
+# Timezone: obs_local is already local time, this is informational (calendars, display).
+# Sources and licences per city: docs/licenses.md.
+cities:
+  lodz:      {display_name: "Łódź",      country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  warszawa:  {display_name: "Warszawa",  country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  krakow:    {display_name: "Kraków",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  gdansk:    {display_name: "Gdańsk",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  poznan:    {display_name: "Poznań",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  szczecin:  {display_name: "Szczecin",  country: PL, timezone: Europe/Warsaw,    kind: city,       tier: candidate}
+  prague:    {display_name: "Praga",     country: CZ, timezone: Europe/Prague,    kind: city,       tier: candidate}
+  rome:      {display_name: "Rzym",      country: IT, timezone: Europe/Rome,      kind: city,       tier: candidate}
+  turin:     {display_name: "Turyn",     country: IT, timezone: Europe/Rome,      kind: city,       tier: candidate}
+  vilnius:   {display_name: "Wilno",     country: LT, timezone: Europe/Vilnius,   kind: city,       tier: candidate}
+  sofia:     {display_name: "Sofia",     country: BG, timezone: Europe/Sofia,     kind: city,       tier: candidate}
+  bucharest: {display_name: "Bukareszt", country: RO, timezone: Europe/Bucharest, kind: city,       tier: candidate}
+  lisbon:    {display_name: "Lizbona",   country: PT, timezone: Europe/Lisbon,    kind: city,       tier: candidate}
+  zagreb:    {display_name: "Zagrzeb",   country: HR, timezone: Europe/Zagreb,    kind: city,       tier: candidate}
+  ljubljana: {display_name: "Lublana",   country: SI, timezone: Europe/Ljubljana, kind: city,       tier: candidate}
+  nicosia:   {display_name: "Nikozja",   country: CY, timezone: Asia/Nicosia,     kind: city,       tier: candidate}
+
+  lublin:    {display_name: "Lublin",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  rzeszow:   {display_name: "Rzeszów",   country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  kielce:    {display_name: "Kielce",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  radom:     {display_name: "Radom",     country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  rybnik:    {display_name: "Rybnik",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  elblag:    {display_name: "Elbląg",    country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  przemysl:  {display_name: "Przemyśl",  country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  suwalki:   {display_name: "Suwałki",   country: PL, timezone: Europe/Warsaw,    kind: city,       tier: watch}
+  gzm:       {display_name: "GZM (Górnośląsko-Zagłębiowska Metropolia)", country: PL, timezone: Europe/Warsaw, kind: metropolis, tier: watch}
+
+  boston:    {display_name: "Boston",    country: US, timezone: America/New_York,   kind: city,     tier: out_of_scope}
+  brisbane:  {display_name: "Brisbane",  country: AU, timezone: Australia/Brisbane, kind: city,     tier: out_of_scope}

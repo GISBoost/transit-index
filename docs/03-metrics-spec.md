@@ -38,6 +38,8 @@ Prędkość jest jednym z pięciu wymiarów, nie nagłówkiem całości. Co jest
 
 Tramwaje prawie się nie zmieniają (Praga 18,7 → 17,6). Prawdopodobna przyczyna (do potwierdzenia w M0): feed PID obejmuje także linie regionalne, a feed ZTM Poznań przewoźników podmiejskich; takie linie mają długie odcinki i wysokie prędkości.
 
+**Pomiar z poligonami (M0, 2026-09-24, prędkość autobusów `ΣL/ΣT`, poligon GISCO Urban Audit 2024; pełna tabela: `docs/data-inventory.generated.md` §7):** Łódź 18,24 → 17,88; Warszawa 20,14 → 19,17; Kraków 21,32 → 19,71; Gdańsk 19,42 → 19,11; Poznań 27,84 → 26,61 (udział obserwacji 73%); Praga 28,10 → 22,22 (70%); Bukareszt 15,64 → 14,04; Zagrzeb 24,09 → 23,40; Nikozja 27,15 → 20,97 (71%). Poligon zmienia wynik o 0,0–6,2 km/h (prawie wcale w Rzymie, Sofii, Lizbonie i Lublanie, najmocniej w Pradze i Nikozji) i obcina do 30% obserwacji. Uwaga: Poznań po filtrze nadal ma najwyższą prędkość autobusów (26,6 km/h wobec 19–21 w Krakowie i Warszawie), co M2 ma wyjaśnić (linie ekspresowe albo metropolitalne w obrębie miasta).
+
 Wymaganie: **odcinek wchodzi do indeksu tylko wtedy, gdy oba jego przystanki leżą wewnątrz wielokąta miasta** (`config/areas/<miasto>.geojson`). Źródło wielokąta jest decyzją M0 (`docs/08`, D12): granica administracyjna z OpenStreetMap (ODbL) albo obszar z Eurostat GISCO. TomTom też zmienił metodę wyznaczania centrów i obszarów metropolitalnych, żeby porównania były standaryzowane (komunikat o edycji 2025). W `summary.json` zapisuj `area.definition`, `source` i `share_of_obs_in_area`. `radius_fallback` (promień od mediany przystanków) jest tylko do testów wewnętrznych i nie wolno go publikować. GZM jest metropolią, nie miastem: osobna etykieta i osobny wielokąt.
 
 ### 2.2 Dzień referencyjny

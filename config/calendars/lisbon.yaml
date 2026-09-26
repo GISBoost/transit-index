@@ -1,0 +1,22 @@
+city: lisbon
+country: PT
+window:
+  from: '2026-09-01'
+  to: '2026-12-18'
+source: python-holidays 0.105, country-level (no regional holidays)
+public_holidays:
+- date: '2026-10-05'
+  name: Republic Day
+  weekday: Mon
+- date: '2026-11-01'
+  name: All Saints' Day
+  weekday: Sun
+- date: '2026-12-01'
+  name: Restoration of Independence Day
+  weekday: Tue
+- date: '2026-12-08'
+  name: Immaculate Conception
+  weekday: Tue
+school_breaks: []
+weekdays_in_window: 79
+weekdays_minus_public_holidays: 76

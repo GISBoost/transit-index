@@ -1,0 +1,16 @@
+city: bucharest
+country: RO
+window:
+  from: '2026-09-01'
+  to: '2026-12-18'
+source: python-holidays 0.105, country-level (no regional holidays)
+public_holidays:
+- date: '2026-11-30'
+  name: Saint Andrew's Day
+  weekday: Mon
+- date: '2026-12-01'
+  name: National Day
+  weekday: Tue
+school_breaks: []
+weekdays_in_window: 79
+weekdays_minus_public_holidays: 77

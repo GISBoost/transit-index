@@ -15,7 +15,7 @@ Serwis publikuje rankingi miast per wymiar (z flagami jakości danych), strony m
 **Status (2026-09-26):**
 - **Design: gotowy i zaimportowany** do `design/` (Claude Design, commit `ed69a7c`). Jest nadrzędny wobec dokumentów.
 - **Specyfikacja techniczna: gotowa** (`docs/`, `schemas/`, `reference/`), sprawdzona na prawdziwych danych dla prędkości i kary szczytu.
-- **Potoku i strony jeszcze nie ma.** Następny krok to M0 (`docs/07-milestones.md`), potem prawdziwa analiza danych i podpięcie ich do serwisu.
+- **M0 wykonany** (`docs/progress.md`): dane na pełnym oknie sprawdzone, decyzje zebrane w `docs/decisions-needed.md`. **Potoku i strony jeszcze nie ma.** Następny krok to M1 (ingest i tabela obserwacji), potem prawdziwa analiza danych i podpięcie ich do serwisu.
 
 ## Co gdzie leży
 
@@ -54,7 +54,7 @@ W dokumentach `docs/03` oznacza plik `docs/03-*.md`. **M0–M7** to kamienie mil
 
 ## Stan danych i weryfikacja (2026-09-26)
 
-- `easy-GTFS-RT`: 28 miast w `cities.json`, tagi do 2026-09-25, ok. 1385 par miasto-dzień od 2026-08-03 (załącznik `tidy`).
+- `easy-GTFS-RT`: 27 miast w `cities.json`, tagi do 2026-09-25, ok. 1385 par miasto-dzień od 2026-08-03 (załącznik `tidy`).
 - **Sprawdzone na prawdziwych danych:** 15 miast z 2026-09-24 (tidy + statyka) i 9 dni Łodzi: 34 kolumny, semantyka odcinków, strefy czasu, geometria, stabilność kluczy, rozmiary (433 MB/dzień tidy), gotowość feedów (`docs/09`).
 - **Najważniejsze ustalenia:** filtr obszaru zmienia prędkości o kilka km/h (obowiązkowy); "spowolnienie względem P85" zastąpiono karą szczytu; statykę bierz z każdego dnia i deduplikuj po SHA-256; klasy prędkości `[15, 20, 25, 30]` (pięć klas, jak w designie).
 - Dane sprzed 2026-09-01 to wakacje. Pilotaż używa okna 2026-09-01 – 2026-12-18.

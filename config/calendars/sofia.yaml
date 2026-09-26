@@ -1,0 +1,19 @@
+city: sofia
+country: BG
+window:
+  from: '2026-09-01'
+  to: '2026-12-18'
+source: python-holidays 0.105, country-level (no regional holidays)
+public_holidays:
+- date: '2026-09-06'
+  name: Unification Day
+  weekday: Sun
+- date: '2026-09-07'
+  name: Unification Day (observed)
+  weekday: Mon
+- date: '2026-09-22'
+  name: Independence Day
+  weekday: Tue
+school_breaks: []
+weekdays_in_window: 79
+weekdays_minus_public_holidays: 77

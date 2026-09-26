@@ -1,0 +1,27 @@
+# Registry of known feed defects (docs/02 §5). Takes precedence over the computed city gate (docs/03 §6).
+# `action`: how the defect is handled; `exclude` = never ranked while the defect holds.
+# Entries are evidence-based on the 2026-09-24 sample; M0 confirms or corrects them on the full window
+# (see docs/data-inventory.generated.md).
+defects:
+  - {city: turin,     id: no_trip_id,        detail: "Feed often has no trip_id (47-100% of entries per docs/02; NOT confirmed in M0: tidy always carries a trip_id, so the M0 stats cannot measure it); releases missing 09-10, 09-11, 09-17, 09-24; only 7 of 15 weekdays since 09-07 pass the day gate; GTT licence allows non-commercial use only (docs/licenses.md); owner decision 2026-09-26: the project is non-commercial, Turin is admitted and governed by the quality gate (no exclusion by default)", action: gate}
+  - {city: bucharest, id: weak_coverage,     detail: "Weakest sample: crossing_rate 0.708, ok share 0.641; metro lines excluded from matching, more GPS noise", action: gate}
+  - {city: prague,    id: suburban_lines,    detail: "PID feed includes regional lines and rail (route_type 2); bus speed 28.1 km/h without area filter", action: area_filter}
+  - {city: zagreb,    id: suburban_lines,    detail: "High bus speed (24.1 km/h) suggests suburban lines", action: area_filter}
+  - {city: nicosia,   id: suburban_lines,    detail: "High bus speed (27.2 km/h) suggests intercity lines", action: area_filter}
+  - {city: poznan,    id: static_ahead,      detail: "Next-period static published ahead of time; ~1 day in 3 degraded (detect via share of unknown trip_id)", action: gate}
+  - {city: lodz,      id: trip_id_renumbering, detail: "trip_id renumbered every 1-3 days; use same-day static, check share of trips without shape_id each day", action: same_day_static}
+  - {city: gdansk,    id: no_stop_sequence,  detail: "No current_stop_sequence / stop_id in positions: weaker matching window (has speed on 100% of entities)", action: gate}
+  - {city: vilnius,   id: no_stop_sequence,  detail: "No current_stop_sequence (stop_id only): weaker matching window", action: gate}
+  - {city: sofia,     id: no_stop_sequence,  detail: "No current_stop_sequence (stop_id only): weaker matching window", action: gate}
+  - {city: helsinki,  id: no_trip_id,        detail: "No trip_id at all: unusable (raw tags only, not in cities.json)", action: exclude}
+  - {city: "*",       id: first_pair_dwell,  detail: "First stop pair absorbs terminal dwell (median 2.5-12 km/h vs 16-27 mid-trip); FA-20 drops it by default", action: seg_status_filter}
+
+# Events affecting many cities at once, found by the M0 inventory (reports/m0/, docs/data-inventory.generated.md).
+# They are handled by the day gate (band coverage, crossing rate) or by missing-release accounting, not by city.
+window_events:
+  - {dates: ["2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04"], id: partial_recording,
+     detail: "Recording started late: 09-01 from 11:00, 09-03 from 15:00, 09-04 from 17:00 (local hours with >=1% of ok rows); 09-02 misses one hour. Full days start 2026-09-07.",
+     action: day_gate_band_coverage}
+  - {dates: ["2026-09-17"], id: missing_releases,
+     detail: "No tidy for 11 of 25 in-scope cities in two modes: 8 have no release tag (elblag, gdansk, gzm, ljubljana, nicosia, prague, rome, zagreb) and 3 have a tag without the tidy asset (szczecin, turin, warszawa). Cause NOT established; the many affected cities suggest a common upstream cause (recording or build), not confirmed.",
+     action: missing_day}

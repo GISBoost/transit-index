@@ -4,7 +4,7 @@ Poboczny projekt GISBoost (poza doktoratem). Serwis indeksujący **jakość funk
 
 **Podział pracy:** wygląd, układ i animacje: Claude Design, **gotowe i zaimportowane do `design/`, nadrzędne wobec docs**. Ten katalog `docs/` to dane, metryki, potok, build i kontrakt techniczny z designem.
 
-**Status (2026-09-26):** design zbudowany; specyfikacja, kod referencyjny i wartości wzorcowe gotowe; potoku i strony jeszcze nie ma. Ten plik to skrót; pełna treść w `docs/01…09`, `reference/`, `schemas/`, `examples/`.
+**Status (2026-09-26):** design zbudowany; specyfikacja, kod referencyjny i wartości wzorcowe gotowe; M0 wykonany (dane na pełnym oknie sprawdzone, `docs/progress.md`); potoku i strony jeszcze nie ma. Ten plik to skrót; pełna treść w `docs/01…09`, `reference/`, `schemas/`, `examples/`.
 
 ## 1. Mapa repo
 
@@ -108,8 +108,8 @@ Po każdym kamieniu: `milestone-reviewer`, dalej dopiero po PASS.
 
 ## 9. Decyzje i ryzyka (`docs/08`)
 
-- **Rozstrzygnięte:** D1 zakres = kilkanaście miast europejskich; **D11 model jakości = pięć osobnych wymiarów, wskaźnik złożony w v2**.
-- **Do podjęcia:** D2 metryka wymiaru Prędkość (M2), D3 okno pilotażu, D4 nazwa i adres (robocza: Transit Index, `gisboost.github.io/transit-index/`; nadrzędny `easy/CLAUDE.md` zakłada strony bez build stepu, a tu jest Astro), D7 licencja wyników, D8 GZM jako metropolia, D9 rytm publikacji, **D12 źródło poligonów** (OSM albo Eurostat GISCO), **D13 copy landingu do modelu jakości**, **D14 nazwy wymiarów w UI**.
+- **Rozstrzygnięte:** D1 zakres = kilkanaście miast europejskich; D5 stack = Astro + Actions (ADR-0001, wyjątek od "bez build stepu" zapisany w `easy/CLAUDE.md`); D11 model jakości = pięć osobnych wymiarów; **D12 poligony = GISCO, przy różnicach mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002)**; **projekt niekomercyjny, Turyn pod bramką jakości (ADR-0003)**.
+- **Do podjęcia:** D7 licencja wyników (rekomendacja CC BY-NC 4.0), lista miast publikowanych w pilotażu (Rzym po zgodzie operatora), D4 nazwa i adres, D13/D14 copy i nazwy wymiarów w UI, D3/D8/D9; pin `easy-OTP` (wymaga zgody na zmiany w cudzych repo). Pełna lista: `docs/decisions-needed.md`.
 - **Główne ryzyka:** definicja obszaru miasta, statyki zmieniające się między dniami, luki dzienne, jakość feedów (Bukareszt, Turyn), licencje danych operatorów, PMTiles na Pages, pojedynczy punkt awarii (telefon nagrywający), wymiary mogące się wzajemnie "nie zgadzać", oferta odczytana jako pomiar.
 - **Nieweryfikowane:** W11 i W12 nie liczone na danych, W10 tylko 1 dzień; 14 z 15 miast ma tylko jeden dzień próbki; filtr obszaru w próbie to promień, nie poligon; ref `easy-OTP` w workflow; licencje danych, fontów i ikon; progi bramki to propozycja; sformułowanie "pierwszy w Polsce" wymaga sprawdzenia.
 

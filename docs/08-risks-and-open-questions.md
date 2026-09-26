@@ -9,15 +9,15 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 | D1 | Zakres rankingu | **Rozstrzygnięte: kilkanaście miast europejskich.** Status `ranked`/`limited`/`excluded` z bramki jakości (`03` §6); Bukareszt (pokrycie 0,64) już dziś byłby `limited` | — |
 | D2 | Metryka wymiaru Prędkość (nie całego indeksu; D11) | `ΣL/ΣT`; test czułości: dla łącznie i autobusów kolejność zgodna z medianą ważoną, dla tramwajów ρ = 0,7 (`09` F15), więc **rankingi tramwajów oznacz przedziałami i nie przeceniaj pojedynczych miejsc** | M2 |
 | D3 | Okno pilotażu | 2026-09-01 – 2026-12-18 (okres szkolny); kalendarze świąt i ferii per kraj (`05`) | przed M3 |
-| D4 | Nazwa i adres | Robocza: **Transit Index** (z designu), opis "Indeks jakości transportu publicznego"; `gisboost.github.io/transit-index/`. Unikaj "Traffic Index"; sprawdź kolizje nazwy przed publikacją. Uwaga: nadrzędny `easy/CLAUDE.md` zakłada, że strony pod `gisboost.github.io` są bez build stepu; ten projekt wybiera Astro (D5), więc wymaga to zatwierdzenia i dopisania do tabeli w `easy/CLAUDE.md` | przed M5 |
-| D5 | Stack | Astro + MapLibre + PMTiles (`06`) | M5 |
+| D4 | Nazwa i adres | Robocza: **Transit Index** (z designu), opis "Indeks jakości transportu publicznego"; `gisboost.github.io/transit-index/`. Unikaj "Traffic Index"; sprawdź kolizje nazwy przed publikacją. | przed M5 |
+| D5 | Stack | **Rozstrzygnięte (2026-09-26): Astro + MapLibre + PMTiles (`06`), opcja A.** Build tylko w GitHub Actions, wynik poza gitem. Wyjątek od reguły "bez build stepu" zapisany w `easy/CLAUDE.md` | — |
 | D6 | Tryby | tramwaj, autobus (z trolejbusami), łącznie; metro i kolej poza | M2 |
-| D7 | Licencja wyników | Po audycie licencji źródeł w M0; wstępnie CC BY 4.0 dla agregatów, jeśli nie koliduje z warunkami operatorów (przy 15+ krajach warunki różnią się bardziej) | po M0 |
+| D7 | Licencja wyników | **Częściowo rozstrzygnięte (2026-09-26, ADR-0003):** projekt niekomercyjny, więc licencja wyników zgodna z niekomercyjnością; rekomendacja CC BY-NC 4.0 (decyzja przed publikacją). Audyt licencji źródeł: `docs/licenses.md` | przed publikacją |
 | D8 | GZM: miasto czy metropolia | Osobna etykieta "metropolia", poza rankingiem miast | M3 |
 | D9 | Rytm publikacji | Styczeń (jak TomTom) | przed M7 |
 | D10 | Płatne treści a Pages | Sprzedaż musi być poza Pages | przy monetyzacji |
 | D11 | Wskaźnik złożony czy osobne wymiary | **Rozstrzygnięte (2026-09-26):** osobne wymiary w v1: prędkość, obciążenie szczytu, punktualność, regularność, oferta (`03` §1). Wskaźnik złożony w v2, po teście wag | — |
-| D12 | Źródło poligonów obszaru miasta (W0) | Granica administracyjna OSM albo Eurostat GISCO (jedno źródło dla wszystkich miast, ze względu na spójność; zapisz wersję w manifeście). Filtr zmienia wyniki o kilka km/h (`09` F13) | M0/M2 |
+| D12 | Źródło poligonów obszaru miasta (W0) | **Rozstrzygnięte (2026-09-26, ADR-0002):** GISCO Urban Audit 2024 domyślnie; gdy źródła różnią się istotnie, preferujemy mniejszy obszar (rdzeń miejski); Sofia i Lizbona z OSM. Wyniki porównania: `docs/data-inventory.generated.md` §6–7 | — |
 | D13 | Copy landingu w designie (sekcja "Liczba", hero, nagłówek rankingu, "Uczciwie") mówi tylko o prędkości | Zmienić przy podpinaniu prawdziwych danych: kara szczytu zamiast "−22% vs 10% najszybszych", przełącznik wymiarów w rankingu (`06` §9). Po stronie designu | przed M5 |
 | D14 | Nazwa i skala wymiarów w UI: jak nazwać pięć wymiarów po polsku i angielsku, czy pokazywać je jako kartę miasta | Do zaprojektowania w Claude Design; docs podają tylko identyfikatory (`speed`, `peak_penalty`, `punctuality`, `regularity`, `service`) | przed M5 |
 

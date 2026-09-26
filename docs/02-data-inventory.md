@@ -19,7 +19,7 @@ Surowe pozycje (`positions-raw-*`) są kasowane po zbudowaniu; `matched.csv` nig
 
 ## 2. Pokrycie (tagi realized `-phone`, snapshot 2026-09-25)
 
-29 unikalnych nazw, z czego 28 jest w `config/cities.json`; `amsterdam` ma 1 dzień (test). Łącznie 1630 par miasto-dzień, z czego 1385 od 2026-08-03 (kiedy zaczęły się załączniki tidy). Kolumna "od 08-03" to górne ograniczenie liczby dostępnych tidy.
+29 unikalnych nazw tagów; w `config/cities.json` jest teraz 27 miast (`lka` usunięto 2026-09-09, ma tylko stare tagi); `amsterdam` ma 1 dzień (test). Łącznie 1630 par miasto-dzień, z czego 1385 od 2026-08-03 (kiedy zaczęły się załączniki tidy). Kolumna "od 08-03" to górne ograniczenie liczby dostępnych tidy.
 
 | miasto | dni (tag) | od 08-03 | pierwszy | ostatni |
 |---|---|---|---|---|
@@ -56,7 +56,7 @@ Uwagi:
 - `lka` (Łódzka Kolej Aglomeracyjna) to kolej; nagrania pozycji dotyczyły wcześniej złej sieci (autobusów zastępczych) i zostały wycofane, a realized dla ŁKA powstaje z TripUpdates (17 tagów `-tripupdates`). **Poza indeksem.**
 - `gzm` to metropolia (wiele miast), nie miasto. Etykieta "GZM (metropolia)" i osobna decyzja, czy w rankingu.
 - Istnieją też tagi `raw-*` dla miast bez realized (np. Helsinki 30, Ryga 21). Helsinki nie publikuje `trip_id`.
-- Liczby niespójne w dokumentacji: README easy-GTFS-RT mówi o 13 nagrywanych miastach, strona główna GISBoost o 27, `cities.json` ma 28 wpisów. **M0: ustalić, które miasta mają ciągłe, użyteczne dane.**
+- Liczby niespójne w dokumentacji: README easy-GTFS-RT mówi o 13 nagrywanych miastach, strona główna GISBoost o 27, `cities.json` ma 27 wpisów (stan 2026-09-26). M0 ustalił, które miasta mają ciągłe dane: `docs/data-inventory.generated.md`.
 
 ## 3. Tabela tidy (kontrakt wejściowy)
 
@@ -85,7 +85,7 @@ Semantyka (z kodu, **potwierdzona na danych**: 15 plików ma dokładnie te 34 ko
 ### Rozmiary (2026-09-24, 15 miast)
 
 - tidy: 4,7–80 MB na miasto-dzień (Łódź 19, Warszawa 72, Praga 80), razem **433 MB dziennie**;
-- statyka: 3,7–108 MB na miasto, razem 416 MB dziennie, ale zmienia się rzadko: **deduplikuj po SHA-256**;
+- statyka: 3,7–108 MB na miasto, razem 416 MB dziennie. **M0 (okno 2026-09-01…25) pokazał, że zmienia się rzadko tylko w części miast** (odcisk z CRC32 członków zip: Zagrzeb i Elbląg 1 wersja w 25 dniach, Szczecin 3, Lublin i Radom 2, Rzeszów 4, Bukareszt 3), a w innych prawie codziennie (Praga, Warszawa, Wilno, Lublana, Nikozja, Sofia, Gdańsk, Rzym, Lizbona, GZM, Przemyśl, Rybnik, Suwałki: 20–25 wersji w 25 dniach). **Deduplikuj po SHA-256**, ale nie licz na duże oszczędności;
 - wąska tabela obserwacji L0 (tylko `ok`, zstd): Łódź 1,2 MB, ok. 16× mniej niż tidy (`04` §5).
 
 ## 4. Czego nie używać
@@ -115,7 +115,7 @@ Feedy realized P50/P85: kotwiczone na rozkładowym pierwszym odjeździe, kubełk
 - 2026-07-29/30: reguły FA-17→FA-20 (pierwsza para), FA-18 (< 2 km/h), FA-19.
 - 2026-08-03: załącznik tidy w release'ach.
 - 2026-08-09: poprawki D1–D3 i F12 dotyczą `build` (realized), nie tidy.
-- **Workflow easy-GTFS-RT wykonuje checkout `easy-OTP`** – jeśli `main`, to metoda zmienia się po cichu. **M0: ustalić, jaki ref jest używany, i przypiąć tag** (`easy_otp_ref` w manifeście edycji).
+- **Workflow easy-GTFS-RT wykonuje checkout `easy-OTP` bez `ref`** (`family_a_build_and_notify_from_phone.yml`, krok "Checkout easy-OTP"), czyli z domyślnej gałęzi `main`: metoda zmienia się po cichu. **Ustalone w M0 (2026-09-26):** ostatni commit zmieniający `tools/family_a_reconstruction` i `tools/transit_charts` to `bccb17bb0066a358fde547dbe215fd50517838b2` (2026-09-04, `perf`, bez zmiany semantyki); ostatnia zmiana semantyki tidy to 2026-08-09 (`88a2e1e`, `86929f6`). Dla okna od 2026-09-01 semantyka jest więc jednolita. **Rekomendacja:** tag w `easy-OTP` na `bccb17b` i `ref:` w workflow (oba repo poza tym projektem, wymaga zgody autora; `docs/decisions-needed.md`), a do manifestu edycji wpisać SHA.
 
 ## 7. Okno nagrywania i strefy czasowe (rozstrzygnięte)
 
@@ -125,12 +125,12 @@ Nagrywanie trwa ok. 06:00–22:00 **w czasie lokalnym miasta**, a `obs_local` je
 
 Zrobione (`09`): schemat 34 kolumn (15 plików), semantyka odcinków, strefy czasu, stabilność klucza odcinka w Łodzi (98,3–99,4%), rozmiary, luki (Turyn), rozkład prędkości i kalibracja klas.
 
-Do zrobienia w M0 na pełnym oknie:
-1. Inwentarz wszystkich par miasto-dzień z załącznikiem tidy i statyką (skrypt `fetch_release_assets.py` daje 404 jako `missing`); luki dzienne.
-2. Stabilność schematu w całym okresie od 2026-08-03 (wersjonowanie?).
-3. Stabilność `stop_id` między dniami dla pozostałych miast (nie tylko Łodzi).
-4. Ref `easy-OTP` używany przez workflow; daty zmian metody.
-5. Pokrycie pasm per miasto na wszystkich dniach.
-6. Odsetek `seg_status == "ok"` per miasto i dzień; kandydaci na `excluded`.
-7. Dostępność `QualityReport` (crossing rate, przerwy) poza tidy.
-8. Poligony obszarów miast (`config/areas/`, D12) i audyt licencji.
+Zadania M0 na pełnym oknie (stan 2026-09-26, wyniki: `docs/data-inventory.generated.md`, `docs/progress.md`):
+1. ~~Inwentarz par miasto-dzień z tidy i statyką; luki dzienne.~~ **Zrobione** (25 miast w zakresie, 601 plików tidy, 10,2 GB). Luka wspólna 2026-09-17: brak release'u w 11 z 25 miast.
+2. ~~Stabilność schematu.~~ **Zrobione dla okna 09-01…25:** 34 kolumny w każdym z 287 plików kandydatów. Okres od 2026-08-03 nie sprawdzany.
+3. Stabilność `stop_id` między dniami dla pozostałych miast: **przeniesione do M1** (wymaga statyk).
+4. ~~Ref `easy-OTP`; daty zmian metody.~~ **Zrobione**, patrz wyżej.
+5. ~~Pokrycie pasm per miasto na wszystkich dniach.~~ **Zrobione.** 1–4.09 nagranie częściowe; pełne dni od 2026-09-07.
+6. ~~Odsetek `ok` per miasto i dzień; kandydaci na `excluded`.~~ **Zrobione.** Turyn: 7 z 15 dni ważnych od 09-07; Bukareszt na granicy.
+7. `QualityReport` poza tidy: **nie sprawdzano** (nie jest publikowany; poza zakresem).
+8. ~~Poligony (`config/areas/`, D12) i audyt licencji.~~ **Zrobione roboczo:** poligony GISCO i OSM porównane, GISCO w `config/areas/` jako propozycja; audyt licencji w `docs/licenses.md` (wstępny, GTFS-RT nieaudytowane).
