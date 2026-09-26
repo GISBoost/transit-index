@@ -1,0 +1,98 @@
+{
+  "city": "miasto-a",
+  "display_name": "Miasto A (zastępcze)",
+  "edition": "2026-pilot",
+  "method_version": "ti-1.0-draft",
+  "placeholder": true,
+  "status": "ranked",
+  "days": {
+    "n_valid": 42,
+    "first": "2026-09-01",
+    "last": "2026-12-18",
+    "excluded_days": [
+      {
+        "date": "2026-11-11",
+        "reason": "public_holiday"
+      },
+      {
+        "date": "2026-10-14",
+        "reason": "anomalous_day_low_trips"
+      }
+    ]
+  },
+  "modes": {
+    "street": {
+      "speed_kmh": 18.4,
+      "speed_kmh_median_weighted": 19.1,
+      "minutes_per_10km": 32.6,
+      "sched_speed_kmh": 19.8,
+      "speed_vs_sched_pct": -7.1,
+      "reliability_p85_p50": null,
+      "median_stop_spacing_m": 520,
+      "n_obs": 812345,
+      "n_segments": 5210,
+      "network_coverage_share": 0.86,
+      "bands": {
+        "all_day": {
+          "speed_kmh": 18.4,
+          "n_obs": 812345,
+          "coverage_share": 0.86
+        },
+        "am_peak": {
+          "speed_kmh": 17.2,
+          "n_obs": 160000,
+          "coverage_share": 0.8
+        },
+        "midday": {
+          "speed_kmh": 19.6,
+          "n_obs": 300000,
+          "coverage_share": 0.85
+        },
+        "pm_peak": {
+          "speed_kmh": 16.8,
+          "n_obs": 200000,
+          "coverage_share": 0.82
+        },
+        "evening": {
+          "speed_kmh": 20.9,
+          "n_obs": 152345,
+          "coverage_share": 0.7
+        }
+      },
+      "peak_penalty_am_pct": 4.5,
+      "peak_penalty_pm_pct": 9.4,
+      "p85_slowdown_pct": null,
+      "punctuality_share": {
+        "early": 0.06,
+        "on_time": 0.67,
+        "late": 0.23,
+        "very_late": 0.04
+      }
+    }
+  },
+  "quality": {
+    "crossing_rate": 0.87,
+    "recorded_share_of_window": 0.98,
+    "known_defects": [],
+    "optimistic_bias_note": "Pojazd znikający z feedu w korku nie wnosi obserwacji, więc prędkości są lekko zawyżone."
+  },
+  "slowest_segments": [
+    {
+      "seg_id": "1001>1002",
+      "from_name": "Przystanek A1",
+      "to_name": "Przystanek A2",
+      "routes": [
+        "10",
+        "12"
+      ],
+      "speed_kmh": 6.1,
+      "n_obs": 412
+    }
+  ],
+  "area": {
+    "definition": "polygon",
+    "source": "config/areas/miasto-a.geojson (przykład)",
+    "share_of_obs_in_area": 0.92,
+    "n_stops_in_area": 2100
+  }
+}

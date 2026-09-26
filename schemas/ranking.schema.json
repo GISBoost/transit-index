@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ranking.json - ranking miast w edycji",
+  "type": "object",
+  "required": [
+    "edition",
+    "method_version",
+    "generated_at",
+    "rankings",
+    "excluded"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "edition": {
+      "type": "string",
+      "pattern": "^[0-9]{4}(-pilot)?(\\.[0-9]+)?$",
+      "description": "np. 2026-pilot, 2027, 2027.1 (erratum)"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "boolean",
+      "description": "true = dane przykładowe, nie publikować"
+    },
+    "rankings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ranking"
+      }
+    },
+    "excluded": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/excluded"
+      }
+    }
+  },
+  "$defs": {
+    "ranking": {
+      "type": "object",
+      "required": [
+        "id",
+        "metric",
+        "unit",
+        "band",
+        "day_type",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(street|bus|tram)_(speed|peak_penalty|punctuality|ewt|frequency)$",
+          "description": "<tryb>_<wymiar>, np. bus_punctuality (docs/03 §2 i §4)"
+        },
+        "dimension": {
+          "enum": [
+            "speed",
+            "peak_penalty",
+            "punctuality",
+            "regularity",
+            "service"
+          ],
+          "description": "wymiar jakości (docs/03 §1); brak wskaźnika złożonego w v1"
+        },
+        "metric": {
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "km/h",
+            "%",
+            "min/10km",
+            "min",
+            "dep/h"
+          ]
+        },
+        "band": {
+          "enum": [
+            "all_day",
+            "am_peak",
+            "midday",
+            "pm_peak",
+            "evening"
+          ]
+        },
+        "day_type": {
+          "enum": [
+            "WEEKDAY",
+            "SATURDAY",
+            "SUNDAY"
+          ]
+        },
+        "sort": {
+          "enum": [
+            "desc",
+            "asc"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "rank",
+        "city",
+        "display_name",
+        "value",
+        "n_days",
+        "n_obs",
+        "network_coverage_share",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "city": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "delta_vs_previous_edition": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "median_stop_spacing_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "kowariat do wyświetlenia obok rankingu"
+        },
+        "n_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_obs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "network_coverage_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "status": {
+          "enum": [
+            "ranked",
+            "limited"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "area_definition": {
+          "enum": [
+            "polygon",
+            "radius_fallback"
+          ],
+          "description": "jak wyznaczono obszar miasta (docs/03 §2); radius_fallback = tymczasowe przybliżenie, nie do publikacji"
+        }
+      }
+    },
+    "excluded": {
+      "type": "object",
+      "required": [
+        "city",
+        "display_name",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "too_few_days",
+              "low_crossing_rate",
+              "feed_defect",
+              "no_trip_id",
+              "low_network_coverage",
+              "recording_window_gap",
+              "method_mismatch",
+              "operator_dispute",
+              "no_area_definition"
+            ]
+          }
+        },
+        "detail": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

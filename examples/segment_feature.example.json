@@ -1,0 +1,48 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        19.45,
+        51.77
+      ],
+      [
+        19.4512,
+        51.7706
+      ],
+      [
+        19.4525,
+        51.7711
+      ]
+    ]
+  },
+  "properties": {
+    "seg_id": "1001>1002",
+    "from_stop_id": "1001",
+    "to_stop_id": "1002",
+    "from_name": "Przystanek A1 (zastępczy)",
+    "to_name": "Przystanek A2 (zastępczy)",
+    "mode": "bus",
+    "routes": [
+      "10",
+      "12"
+    ],
+    "length_m": 412.0,
+    "v_all": 14.2,
+    "v_am": 12.9,
+    "v_mid": 15.4,
+    "v_pm": 12.1,
+    "v_eve": 17.0,
+    "v_sched": 16.0,
+    "n_all": 412,
+    "n_days": 38,
+    "q_all": "ok",
+    "q_am": "ok",
+    "q_mid": "ok",
+    "q_pm": "ok",
+    "q_eve": "thin",
+    "pen_pm": 9.7,
+    "geometry_quality": "shape"
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cities/{city}/summary.json - podsumowanie miasta w edycji",
+  "type": "object",
+  "required": [
+    "city",
+    "display_name",
+    "edition",
+    "method_version",
+    "status",
+    "days",
+    "modes",
+    "quality",
+    "area"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "city": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "ranked",
+        "limited",
+        "excluded"
+      ]
+    },
+    "days": {
+      "type": "object",
+      "required": [
+        "n_valid",
+        "first",
+        "last",
+        "excluded_days"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "n_valid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "excluded_days": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "date",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "modes": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "street",
+          "bus",
+          "tram"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/mode_metrics"
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "crossing_rate",
+        "known_defects"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "crossing_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "udział przystanków rozkładowych z zaobserwowanym przejazdem"
+        },
+        "recorded_share_of_window": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "known_defects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optimistic_bias_note": {
+          "type": "string"
+        }
+      }
+    },
+    "slowest_segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "seg_id",
+          "from_name",
+          "to_name",
+          "speed_kmh",
+          "n_obs"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "seg_id": {
+            "type": "string"
+          },
+          "from_name": {
+            "type": "string"
+          },
+          "to_name": {
+            "type": "string"
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "speed_kmh": {
+            "type": "number"
+          },
+          "n_obs": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "area": {
+      "type": "object",
+      "required": [
+        "definition",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "enum": [
+            "polygon",
+            "radius_fallback"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "description": "np. OSM admin_level, Eurostat GISCO, plik config/areas/<miasto>.geojson"
+        },
+        "share_of_obs_in_area": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "n_stops_in_area": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "band_metrics": {
+      "type": "object",
+      "required": [
+        "speed_kmh",
+        "n_obs"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "speed_kmh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "n_obs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "mode_metrics": {
+      "type": "object",
+      "required": [
+        "speed_kmh",
+        "minutes_per_10km",
+        "n_obs",
+        "n_segments",
+        "network_coverage_share",
+        "bands"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "speed_kmh": {
+          "type": "number"
+        },
+        "speed_kmh_median_weighted": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "test czułości"
+        },
+        "minutes_per_10km": {
+          "type": "number"
+        },
+        "sched_speed_kmh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "speed_vs_sched_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reliability_p85_p50": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "v1.1, eksperymentalne"
+        },
+        "median_stop_spacing_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "n_obs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_segments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "network_coverage_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "bands": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "all_day",
+              "am_peak",
+              "midday",
+              "pm_peak",
+              "evening"
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/band_metrics"
+          }
+        },
+        "peak_penalty_am_pct": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "W3: kara szczytu porannego względem pasm midday+evening, na tych samych odcinkach"
+        },
+        "peak_penalty_pm_pct": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "W3: kara szczytu popołudniowego"
+        },
+        "p85_slowdown_pct": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "EKSPERYMENTALNE (W3x): spowolnienie względem P85, zależne od kwantyla; nie do rankingu"
+        },
+        "ewt_min": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "W11: nadmiar czasu oczekiwania (min), tylko linie częste; null, gdy brak linii częstych lub próba za mała"
+        },
+        "service_dep_per_hour": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "W12: mediana rozkładowych odjazdów na godzinę na przystanek w obszarze, pasmo midday (statyka tego samego dnia)"
+        },
+        "punctuality_share": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "W10: udział klas punktualności (progi C11); wymiar jakości v1",
+          "properties": {
+            "early": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "on_time": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "late": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "very_late": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

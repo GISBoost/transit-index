@@ -1,0 +1,16 @@
+{
+  "edition": "2026-pilot",
+  "method_version": "ti-1.0-draft",
+  "placeholder": true,
+  "status": "draft",
+  "window": {"from": "2026-09-01", "to": "2026-12-18", "day_type": "WEEKDAY"},
+  "code": {"ti_commit": "0000000000000000000000000000000000000000", "easy_otp_ref": "ti-pin-2026-11"},
+  "config_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "cities": [
+    {"city": "miasto-a", "status": "ranked", "n_valid_days": 42, "n_input_files": 44, "inputs_sha256": "1111111111111111111111111111111111111111111111111111111111111111"},
+    {"city": "miasto-d", "status": "excluded", "n_valid_days": 0, "n_input_files": 44, "inputs_sha256": "2222222222222222222222222222222222222222222222222222222222222222"}
+  ],
+  "created_at": "2027-01-10T08:00:00Z",
+  "doi": null,
+  "errata": []
+}

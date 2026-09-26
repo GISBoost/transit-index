@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cecha odcinka fizycznego (GeoJSON Feature) - właściwości kafli PMTiles",
+  "type": "object",
+  "required": [
+    "type",
+    "geometry",
+    "properties"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "Feature"
+    },
+    "geometry": {
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "const": "LineString"
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "seg_id",
+        "from_stop_id",
+        "to_stop_id",
+        "from_name",
+        "to_name",
+        "mode",
+        "length_m",
+        "q_all"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "seg_id": {
+          "type": "string",
+          "description": "from_stop_id>to_stop_id"
+        },
+        "from_stop_id": {
+          "type": "string"
+        },
+        "to_stop_id": {
+          "type": "string"
+        },
+        "from_name": {
+          "type": "string"
+        },
+        "to_name": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "bus",
+            "tram",
+            "trolleybus"
+          ]
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "numery linii przejeżdżających odcinkiem"
+        },
+        "length_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "v_all": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "mediana prędkości km/h, całe pasmo 06-22"
+        },
+        "v_am": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_mid": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_pm": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_eve": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_sched": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "prędkość rozkładowa, km/h"
+        },
+        "n_all": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "q_all": {
+          "enum": [
+            "ok",
+            "thin",
+            "none"
+          ]
+        },
+        "q_am": {
+          "enum": [
+            "ok",
+            "thin",
+            "none"
+          ]
+        },
+        "q_mid": {
+          "enum": [
+            "ok",
+            "thin",
+            "none"
+          ]
+        },
+        "q_pm": {
+          "enum": [
+            "ok",
+            "thin",
+            "none"
+          ]
+        },
+        "q_eve": {
+          "enum": [
+            "ok",
+            "thin",
+            "none"
+          ]
+        },
+        "pen_pm": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "kara szczytu popołudniowego na odcinku (%), sparowana z pasmami midday+evening; null gdy za mało obserwacji"
+        },
+        "geometry_quality": {
+          "enum": [
+            "shape",
+            "straight"
+          ],
+          "description": "straight = prosta linia między przystankami (brak kształtu w feedzie)"
+        }
+      }
+    }
+  }
+}

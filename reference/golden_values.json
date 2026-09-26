@@ -1,0 +1,731 @@
+{
+ "_opis": "Wartości wzorcowe policzone reference/probe_release_data.py na release'ach GISBoost/easy-GTFS-RT (2026-09-26). Testy w M1/M2 mają je odtwarzać (tolerancja: 0,01 km/h dla prędkości, 0,1 pp dla procentów). UWAGA: zależą od zawartości załączników; jeśli skrót SHA-256 pliku się różni, release został przebudowany i wartości trzeba policzyć od nowa, a nie 'naprawiać' kodu.",
+ "wygenerowano": "2026-09-26",
+ "lodz_2026-09-24": {
+  "city": "lodz",
+  "inputs": {
+   "lodz_tidy_2026-09-24.csv.gz": "d3730ad2d78365c1790c0d415a132bbbadbb952a0965c5bc1d893d4d1aad6648",
+   "lodz_static_gtfs_2026-09-24.zip": "549e52b8e50463d271e886f8292155514612210a85b8b1033a68f9cb00113173"
+  },
+  "per_file": [
+   {
+    "date": "2026-09-24",
+    "rows": 207205,
+    "schema_ok": true,
+    "trips": 7770,
+    "crossing_rate": 0.865,
+    "seg_status_share": {
+     "ok": 0.813,
+     "gap": 0.105,
+     "no_previous_stop": 0.037,
+     "first_pair": 0.037,
+     "implausible": 0.006,
+     "stationary": 0.001
+    }
+   }
+  ],
+  "n_days": 1,
+  "route_types_in_static": {
+   "3": 111,
+   "0": 27
+  },
+  "row_share_by_mode": {
+   "bus": 0.66,
+   "tram": 0.34
+  },
+  "local_hours_with_>=1pct_of_ok": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21
+  ],
+  "street": {
+   "n_obs": 168507,
+   "v_sum_ratio_kmh": 17.58,
+   "v_median_weighted_kmh": 20.53,
+   "minutes_per_10km": 34.1
+  },
+  "bus": {
+   "n_obs": 111103,
+   "v_sum_ratio_kmh": 18.24,
+   "v_median_weighted_kmh": 21.45,
+   "minutes_per_10km": 32.9
+  },
+  "tram": {
+   "n_obs": 57404,
+   "v_sum_ratio_kmh": 16.37,
+   "v_median_weighted_kmh": 18.89,
+   "minutes_per_10km": 36.6
+  },
+  "median_seg_dist_m": 458.0,
+  "share_seg_over_1000m": 0.03,
+  "v_sched_kmh": 18.54,
+  "speed_vs_sched_pct": -5.2,
+  "speed_by_band_kmh": {
+   "am_peak": 17.39,
+   "evening": 18.92,
+   "midday": 17.44,
+   "pm_peak": 16.55,
+   "shoulder": 17.88
+  },
+  "speed_by_day_kmh": {
+   "2026-09-24": 17.58
+  },
+  "punctuality_share": {
+   "early": 0.057,
+   "on_time": 0.661,
+   "late": 0.238,
+   "very_late": 0.044
+  }
+ },
+ "lodz_2026-09-14_do_2026-09-24_9_dni_roboczych": {
+  "city": "lodz",
+  "inputs": {
+   "lodz_tidy_2026-09-14.csv.gz": "f9debc1d7cda4906f14c44333a0a14485f7dfb3f392137f43a8adcafa8964829",
+   "lodz_tidy_2026-09-15.csv.gz": "3fb7b6c228e25cc22be0d29571ff8bed04bab259bb677c15e9a152d4f9416576",
+   "lodz_tidy_2026-09-16.csv.gz": "928a4afb46225399708bfdb0cb47ad0b37e79e4addc9167cb0bc098d867f090b",
+   "lodz_tidy_2026-09-17.csv.gz": "e89a0d00a495dde10460cf55398abe663e13eba25f857c988881bd553bb131d4",
+   "lodz_tidy_2026-09-18.csv.gz": "c94a8f5d93d17b55083d70b832ff22b1a828841f8bb0eaf466deaa7e59d6c4dd",
+   "lodz_tidy_2026-09-21.csv.gz": "d230f7fdc73dd0b4fa693a69cf2a2963638d56ba1f935cdb3d4afca4ea68dc2d",
+   "lodz_tidy_2026-09-22.csv.gz": "6963b4cacedd1ea50be8f6e44c3986f2c7d4903a7903a4d7ea31af536d32d4a3",
+   "lodz_tidy_2026-09-23.csv.gz": "2fa0f7501de8866458d98a8e8c34a956139a5cd354dad1fdd41c1f64485554b8",
+   "lodz_tidy_2026-09-24.csv.gz": "d3730ad2d78365c1790c0d415a132bbbadbb952a0965c5bc1d893d4d1aad6648",
+   "lodz_static_gtfs_2026-09-24.zip": "549e52b8e50463d271e886f8292155514612210a85b8b1033a68f9cb00113173"
+  },
+  "per_file": [
+   {
+    "date": "2026-09-14",
+    "rows": 201084,
+    "schema_ok": true,
+    "trips": 7514,
+    "crossing_rate": 0.869,
+    "seg_status_share": {
+     "ok": 0.819,
+     "gap": 0.101,
+     "no_previous_stop": 0.037,
+     "first_pair": 0.037,
+     "implausible": 0.004,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-15",
+    "rows": 200437,
+    "schema_ok": true,
+    "trips": 7577,
+    "crossing_rate": 0.856,
+    "seg_status_share": {
+     "ok": 0.805,
+     "gap": 0.114,
+     "no_previous_stop": 0.038,
+     "first_pair": 0.038,
+     "implausible": 0.004,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-16",
+    "rows": 196605,
+    "schema_ok": true,
+    "trips": 7430,
+    "crossing_rate": 0.832,
+    "seg_status_share": {
+     "ok": 0.781,
+     "gap": 0.138,
+     "first_pair": 0.038,
+     "no_previous_stop": 0.038,
+     "implausible": 0.004,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-17",
+    "rows": 199361,
+    "schema_ok": true,
+    "trips": 7571,
+    "crossing_rate": 0.874,
+    "seg_status_share": {
+     "ok": 0.824,
+     "gap": 0.095,
+     "no_previous_stop": 0.038,
+     "first_pair": 0.038,
+     "implausible": 0.004,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-18",
+    "rows": 199636,
+    "schema_ok": true,
+    "trips": 7543,
+    "crossing_rate": 0.867,
+    "seg_status_share": {
+     "ok": 0.817,
+     "gap": 0.102,
+     "no_previous_stop": 0.038,
+     "first_pair": 0.038,
+     "implausible": 0.004,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-21",
+    "rows": 203253,
+    "schema_ok": true,
+    "trips": 7715,
+    "crossing_rate": 0.863,
+    "seg_status_share": {
+     "ok": 0.809,
+     "gap": 0.108,
+     "no_previous_stop": 0.038,
+     "first_pair": 0.038,
+     "implausible": 0.006,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-22",
+    "rows": 205032,
+    "schema_ok": true,
+    "trips": 7623,
+    "crossing_rate": 0.87,
+    "seg_status_share": {
+     "ok": 0.819,
+     "gap": 0.1,
+     "no_previous_stop": 0.037,
+     "first_pair": 0.037,
+     "implausible": 0.006,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-23",
+    "rows": 203620,
+    "schema_ok": true,
+    "trips": 7669,
+    "crossing_rate": 0.866,
+    "seg_status_share": {
+     "ok": 0.814,
+     "gap": 0.104,
+     "no_previous_stop": 0.038,
+     "first_pair": 0.038,
+     "implausible": 0.007,
+     "stationary": 0.001
+    }
+   },
+   {
+    "date": "2026-09-24",
+    "rows": 207205,
+    "schema_ok": true,
+    "trips": 7770,
+    "crossing_rate": 0.865,
+    "seg_status_share": {
+     "ok": 0.813,
+     "gap": 0.105,
+     "no_previous_stop": 0.037,
+     "first_pair": 0.037,
+     "implausible": 0.006,
+     "stationary": 0.001
+    }
+   }
+  ],
+  "n_days": 9,
+  "route_types_in_static": {
+   "3": 111,
+   "0": 27
+  },
+  "row_share_by_mode": {
+   "bus": 0.636,
+   "tram": 0.35,
+   "unmapped": 0.014
+  },
+  "local_hours_with_>=1pct_of_ok": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21
+  ],
+  "street": {
+   "n_obs": 1452155,
+   "v_sum_ratio_kmh": 17.59,
+   "v_median_weighted_kmh": 20.52,
+   "minutes_per_10km": 34.1
+  },
+  "bus": {
+   "n_obs": 937370,
+   "v_sum_ratio_kmh": 18.31,
+   "v_median_weighted_kmh": 21.5,
+   "minutes_per_10km": 32.8
+  },
+  "tram": {
+   "n_obs": 514785,
+   "v_sum_ratio_kmh": 16.36,
+   "v_median_weighted_kmh": 18.91,
+   "minutes_per_10km": 36.7
+  },
+  "median_seg_dist_m": 458.0,
+  "share_seg_over_1000m": 0.03,
+  "v_sched_kmh": 18.54,
+  "speed_vs_sched_pct": -5.1,
+  "speed_by_band_kmh": {
+   "am_peak": 17.42,
+   "evening": 18.91,
+   "midday": 17.43,
+   "pm_peak": 16.61,
+   "shoulder": 17.85
+  },
+  "speed_by_day_kmh": {
+   "2026-09-14": 17.55,
+   "2026-09-15": 17.61,
+   "2026-09-16": 17.6,
+   "2026-09-17": 17.69,
+   "2026-09-18": 17.67,
+   "2026-09-21": 17.52,
+   "2026-09-22": 17.55,
+   "2026-09-23": 17.53,
+   "2026-09-24": 17.58
+  },
+  "punctuality_share": {
+   "early": 0.056,
+   "on_time": 0.67,
+   "late": 0.233,
+   "very_late": 0.042
+  },
+  "segment_length_share_by_quality": {
+   "all_day": {
+    "ok": 0.952,
+    "thin": 0.043
+   },
+   "am_peak": {
+    "ok": 0.831,
+    "thin": 0.092
+   },
+   "midday": {
+    "ok": 0.846,
+    "thin": 0.067
+   },
+   "pm_peak": {
+    "ok": 0.864,
+    "thin": 0.056
+   },
+   "evening": {
+    "ok": 0.83,
+    "thin": 0.094
+   }
+  },
+  "peak_penalty_vs_midday_evening": {
+   "street_am_peak": {
+    "penalty_pct": 4.5,
+    "n_obs": 194955,
+    "n_segments": 2277
+   },
+   "street_pm_peak": {
+    "penalty_pct": 9.4,
+    "n_obs": 288417,
+    "n_segments": 2323
+   },
+   "bus_am_peak": {
+    "penalty_pct": 6.7,
+    "n_obs": 125813,
+    "n_segments": 1831
+   },
+   "bus_pm_peak": {
+    "penalty_pct": 13.2,
+    "n_obs": 185361,
+    "n_segments": 1875
+   },
+   "tram_am_peak": {
+    "penalty_pct": 1.0,
+    "n_obs": 69128,
+    "n_segments": 477
+   },
+   "tram_pm_peak": {
+    "penalty_pct": 3.3,
+    "n_obs": 103056,
+    "n_segments": 479
+   }
+  },
+  "area_effect": {
+   "R<=8km": {
+    "share_of_obs": 0.92,
+    "bus": {
+     "n_obs": 843150,
+     "v_sum_ratio_kmh": 17.47,
+     "v_median_weighted_kmh": 20.48,
+     "minutes_per_10km": 34.3
+    },
+    "tram": {
+     "n_obs": 492387,
+     "v_sum_ratio_kmh": 16.23,
+     "v_median_weighted_kmh": 18.74,
+     "minutes_per_10km": 37.0
+    },
+    "street": {
+     "n_obs": 1335537,
+     "v_sum_ratio_kmh": 17.0,
+     "v_median_weighted_kmh": 19.81,
+     "minutes_per_10km": 35.3
+    }
+   },
+   "R<=12km": {
+    "share_of_obs": 0.981,
+    "bus": {
+     "n_obs": 917350,
+     "v_sum_ratio_kmh": 18.11,
+     "v_median_weighted_kmh": 21.28,
+     "minutes_per_10km": 33.1
+    },
+    "tram": {
+     "n_obs": 507582,
+     "v_sum_ratio_kmh": 16.34,
+     "v_median_weighted_kmh": 18.88,
+     "minutes_per_10km": 36.7
+    },
+    "street": {
+     "n_obs": 1424932,
+     "v_sum_ratio_kmh": 17.45,
+     "v_median_weighted_kmh": 20.37,
+     "minutes_per_10km": 34.4
+    }
+   }
+  }
+ },
+ "prague_2026-09-24": {
+  "city": "prague",
+  "inputs": {
+   "prague_tidy_2026-09-24.csv.gz": "eb68746f092c835dd34c89a26dd3004109b12e0826642216237a747a372557d0",
+   "prague_static_gtfs_2026-09-24.zip": "bb702f61a90e2dedbde9281b6ccab5f1af81d6a1d340bb38be9695337c86f055"
+  },
+  "per_file": [
+   {
+    "date": "2026-09-24",
+    "rows": 897844,
+    "schema_ok": true,
+    "trips": 44678,
+    "crossing_rate": 0.878,
+    "seg_status_share": {
+     "ok": 0.777,
+     "gap": 0.106,
+     "no_previous_stop": 0.05,
+     "first_pair": 0.05,
+     "implausible": 0.017,
+     "stationary": 0.001
+    }
+   }
+  ],
+  "n_days": 1,
+  "route_types_in_static": {
+   "3": 750,
+   "2": 96,
+   "0": 37,
+   "11": 6,
+   "4": 5,
+   "1": 3,
+   "7": 1
+  },
+  "row_share_by_mode": {
+   "bus": 0.699,
+   "tram": 0.216,
+   "other": 0.085
+  },
+  "local_hours_with_>=1pct_of_ok": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21
+  ],
+  "street": {
+   "n_obs": 643568,
+   "v_sum_ratio_kmh": 26.04,
+   "v_median_weighted_kmh": 30.34,
+   "minutes_per_10km": 23.0
+  },
+  "bus": {
+   "n_obs": 481456,
+   "v_sum_ratio_kmh": 28.1,
+   "v_median_weighted_kmh": 33.41,
+   "minutes_per_10km": 21.4
+  },
+  "tram": {
+   "n_obs": 162112,
+   "v_sum_ratio_kmh": 18.7,
+   "v_median_weighted_kmh": 20.38,
+   "minutes_per_10km": 32.1
+  },
+  "median_seg_dist_m": 527.0,
+  "share_seg_over_1000m": 0.179,
+  "v_sched_kmh": 27.73,
+  "speed_vs_sched_pct": -6.0,
+  "speed_by_band_kmh": {
+   "am_peak": 25.11,
+   "evening": 26.78,
+   "midday": 26.05,
+   "pm_peak": 25.76,
+   "shoulder": 26.53
+  },
+  "speed_by_day_kmh": {
+   "2026-09-24": 26.04
+  },
+  "punctuality_share": {
+   "early": 0.025,
+   "on_time": 0.754,
+   "late": 0.196,
+   "very_late": 0.026
+  },
+  "area_effect": {
+   "R<=8km": {
+    "share_of_obs": 0.384,
+    "bus": {
+     "n_obs": 149851,
+     "v_sum_ratio_kmh": 20.92,
+     "v_median_weighted_kmh": 23.18,
+     "minutes_per_10km": 28.7
+    },
+    "tram": {
+     "n_obs": 97227,
+     "v_sum_ratio_kmh": 17.6,
+     "v_median_weighted_kmh": 19.23,
+     "minutes_per_10km": 34.1
+    },
+    "street": {
+     "n_obs": 247078,
+     "v_sum_ratio_kmh": 19.62,
+     "v_median_weighted_kmh": 21.76,
+     "minutes_per_10km": 30.6
+    }
+   },
+   "R<=12km": {
+    "share_of_obs": 0.63,
+    "bus": {
+     "n_obs": 253122,
+     "v_sum_ratio_kmh": 22.24,
+     "v_median_weighted_kmh": 24.48,
+     "minutes_per_10km": 27.0
+    },
+    "tram": {
+     "n_obs": 152288,
+     "v_sum_ratio_kmh": 18.38,
+     "v_median_weighted_kmh": 19.99,
+     "minutes_per_10km": 32.6
+    },
+    "street": {
+     "n_obs": 405410,
+     "v_sum_ratio_kmh": 20.79,
+     "v_median_weighted_kmh": 22.91,
+     "minutes_per_10km": 28.9
+    }
+   },
+   "R<=20km": {
+    "share_of_obs": 0.768,
+    "bus": {
+     "n_obs": 332454,
+     "v_sum_ratio_kmh": 23.37,
+     "v_median_weighted_kmh": 25.87,
+     "minutes_per_10km": 25.7
+    },
+    "tram": {
+     "n_obs": 162112,
+     "v_sum_ratio_kmh": 18.7,
+     "v_median_weighted_kmh": 20.38,
+     "minutes_per_10km": 32.1
+    },
+    "street": {
+     "n_obs": 494566,
+     "v_sum_ratio_kmh": 21.88,
+     "v_median_weighted_kmh": 24.17,
+     "minutes_per_10km": 27.4
+    }
+   }
+  }
+ },
+ "poznan_2026-09-24": {
+  "city": "poznan",
+  "inputs": {
+   "poznan_tidy_2026-09-24.csv.gz": "240b3d2e06f9850fc6af2ce9e5b2ba487e33fa1048f2388babba30320cdeccde",
+   "poznan_static_gtfs_2026-09-24.zip": "5827f3261c6aa0f4d68ae87ae52361da5e5f1405b9e02fd2b27c703dc7a1581e"
+  },
+  "per_file": [
+   {
+    "date": "2026-09-24",
+    "rows": 132532,
+    "schema_ok": true,
+    "trips": 5348,
+    "crossing_rate": 0.886,
+    "seg_status_share": {
+     "ok": 0.83,
+     "gap": 0.089,
+     "no_previous_stop": 0.04,
+     "first_pair": 0.04,
+     "implausible": 0.0,
+     "stationary": 0.0
+    }
+   }
+  ],
+  "n_days": 1,
+  "route_types_in_static": {
+   "3": 193,
+   "0": 23
+  },
+  "row_share_by_mode": {
+   "tram": 0.59,
+   "bus": 0.41
+  },
+  "local_hours_with_>=1pct_of_ok": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21
+  ],
+  "street": {
+   "n_obs": 109941,
+   "v_sum_ratio_kmh": 22.32,
+   "v_median_weighted_kmh": 25.98,
+   "minutes_per_10km": 26.9
+  },
+  "bus": {
+   "n_obs": 44768,
+   "v_sum_ratio_kmh": 27.84,
+   "v_median_weighted_kmh": 31.76,
+   "minutes_per_10km": 21.6
+  },
+  "tram": {
+   "n_obs": 65173,
+   "v_sum_ratio_kmh": 18.54,
+   "v_median_weighted_kmh": 21.35,
+   "minutes_per_10km": 32.4
+  },
+  "median_seg_dist_m": 486.0,
+  "share_seg_over_1000m": 0.071,
+  "v_sched_kmh": 23.41,
+  "speed_vs_sched_pct": -4.7,
+  "speed_by_band_kmh": {
+   "am_peak": 22.04,
+   "evening": 23.37,
+   "midday": 22.68,
+   "pm_peak": 21.44,
+   "shoulder": 22.43
+  },
+  "speed_by_day_kmh": {
+   "2026-09-24": 22.32
+  },
+  "punctuality_share": {
+   "early": 0.055,
+   "on_time": 0.762,
+   "late": 0.169,
+   "very_late": 0.014
+  },
+  "area_effect": {
+   "R<=8km": {
+    "share_of_obs": 0.747,
+    "bus": {
+     "n_obs": 16988,
+     "v_sum_ratio_kmh": 23.39,
+     "v_median_weighted_kmh": 26.47,
+     "minutes_per_10km": 25.6
+    },
+    "tram": {
+     "n_obs": 65173,
+     "v_sum_ratio_kmh": 18.54,
+     "v_median_weighted_kmh": 21.35,
+     "minutes_per_10km": 32.4
+    },
+    "street": {
+     "n_obs": 82161,
+     "v_sum_ratio_kmh": 19.53,
+     "v_median_weighted_kmh": 22.52,
+     "minutes_per_10km": 30.7
+    }
+   },
+   "R<=12km": {
+    "share_of_obs": 0.86,
+    "bus": {
+     "n_obs": 29402,
+     "v_sum_ratio_kmh": 25.62,
+     "v_median_weighted_kmh": 28.7,
+     "minutes_per_10km": 23.4
+    },
+    "tram": {
+     "n_obs": 65173,
+     "v_sum_ratio_kmh": 18.54,
+     "v_median_weighted_kmh": 21.35,
+     "minutes_per_10km": 32.4
+    },
+    "street": {
+     "n_obs": 94575,
+     "v_sum_ratio_kmh": 20.73,
+     "v_median_weighted_kmh": 23.96,
+     "minutes_per_10km": 28.9
+    }
+   },
+   "R<=20km": {
+    "share_of_obs": 0.984,
+    "bus": {
+     "n_obs": 43016,
+     "v_sum_ratio_kmh": 27.61,
+     "v_median_weighted_kmh": 31.48,
+     "minutes_per_10km": 21.7
+    },
+    "tram": {
+     "n_obs": 65173,
+     "v_sum_ratio_kmh": 18.54,
+     "v_median_weighted_kmh": 21.35,
+     "minutes_per_10km": 32.4
+    },
+    "street": {
+     "n_obs": 108189,
+     "v_sum_ratio_kmh": 22.13,
+     "v_median_weighted_kmh": 25.74,
+     "minutes_per_10km": 27.1
+    }
+   }
+  }
+ }
+}

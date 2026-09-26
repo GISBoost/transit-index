@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "editions/{edition}/manifest.json - odcisk edycji (niezmienny po publikacji)",
+  "type": "object",
+  "required": ["edition", "method_version", "window", "code", "config_sha256", "cities", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "edition": {"type": "string"},
+    "method_version": {"type": "string"},
+    "placeholder": {"type": "boolean"},
+    "status": {"enum": ["draft", "operator_review", "published", "superseded"]},
+    "window": {
+      "type": "object",
+      "required": ["from", "to", "day_type"],
+      "additionalProperties": false,
+      "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "day_type": {"enum": ["WEEKDAY"]}}
+    },
+    "code": {
+      "type": "object",
+      "required": ["ti_commit", "easy_otp_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "ti_commit": {"type": "string"},
+        "easy_otp_ref": {"type": "string", "description": "przypięty tag/commit easy-OTP użyty do tidy; NIE 'main'"}
+      }
+    },
+    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "cities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["city", "status", "n_valid_days", "n_input_files", "inputs_sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "city": {"type": "string"},
+          "status": {"enum": ["ranked", "limited", "excluded"]},
+          "n_valid_days": {"type": "integer", "minimum": 0},
+          "n_input_files": {"type": "integer", "minimum": 0},
+          "inputs_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "skrót z posortowanych skrótów plików tidy"}
+        }
+      }
+    },
+    "created_at": {"type": "string"},
+    "doi": {"type": ["string", "null"]},
+    "errata": {"type": "array", "items": {"type": "string"}}
+  }
+}
