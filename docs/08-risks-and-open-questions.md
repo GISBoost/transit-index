@@ -7,7 +7,7 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 | # | Pytanie | Rekomendacja / stan | Kiedy |
 |---|---|---|---|
 | D1 | Zakres rankingu | **Rozstrzygnięte: kilkanaście miast europejskich.** Status `ranked`/`limited`/`excluded` z bramki jakości (`03` §6); Bukareszt (pokrycie 0,64) już dziś byłby `limited` | — |
-| D2 | Metryka wymiaru Prędkość (nie całego indeksu; D11) | `ΣL/ΣT`; test czułości: dla łącznie i autobusów kolejność zgodna z medianą ważoną, dla tramwajów ρ = 0,7 (`09` F15), więc **rankingi tramwajów oznacz przedziałami i nie przeceniaj pojedynczych miejsc** | M2 |
+| D2 | Metryka wymiaru Prędkość (nie całego indeksu; D11) | **Rozstrzygnięte (2026-09-27, ADR-0005):** `ΣL/ΣT`, potwierdzone na pełnym oknie (16 miast, 14-19 dni) dla wszystkich grup trybów, w tym tramwajów (ρ = 0,986 — ostrzeżenie z próbki 1-dniowej, ρ = 0,7, nie potwierdziło się) | — |
 | D3 | Okno pilotażu | 2026-09-01 – 2026-12-18 (okres szkolny); kalendarze świąt i ferii per kraj (`05`) | przed M3 |
 | D4 | Nazwa i adres | Robocza: **Transit Index** (z designu), opis "Indeks jakości transportu publicznego"; `gisboost.github.io/transit-index/`. Unikaj "Traffic Index"; sprawdź kolizje nazwy przed publikacją. | przed M5 |
 | D5 | Stack | **Rozstrzygnięte (2026-09-26): Astro + MapLibre + PMTiles (`06`), opcja A.** Build tylko w GitHub Actions, wynik poza gitem. Wyjątek od reguły "bez build stepu" zapisany w `easy/CLAUDE.md` | — |
@@ -65,5 +65,5 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 - Progi bramki jakości to propozycja do kalibracji w M3.
 - Nie potwierdzono, że w Polsce nie istnieje podobny ranking zmierzonych prędkości; sformułowanie "pierwszy" wymaga weryfikacji.
 - Licencje danych operatorów oraz fontów i ikon (Hanken Grotesk, Archivo Narrow: OFL; Material Symbols: Apache 2.0) do potwierdzenia w M0.
-- **Wymiary W11 (regularność) i W12 (oferta) nie były liczone na prawdziwych danych**; W10 (punktualność) tylko na jednym dniu bez filtra obszaru. Definicje to propozycja do walidacji w M2 (`03` §4).
+- ~~Wymiary W11 (regularność) i W12 (oferta) nie były liczone na prawdziwych danych; W10 (punktualność) tylko na jednym dniu bez filtra obszaru.~~ **Zweryfikowane w M2 (2026-09-27, ADR-0006)** na 16 miastach, 14-19 dni, po filtrze obszaru.
 - Rozbieżność designu z modelem jakości (D13) nie jest jeszcze naniesiona w `design/`.

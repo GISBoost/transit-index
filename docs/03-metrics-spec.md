@@ -14,11 +14,11 @@ Definicje są wykonywalne w `reference/metrics_reference.py` (samotest: `python 
 
 | wymiar | pytanie | metryka (ID) | kierunek | status |
 |---|---|---|---|---|
-| Prędkość | jak szybko jedzie | prędkość komunikacyjna W1 (+ czas 10 km W2) | więcej = lepiej | zweryfikowana na danych (`docs/09`) |
-| Obciążenie szczytu | ile traci w godzinach szczytu | kara szczytu W3 | mniej = lepiej | zweryfikowana (Łódź, 9 dni) |
-| Punktualność | czy jedzie według rozkładu | udział przyjazdów "o czasie" W10 | więcej = lepiej | wstępne liczby z 1 dnia; definicja do walidacji w M2 |
-| Regularność | czy przyjeżdża w równych odstępach | nadmiar czasu oczekiwania EWT W11 (linie częste) | mniej = lepiej | **niezweryfikowana**; definicja do potwierdzenia w M2 |
-| Oferta | jak często jeździ według rozkładu | rozkładowe odjazdy na godzinę W12 | więcej = lepiej | **niezweryfikowana**; mierzy rozkład, nie wykonanie |
+| Prędkość | jak szybko jedzie | prędkość komunikacyjna W1 (+ czas 10 km W2) | więcej = lepiej | zweryfikowana na danych (`docs/09`); metryka nagłówkowa potwierdzona na pełnym oknie, w tym tramwaje (ADR-0005) |
+| Obciążenie szczytu | ile traci w godzinach szczytu | kara szczytu W3 | mniej = lepiej | zweryfikowana (Łódź, 9 dni); AM/PM osobno potwierdzone na 16 miastach (M2) |
+| Punktualność | czy jedzie według rozkładu | udział przyjazdów "o czasie" W10 | więcej = lepiej | zweryfikowana na 16 miastach, 14-19 dni (M2); progi C11 potwierdzone (ADR-0006) |
+| Regularność | czy przyjeżdża w równych odstępach | nadmiar czasu oczekiwania EWT W11 (linie częste) | mniej = lepiej | zweryfikowana na 16 miastach (M2); agregacja i próg potwierdzone (ADR-0006) |
+| Oferta | jak często jeździ według rozkładu | rozkładowe odjazdy na godzinę W12 | więcej = lepiej | zweryfikowana na 16 miastach (M2, ADR-0006); ranking tramwajowy niepewny co do metody agregacji; mierzy rozkład, nie wykonanie |
 
 Prędkość jest jednym z pięciu wymiarów, nie nagłówkiem całości. Co jest **poza modelem**, bo nie wynika z GTFS/GTFS-RT: dostępność przystanków i pojazdów, ceny, komfort, bezpieczeństwo, zatłoczenie oraz **realizacja kursów** (nie da się odróżnić odwołanego kursu od kursu, którego pojazd zniknął z feedu, więc `trip_coverage` jest miarą jakości danych, nie usługi).
 
@@ -140,12 +140,12 @@ Wartość miasta: sumy `Σh²` i `Σh` zbiorcze po wszystkich komórkach (tak ja
 
 ### 4.3 Oferta rozkładowa (W12)
 
-Mediana po przystankach w obszarze miasta z liczby **rozkładowych** odjazdów na godzinę w paśmie `midday` (10–13), osobno dla trybu; źródło: wiersze tidy (`sched_dep`, wszystkie kursy rozkładu, także nieobserwowane) albo `stop_times.txt` statyki tego samego dnia (M2 wybiera i uzasadnia w ADR). Jednostka: odj./h (obie strony razem).
+Mediana po przystankach w obszarze miasta z liczby **rozkładowych** odjazdów na godzinę w paśmie `midday` (10–13), osobno dla trybu; źródło: `stop_times.txt` statyki tego samego dnia (**rozstrzygnięte, R10**: tidy zaniża ofertę nawet o 64%, bo obejmuje tylko obserwowane kursy). Mediana liczona dzień po dniu (własny kalendarz/`stop_times` każdego dnia), potem mediana po dniach okna. Jednostka: odj./h (obie strony razem).
 
 - To jest **jakość rozkładu, nie wykonania**: metryka nie mówi, czy kursy naprawdę wyjechały (patrz "poza modelem" w §1). Na stronie zawsze podpisana "według rozkładu".
-- Mediana po przystankach zależy od struktury sieci (dużo rzadkich przystanków peryferyjnych). W teście czułości porównaj ją z udziałem przystanków o częstotliwości ≥ progu. Wybór wariantu decyduje M2.
+- **Agregacja (T17, M2, ADR-0006):** mediana po przystankach potwierdzona jako odporna dla autobusów (ρ = 0,965/0,939 wobec udziału przystanków ≥ 4/6 odj./h, 16 miast), ale **niepewna dla tramwajów** (ρ = −0,155 — sieci tramwajowe są mniejsze i gęstsze, mediana i próg udziału dają praktycznie niepowiązane rankingi). Mediana zostaje jedyną publikowaną liczbą, ale ranking W12 tramwajów ma jawną adnotację niepewności metodycznej (nie status jakości danych) — forma prezentacji do ustalenia z designem w M5, propozycja R10: mapa (kolor odcinka/przystanku), nie surowa tabela rankingu.
 - Godziny obsługi (pierwszy i ostatni kurs) nie są obserwowalne z tidy: nagrywanie obejmuje tylko 06:00–22:00. Poza v1.
-- **Niezweryfikowane na prawdziwych danych.**
+- **Zweryfikowane na prawdziwych danych (M2, 16 miast, 14-19 dni).**
 
 ### 4.4 Wskaźnik złożony (v2, nie v1)
 
@@ -153,7 +153,9 @@ Jeśli powstanie: rangi percentylowe wymiarów, jawne wagi, **test wrażliwości
 
 ## 5. Klasy prędkości
 
-Pięć klas (tokeny `--speed-1…5` z `design/tokens/colors.css`, plus `--speed-nodata` dla braku danych), cztery krawędzie w km/h: **`[15, 20, 25, 30]`** → `<15`, `15–20`, `20–25`, `25–30`, `≥30`. **[PROPOZYCJA]**, skalibrowana na danych. Liczba klas wynika z designu (design nadrzędny); wcześniejsza wersja miała sześć klas z krawędzią 10 km/h, ale poniżej niej leżało tylko 3,4% sieci Łodzi.
+Pięć klas (tokeny `--speed-1…5` z `design/tokens/colors.css`, plus `--speed-nodata` dla braku danych), cztery krawędzie w km/h: **`[15, 20, 25, 30]`** → `<15`, `15–20`, `20–25`, `25–30`, `≥30`. Liczba klas wynika z designu (design nadrzędny); wcześniejsza wersja miała sześć klas z krawędzią 10 km/h, ale poniżej niej leżało tylko 3,4% sieci Łodzi.
+
+**Sprawdzone na pełnym oknie (T18, M2, 2026-09-27, ADR-0006): krawędzie zostają bez zmian, ale to nie jest czysty "confirm".** Udział długości sieci w klasach na 16 miastach (tabela w ADR-0006) waha się szeroko: od zrównoważonego Krakowa (9,7/23,2/29,0/19,6/18,4%) po przekrzywioną Lizbonę (40,5/30,6/15,5/7,7/5,7%). 4 z 16 miast (Bukareszt, Lizbona, Turyn, Zagrzeb) przekraczają 35% w jednej klasie; 3 z tych 4 mają już zarejestrowaną wadę feedu w `config/city_defects.yaml` (`weak_coverage`, `no_trip_id`/`trip_id_unstable`, `suburban_lines`), która wiarygodnie tłumaczy przekrzywienie niezależnie od krawędzi. Lizbona nie ma zarejestrowanej wady — możliwe, że jej wolna sieć (wąskie uliczki, zabytkowe tramwaje) to realna cecha, nie błąd danych; do sprawdzenia ręcznie (T25) przed M3. Współdzielone krawędzie i tak nie dopasują się do każdego profilu miasta bez utraty porównywalności, więc zostają.
 
 | miasto (2026-09-24, bus+tram, obserwacje ważone długością) | kwintyle 20/40/60/80% [km/h] |
 |---|---|
@@ -228,17 +230,17 @@ Ta tabela dotyczy definicji metryk. Pełny plan testów (parametry zapieczone w 
 
 Raport per miasto i tryb z korelacją rang Spearmana między wariantami:
 
-| wariant | pytanie | wynik wstępny (5 miast PL, 1 dzień) |
-|---|---|---|
-| W1 (`ΣL/ΣT`) vs mediana ważona długością | czy ciężkie ogony przestawiają ranking | łącznie i autobusy: identyczna kolejność (ρ = 1,0); **tramwaje: ρ = 0,7** (Kraków/Poznań/Warszawa zamieniają się miejscami) |
-| bez 1% najwolniejszych obserwacji | wpływ postojów pośrednich | do policzenia w M2 |
-| pasma odniesienia W3 (`midday`, `evening`, oba) | wrażliwość kary szczytu | Łódź: kolejność AM < PM i autobus > tramwaj utrzymana w każdym wariancie |
-| tylko wt–czw | wpływ poniedziałków i piątków | do policzenia w M2 |
-| bez pierwszej i ostatniej godziny pasma | wpływ brzegów okna nagrania | do policzenia w M2 |
-| bootstrap po dniach | szerokość przedziałów | do policzenia w M2 |
-| W10: progi 120/180/300 s | czy ranking punktualności zależy od progu "o czasie" | do policzenia w M2 |
-| W11: `ΣΣ` zbiorcze vs mediana po przystankach; próg linii częstych 480/600/720 s | czy ranking regularności zależy od agregacji i progu | do policzenia w M2 |
-| W12: mediana po przystankach vs udział przystanków ≥ próg | czy ranking oferty zależy od struktury sieci | do policzenia w M2 |
-| korelacja rang między wymiarami | czy wymiary niosą różną informację (jeśli ρ ≈ 1, wymiar jest zbędny) | do policzenia w M2 |
+| wariant | pytanie | wynik wstępny (5 miast PL, 1 dzień) | wynik na pełnym oknie (16 miast, 14-19 dni, M2) |
+|---|---|---|---|
+| W1 (`ΣL/ΣT`) vs mediana ważona długością | czy ciężkie ogony przestawiają ranking | łącznie i autobusy: identyczna kolejność (ρ = 1,0); **tramwaje: ρ = 0,7** (Kraków/Poznań/Warszawa zamieniają się miejscami) | łącznie ρ = 0,974; autobusy ρ = 0,974; **tramwaje ρ = 0,986** — ostrzeżenie z próbki 1-dniowej się nie potwierdziło (ADR-0005) |
+| bez 1% najwolniejszych obserwacji | wpływ postojów pośrednich | do policzenia w M2 | odłożone (niski priorytet, T13 głównego wariantu już potwierdzone) |
+| pasma odniesienia W3 (`midday`, `evening`, oba) | wrażliwość kary szczytu | Łódź: kolejność AM < PM i autobus > tramwaj utrzymana w każdym wariancie | potwierdzone na 16 miastach: AM < PM w każdym mieście z danymi (`reports/m2/sensitivity_by_city.csv`) |
+| tylko wt–czw | wpływ poniedziałków i piątków | do policzenia w M2 | odłożone do listopada (T7/T9, ≥ 40 dni) |
+| bez pierwszej i ostatniej godziny pasma | wpływ brzegów okna nagrania | do policzenia w M2 | odłożone do listopada |
+| bootstrap po dniach | szerokość przedziałów | do policzenia w M2 | M3 (`ti gate`) |
+| W10: progi 120/180/300 s | czy ranking punktualności zależy od progu "o czasie" | do policzenia w M2 | ρ = 0,953 (120s) i 0,950 (300s) vs bazowe 180s — próg potwierdzony (ADR-0006) |
+| W11: `ΣΣ` zbiorcze vs mediana po przystankach; próg linii częstych 480/600/720 s | czy ranking regularności zależy od agregacji i progu | do policzenia w M2 | ρ ≥ 0,965 na obu wymiarach zmienności — agregacja i próg 600s potwierdzone (ADR-0006) |
+| W12: mediana po przystankach vs udział przystanków ≥ próg | czy ranking oferty zależy od struktury sieci | do policzenia w M2 | autobus ρ = 0,965 (≥4/h) / 0,939 (≥6/h) — odporne; **tramwaj ρ = −0,155 — niepewne, ADR-0006** |
+| korelacja rang między wymiarami | czy wymiary niosą różną informację (jeśli ρ ≈ 1, wymiar jest zbędny) | do policzenia w M2 | W1×W3(pm) ρ = 0,10; W1×W10 ρ = 0,56; W1×W11 ρ = −0,52; **W10×W11 ρ = −0,93 na poziomie miasta, ale ρ = −0,79 (pula) i od −0,92 do +0,38 per miasto na poziomie linii — w większości miast dużo poniżej progu 0,9, więc to głównie zbieżność między miastami, nie ta sama informacja w obrębie miasta (ADR-0006, R3)** |
 
 **Reguła decyzyjna:** jeśli korelacja rang nagłówka z wariantem odpornym < 0,9, publikuj oba lub przejdź na wariant odporny i zapisz decyzję w `docs/adr/`. Dla tramwajów (ρ = 0,7 na jednym dniu) wynik jest sygnałem ostrzegawczym, nie rozstrzygnięciem: wymaga powtórzenia na wielu dniach i po filtrze obszaru.

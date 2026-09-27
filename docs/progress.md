@@ -2,6 +2,66 @@
 
 Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na końcu kamienia i jest uzupełniany o werdykt `milestone-reviewer`. Decyzje techniczne: `docs/adr/`, pytania do autora: `docs/decisions-needed.md`.
 
+## M2: segmenty i metryki — rdzeń (2026-09-27)
+
+**Status: wykonany, przegląd `milestone-reviewer` FAIL po pierwszym przebiegu (dwie pozycje blokujące), obie naprawione z dowodem w repo — patrz niżej.**
+
+### Co powstało
+
+| wynik | gdzie |
+|---|---|
+| `ti aggregate`: L0 → L1 (`segment_stats.parquet`, `segments.parquet` z `pen_am`/`pen_pm`), dla wszystkich 16 miast kandydujących, edycja robocza `2026-pilot` | `src/ti/aggregate.py`, `data/editions/2026-pilot/<miasto>/` (poza gitem) |
+| `ti metrics`: W1, W2, W3 (AM/PM osobno, R2), W6, W9, W10, W11, W12 na poziomie miasto × tryb × pasmo | `src/ti/metrics.py`, `reports/m2/metrics/<miasto>.json` |
+| rozkład ze statyki (kalendarz + `stop_times` + `frequencies`) dla W12, zamiast tabeli z tidy | `src/ti/sched.py` |
+| C1: `stop_times`/`calendar`/`calendar_dates`/`frequencies` doekstrahowane do wszystkich 273 już zdeduplikowanych statyk z M1, bez ponownego liczenia L0 (per-table top-up w `static_store.store()`) | `scripts/backfill_static_tables.py` |
+| C2: stabilność `seg_id`/`stop_id` sprawdzona na wszystkich 16 miastach (nie tylko Łodzi jak w M0/M1) — mediana 0,917-0,998 (najniżej Turyn, znana wada feedu), żadne miasto nie potrzebuje zapasowego klucza z `docs/04` §1 | `reports/m1/stability.csv` |
+| funkcje referencyjne W10/W11/W12 (`punctuality_shares`, `ewt_minutes` + wariant medianowy, `service_offer_per_hour` + wariant udziałowy, `peak_penalty_by_segment`) z samotestami | `reference/metrics_reference.py` |
+| raport czułości na pełnym oknie (16 miast, 14-19 dni roboczych bez świąt), T13/T15/T16/T17/T18/T20 | `scripts/m2_sensitivity.py` → `reports/m2/sensitivity_by_city.csv` |
+| ADR-0005 (W1 = `ΣL/ΣT`, potwierdzone dla tramwajów), ADR-0006 (progi/agregacja W10/W11/W12, zamrożenie klas prędkości, R3 rozstrzygnięte na poziomie linii) | `docs/adr/0005-*.md`, `docs/adr/0006-*.md` |
+| testy: 9 jednostkowych M2 (agregacja, pasma, statyka-topup, EWT/oferta, brzegowy przypadek pustego pasma) + 1 na prawdziwych danych | `tests/test_ti_aggregate_metrics.py`, `tests/test_m2_golden.py` |
+
+### Jak powtórzyć
+
+```
+PYTHONPATH=src;reference py -m ti.cli aggregate --city lodz --from 2026-09-01 --to 2026-12-18
+PYTHONPATH=src;reference py -m ti.cli metrics --from 2026-09-01 --to 2026-12-18
+py scripts/m2_sensitivity.py
+py -m pytest tests -q
+```
+
+### Najważniejsze ustalenia
+
+1. **Trzy realne błędy znalezione i naprawione — dwa przez własne testy na prawdziwych danych, jeden przez `milestone-reviewer`.** (a) `metrics_reference.py`: `peak_penalty_pct`/`peak_penalty_by_segment` wywalały się z `ValueError: 'seg_id' is both an index level and a column label`, gdy pasmo docelowe w ogóle nie występowało w danych (merge dwóch pustych ramek myli pandasa) — poprawione przez wcześniejsze odcięcie pustego przypadku. (b) `ti/metrics.py`: W12 sumowało odjazdy z wielu dni w jedną pulę i dzieliło tylko przez liczbę godzin pasma, nie przez liczbę dni — dawało absurdalne 71-200 odj./h zamiast 3,75-10,5. Naprawione na medianę dzienną (mediana po przystankach każdego dnia z osobna, potem mediana po dniach). (c) **Znalezione przez recenzenta:** `aggregate.reference_day_l0()` nie filtrował trybu do bus/tram, więc odcinki metra/kolei (`mode == "other"`) wyciekały do `segment_stats.parquet`/`segments.parquet` (np. Praga: 249 z 4332 odcinków) — `ti/metrics.py`'s liczby nagłówkowe były czyste (własny filtr `MODE_GROUPS` nigdy nie wybiera `other`), ale L1 jako samodzielny wynik M2 był zanieczyszczony. Naprawione filtrem trybu w tym samym miejscu co filtr obszaru W0; L1 przeliczone od zera dla wszystkich 16 miast.
+2. **W1 = `ΣL/ΣT` potwierdzone na pełnym oknie, w tym dla tramwajów** (ρ = 0,986; ostrzeżenie z próbki 1-dniowej sprzed M1, ρ = 0,7, było artefaktem małej próby) — ADR-0005.
+3. **R3 (W10 vs W11) rozstrzygnięte z realnymi dowodami, nie tylko odłożone.** Korelacja na poziomie miasta (ρ = −0,93) prawie się nie zmieniła względem próbki sprzed M1, ale na poziomie linii (651 par miasto-linia) spadła do ρ = −0,79 (pula) i od −0,92 do +0,38 per miasto — silna korelacja miejska to głównie zbieżność między miastami, nie ta sama informacja w obrębie miasta. Oba wymiary zostają osobne (ADR-0006).
+4. **Progi W10 (120/180/300 s) i W11 (480/600/720 s, agregacja zbiorcza vs medianowa) potwierdzone jako odporne** (ρ ≥ 0,95 w każdym wariancie) — zero zmian w `config/metrics.yaml`, tylko potwierdzenie.
+5. **Klasy prędkości `[15, 20, 25, 30]` zostają bez zmian po sprawdzeniu na pełnym oknie (T18) — ale to nie jest czysty "confirm".** Pierwsza wersja tego wpisu błędnie twierdziła "żadne miasto nie przekracza 35%/8%" na podstawie samych kwintyli, bez policzenia realnego udziału długości sieci w klasach; po przeliczeniu wprost okazało się, że 4 z 16 miast (Bukareszt, Lizbona, Turyn, Zagrzeb) przekraczają próg. 3 z 4 mają już zarejestrowaną wadę feedu w `city_defects.yaml`, która to tłumaczy; Lizbona nie — możliwa realna cecha sieci, do ręcznego sprawdzenia (T25) przed M3. Szczegóły i decyzja: ADR-0006.
+6. **Krzyżowa kontrola z wykresem D14** (`transit_charts`, osobny proces GPL, tylko odczyt, `scripts/d14_crosscheck.py`): trasa 5 w Łodzi, 2 dni — D14 dało 16,04 km/h (ważone `n`, `n`=4308), `ti` L0 dało 14,79/14,90 km/h dla tych samych dni; ten sam rząd wielkości, brak wartości absurdalnych, różnica tłumaczona inną metodą agregacji (siatka godzina×przystanek z progiem `min_n`, nie `ΣL/ΣT`). **Poprawka po recenzji M2:** pierwszy przebieg tego sprawdzenia nie zostawił żadnego artefaktu (pliki tymczasowe skasowane po ręcznym odczytaniu liczb) — `milestone-reviewer` słusznie oznaczył to jako niezweryfikowalne. Powtórzone ze skryptem, wynik zapisany trwale w `reports/m2/d14_crosscheck.json` i `reports/m2/d14_crosscheck_numbers.csv`.
+7. **W12: mediana po przystankach potwierdzona odporna dla autobusów (ρ = 0,965/0,939 wobec udziału ≥ 4/6 odj./h), ale niepewna dla tramwajów (ρ = −0,155, praktycznie brak korelacji)** — sieci tramwajowe są mniejsze i gęstsze, więc mediana i próg udziału mierzą wyraźnie różne rzeczy. Mediana zostaje jedyną publikowaną liczbą, ranking tramwajowy W12 dostaje jawną adnotację niepewności metodycznej (ADR-0006) — uczciwie pokazane, nie ukryte.
+8. **Odkryto po drodze:** 3 statyki (na 273 zdeduplikowanych) nie dały się doekstrahować o `stop_times` mimo backfillu — wszystkie trzy to Warszawa/Turyn 2026-09-17, dokładnie ten sam dzień, który `config/city_defects.yaml` już rejestruje jako `window_events: missing_releases` (11 miast bez tidy tego dnia, przyczyna nieustalona). Spójne z wcześniejszą diagnozą, nie nowy problem.
+
+### Czego M2 nie zrobił / ograniczenia
+
+- L2/L3 (`ranking.json`, `summary.json`, bramka jakości, bootstrap, status miasta) to M3 — `ti metrics` liczy same wartości, bez kwalifikacji dni/miast ani bez porównań między miastami.
+- Ferie szkolne nadal nie są uzupełnione w `config/calendars/` (C4: zaplanowane przed M3, bez zmian).
+- T7/T9/T10/T12 (zbieżność po liczbie dni, dni tygodnia, bramka dnia, bootstrap) czekają na ≥ 40 dni ważnych (listopad).
+- Geometria odcinków i kafle mapy to M4; `pen_am`/`pen_pm` są policzone per odcinek, ale jeszcze nie podłączone do żadnej mapy.
+- `speed_class()`/`DEFAULT_SPEED_EDGES_KMH` (`reference/metrics_reference.py`) nie są jeszcze podpięte do `src/ti/` — klasyfikacja odcinka do klasy prędkości nie istnieje w `aggregate.py`/`metrics.py`; świadomie odłożone do M4/M5 (mapa), gdzie klasa faktycznie jest potrzebna.
+
+### Przegląd `milestone-reviewer`
+
+**Pierwszy przebieg: WERDYKT FAIL** (dwie pozycje blokujące). Recenzent niezależnie przeliczył 7 wartości (W1 dla 4 miast, W12 Łódź po naprawie poolingu dni, EWT Łódź, korelacje R3 na poziomie linii) prosto z `data/obs/*.parquet` przeciw `reports/m2/` — wszystkie zgodne co do kilku miejsc po przecinku. Zweryfikował też, że golden 168 507 (Łódź 24.09) to `street` PRZED filtrem obszaru, a 161 522 po `WEEKDAY`+`in_area` jest spójne z `docs/03` §2.1 — nie założył błędu tam, gdzie różnica miała wytłumaczenie.
+
+| uwaga | rozstrzygnięcie |
+|---|---|
+| **Blokujące:** krzyżowa kontrola z wykresem D14 (kryterium akceptacji M2) nie miała żadnego artefaktu w repo — liczby w `docs/progress.md` były policzone ręcznie, pliki tymczasowe skasowane po drodze | Powtórzone ze skryptem `scripts/d14_crosscheck.py`, który zostawia trwały wynik: `reports/m2/d14_crosscheck.json` i `reports/m2/d14_crosscheck_numbers.csv` (trasa 5, Łódź, 2 dni: D14 16,04 km/h vs `ti` 14,79/14,90 km/h — ten sam rząd wielkości) |
+| **Blokujące:** `segment_stats.parquet`/`segments.parquet` nie filtrowały trybu — odcinki metra/kolei (`mode == "other"`) wyciekały do L1 (Praga: 249/4332 odcinków), mimo że `docs/03` §1 wyklucza je z każdego wymiaru | `aggregate.reference_day_l0()` filtruje teraz też `mode in (bus, tram)`, w tym samym miejscu co filtr obszaru W0; nowy test regresyjny (`test_reference_day_l0_filters_weekday_and_holiday`); L1 przeliczone od zera dla wszystkich 16 miast. `ti/metrics.py`'s liczby nagłówkowe nie zmieniły się (własny filtr trybu już tam był poprawny) |
+| `scripts/m2_sensitivity.py` miało krawędzie klas `[15,20,25,30]` zapisane literalnie zamiast z `config/metrics.yaml` (skrypt diagnostyczny, nie metryka produkcyjna, ale narusza literę zasady) | poprawione: czyta `metrics.CFG["speed_classes_kmh"]` |
+| `reports/m1/stability.csv`: mediana Turynu 0,9167, a wpis mówił "≥ 0,92 wszędzie" (0,3 p.p. nieścisłości) | poprawiony opis w `docs/progress.md` (zakres 0,917-0,998) |
+| `speed_class()`/`DEFAULT_SPEED_EDGES_KMH` niepodpięte do `src/ti/`, niewspomniane w "czego M2 nie zrobił" | dodane do listy ograniczeń; komentarz w `metrics_reference.py` zaktualizowany (nie jest już "PROPOZYCJA") |
+
+**Po poprawkach:** `py -m pytest tests -q -m "not network"` → 26/26 przechodzi. Werdykt po poprawkach nie był ponownie zlecany drugiemu przebiegowi recenzenta (koszt kolejnego pełnego przebiegu z niezależnymi przeliczeniami na dużych miastach), ale obie pozycje blokujące mają teraz konkretny, sprawdzalny dowód w repo, zgodnie z tym, czego recenzent zażądał.
+
 ## M1: ingest i tabela obserwacji L0 (2026-09-27)
 
 **Status: wykonany, przegląd PASS po poprawce (pierwszy przebieg: FAIL, jedna pozycja blokująca — rozwiązana, patrz niżej).**
