@@ -96,6 +96,10 @@ Pełne dni nagrania od 2026-09-07. Prognoza zakłada, że udział dni ważnych u
 
 D12: GISCO, przy różnicach preferować mniejszy obszar, Sofia i Lizbona z OSM (ADR-0002). Projekt niekomercyjny, wyniki na CC BY 4.0, wszystkie miasta publikowane z atrybucją źródeł, Turyn pod bramką jakości (ADR-0003; pełne warunki GTT w `docs/licenses.md` §2a). Audyt GTFS-RT wykonany (`docs/licenses.md` §2b). Astro (ADR-0001). Bez pinu `easy-OTP` (ADR-0004). Surowe pozycje są co miesiąc archiwizowane w `easy-GTFS-RT` (`raw-snapshots-*`), dostępne przez `gtfs-dashboard`. Zmiany w innych repo tylko po pytaniu. Reszta: `docs/decisions-needed.md`.
 
+### Metodologia wejścia i plan testów (2026-09-26, po M0)
+
+Analiza `easy-GTFS-RT` i `easy-OTP` (odczyt): tidy to obserwacje bezpośrednie (`collect_stop_crossings`), nie agregat P50/P85, więc wejściem produkcyjnym pozostają tabele tidy z pojedynczych dni (statyka tego dnia), a surowe pozycje służą do testów parametrów zapieczonych w tidy i do przebudowy po zmianie metody. Plan 25 testów (T1-T25, priorytety, reguły decyzyjne zapisane z góry): `docs/10-input-methodology-and-test-plan.md`. **Testy przed M1 zakończone 2026-09-27** (`docs/sensitivity-report.md`, status T1-T26: `docs/10` §7, ocena uruchamiania w chmurze: `docs/10` §8): T1 zaliczony (9 dni-miast), T2/T3 na 6-7 miastach (powtarzalne na drugim dniu), T4-T22, T25 i T26 na 15 miastach (2026-09-01…26), T17 wykonany (W12: źródło statyka), T24 odpada, T21 opisany. Główne wyniki: dni anomalne w pojedynczych dniach (Poznań, Rzym, Kraków) i konieczność kryterium liczby kursów; W3 AM bez stabilnego rankingu; W10 i W11 prawie redundantne (rho -0,92); FA-20, próg 300 s i okno FA-12 mają znaczenie w konkretnych miastach. Rekomendacje R1-R10 czekają na decyzje autora (`docs/decisions-needed.md` §2a). Zakres M1 rozstrzygnięty 2026-09-27 (16 miast, wszystkie dni od 1.09). M1 nie rozpoczęty.
+
 ### Przegląd `milestone-reviewer`
 
 **Werdykt: PASS (warunkowy), brak pozycji blokujących.** Recenzent niezależnie przeliczył kluczowe liczby (Łódź, Poznań po filtrze GISCO, dni ważne od 7.09, liczba wersji statyk, poligony) i zgodziły się z raportem. Uwagi i ich rozstrzygnięcie:

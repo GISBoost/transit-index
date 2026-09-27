@@ -8,7 +8,7 @@ Dla każdego miasta i dnia release z tagiem `<miasto>-realized-<data>-phone` zaw
 
 | Załącznik | Zawartość | Uwagi dla indeksu |
 |---|---|---|
-| `<miasto>_tidy_<data>.csv.gz` | tabela całego feedu, jeden wiersz na rozkładowy przystanek każdego kursu | **główne wejście**; od 2026-08-03, tylko w przód |
+| `<miasto>_tidy_<data>.csv.gz` | tabela feedu, jeden wiersz na rozkładowy przystanek każdego kursu **z co najmniej jednym dopasowaniem pozycji** (kursy bez żadnego dopasowania w tabeli nie występują; kod `collect_stop_crossings`, potwierdzone w `docs/sensitivity-report.md` §3.2) | **główne wejście**; od 2026-08-03, tylko w przód |
 | `<miasto>_static_gtfs_<data>.zip` | dokładnie ta statyka, której użyto | źródło geometrii (`shapes.txt`), trybu (`routes.txt`), współrzędnych przystanków |
 | `<miasto>_realized_<data>_p50.zip`, `_p85.zip` | zrealizowany rozkład | **nie używać** do indeksu (patrz sekcja 4) |
 | `<miasto>_diff_<data>_p50_summary.csv`, `_chart.png` | podsumowanie różnic | nie używać |

@@ -28,6 +28,19 @@ Właściciel wszystkich repo: GISBoost (Michał Kaczorowski). Zmiany w innych re
 | D3, D8, D9 | okno pilotażu, GZM, rytm publikacji | bez zmian względem `docs/08` | później |
 | — | ferie szkolne w `config/calendars/` | uzupełnić ręcznie z oficjalnych kalendarzy | przed M3 |
 
+## 2a. Decyzje z testów wrażliwości, runda 1 (2026-09-26, `docs/sensitivity-report.md` §4)
+
+| # | pytanie / propozycja | rekomendacja | kiedy |
+|---|---|---|---|
+| R1 | kryterium liczby kursów (>= 0,70 mediany miasta) jako obowiązkowa część bramki dnia | tak: bez niego błąd jednodniowego W1 do 41% (Poznań), z nim do 7,7%; wpis w M3 | M3 |
+| R2 | ranking kary szczytu: tylko PM czy wskaźnik łączny AM+PM? Poranna kara nie ma stabilnego rankingu (rho 0,83 przy 7 dniach; 34% par miast nierozróżnialnych) | PM; łączny do sprawdzenia w M2 | M2, **decyzja autora** |
+| R3 | W10 (punktualność) i W11 (regularność): rho rang -0,92 na 15 miastach, prawie ta sama informacja | zostawić oba do M2, sprawdzić W11 na poziomie linii; jeśli nadal > 0,9, rozważyć jeden wymiar | po M2, **decyzja autora** |
+| R4 | próg `city_gate.ranked` 40 dni: statystycznie wystarcza kilka dni, więc uzasadnieniem jest reprezentatywność i pokrycie sieci | bez zmian do powtórzenia T7 przy >= 40 dniach | listopad |
+| R5 | Bukareszt na granicy bramki dnia (crossing 0,62-0,69) | zostawić 0,60/0,55, ewentualnie `limited` | informacja |
+| R6 | Poznań i Kraków tracą 20-33% dni roboczych (statyka nie pasuje do RT, przyczyna nieznana); alert w workflow `easy-GTFS-RT`: liczba kursów w tidy względem rozkładu | zapytać przed zmianą (Twoje repo), opcjonalne | opcjonalnie |
+| R10 | W12 ze statyki tego samego dnia (tidy zaniża ofertę, Turyn 36%); agregacja (mediana / udział przystanków >= 4 odj./h) zmienia ranking (rho 0,83-0,93) | statyka; agregacja do wyboru w M2 | M2, **decyzja autora** |
+| R7 | flaga `feed_capability` przy mieście (okno FA-12: sygnał pozycji w feedzie) | tak, po wynikach T2 dla Gdańska | M2/M3 |
+
 ## 3. Przed M1: co warto wiedzieć
 
 **Ustalenia z M0, które M1 dziedziczy (`docs/progress.md`, `docs/data-inventory.generated.md`):**
@@ -47,6 +60,7 @@ Właściciel wszystkich repo: GISBoost (Michał Kaczorowski). Zmiany w innych re
 7. **Pochodzenie:** dla każdego dnia zapisuję czas budowy tidy i commit `easy-OTP` z tej chwili (ADR-0004).
 8. Nic nie commituję bez Twojej prośby i niczego nie publikuję.
 
-**Pytania, na które potrzebuję odpowiedzi przed startem M1:**
-1. **Repo `GISBoost/transit-index` na GitHubie nie istnieje** (lokalne repo nie ma remote'a). Potrzebne do archiwum L0 w release'ach (`docs/04` §6) i później do Pages. Czy mogę je utworzyć jako **prywatne** i wypchnąć historię? (L0 zawiera identyfikatory operatorów, więc prywatne do czasu publikacji.) Jeśli wolisz odłożyć: M1 zapisuje L0 lokalnie, a upload zrobimy później.
-2. Czy zakres M1 (punkt 1 powyżej: 16 miast, wszystkie dni od 1.09) jest OK?
+**Pytania przed startem M1:**
+1. ~~Repo `GISBoost/transit-index` na GitHubie.~~ **Rozstrzygnięte (2026-09-26): repo nie jest zakładane, leży lokalnie.** M1 zapisuje L0 lokalnie (upload do release'ów później).
+2. ~~Zakres M1.~~ **Rozstrzygnięte (2026-09-27): wszystkie miasta kandydujące (16, z Turynem) i wszystkie dni od 2026-09-01** (także weekendy; agregacja wybiera typ dnia). Turyn wchodzi do M1 jako `candidate`; jego status ustali bramka (po bramce z kryterium kursów ma < 10 dni roboczych).
+3. **Do decyzji po testach (autor zapowiedział):** R1-R10 w sekcji 2a i w `docs/sensitivity-report.md` §4; oraz czy uruchamiać obliczenia w GitHub Actions (`docs/10` §8), co wymaga repo (prywatne z limitem minut czy publiczne).

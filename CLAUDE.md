@@ -70,6 +70,7 @@ Skrót `docs/03` oznacza plik `docs/03-*.md` (analogicznie `docs/01` … `docs/0
 | plan pracy (M0–M7, prompty) | `docs/07-milestones.md` |
 | ryzyka i decyzje D1–D14 | `docs/08-risks-and-open-questions.md` |
 | weryfikacja na prawdziwych danych | `docs/09-validation-on-real-data.md`, `reference/golden_values.json` |
+| metodologia wejścia (tidy vs surowe pozycje), plan testów wrażliwości i walidacji | `docs/10-input-methodology-and-test-plan.md` |
 | skrót całości | `docs/ALL-IN-ONE.md` |
 | kontrakty JSON i przykłady | `schemas/`, `examples/` |
 

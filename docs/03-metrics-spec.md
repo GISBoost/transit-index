@@ -208,7 +208,7 @@ mode_min: {routes: 3, segments: 50}
 
 ## 7. Dni anomalne
 
-Automatyczna detekcja, żeby nie polegać wyłącznie na kalendarzu: dzień anomalny, gdy liczba kursów na godzinę spada poniżej `anomaly_min_trip_ratio` mediany tego samego `day_type`, gdy nagranie ma dużą lukę w paśmie albo gdy mediana prędkości miasta odbiega o więcej niż 3 MAD od mediany dni. Detekcja zwraca powód; lista dni idzie do manifestu.
+Automatyczna detekcja, żeby nie polegać wyłącznie na kalendarzu: dzień anomalny, gdy liczba kursów w tidy (lub na godzinę) spada poniżej `anomaly_min_trip_ratio` mediany tego samego `day_type` (**kryterium obowiązkowe**: `docs/sensitivity-report.md` §3.2 pokazuje dni, w których statyka nie pasuje do części kursów RT, `crossing_rate` i udział `ok` wyglądają zdrowo, a W1 miasta jest zawyżony nawet o 40%, np. Poznań 10.09: 27,3 wobec 19,5 km/h), gdy nagranie ma dużą lukę w paśmie albo gdy mediana prędkości miasta odbiega o więcej niż 3 MAD od mediany dni. Detekcja zwraca powód; lista dni idzie do manifestu.
 
 ## 8. Ograniczenia widoczne przy wynikach
 
@@ -223,6 +223,8 @@ Automatyczna detekcja, żeby nie polegać wyłącznie na kalendarzu: dzień anom
 9. **Oferta (W12) to rozkład**, nie wykonanie kursów.
 
 ## 9. Test czułości (M2)
+
+Ta tabela dotyczy definicji metryk. Pełny plan testów (parametry zapieczone w tidy, zbieżność po liczbie dni, wiarygodność podziałowa odcinków, bramka, wersje metody, weryfikacja zewnętrzna) jest w `docs/10-input-methodology-and-test-plan.md`.
 
 Raport per miasto i tryb z korelacją rang Spearmana między wariantami:
 
