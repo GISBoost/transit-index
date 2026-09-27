@@ -18,3 +18,7 @@ dist/
 
 # Local scratch
 tmp/
+
+# Sensitivity-test outputs: tables and logs are reproducible with scripts/t*.py; docs/sensitivity-report.md summarises them
+reports/tests/**/*.csv
+reports/tests/**/*.txt
