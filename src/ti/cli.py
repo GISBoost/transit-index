@@ -6,6 +6,8 @@ import argparse
 from . import ingest, obs, stability
 from .config import candidate_cities
 
+DEFAULT_EDITION = "2026-pilot"  # docs/07 M7 prompt names this edition; M2 uses it for L1 too
+
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="ti")
@@ -28,6 +30,17 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("stability", help="day-to-day stop_id/seg_id overlap per city (reports/m1/stability.csv)")
     s.add_argument("--cities", nargs="*", default=None)
 
+    g = sub.add_parser("aggregate", help="L0 -> L1 segment_stats.parquet + segments.parquet (data/editions/<edition>/<city>/)")
+    g.add_argument("--city", required=True)
+    g.add_argument("--from", dest="start", required=True)
+    g.add_argument("--to", dest="end", required=True)
+    g.add_argument("--edition", default=DEFAULT_EDITION)
+
+    m = sub.add_parser("metrics", help="city x mode x band headline values (reports/m2/metrics/<city>.json)")
+    m.add_argument("--from", dest="start", required=True)
+    m.add_argument("--to", dest="end", required=True)
+    m.add_argument("--cities", nargs="*", default=None)
+
     a = ap.parse_args(argv)
 
     if a.cmd == "ingest":
@@ -42,6 +55,15 @@ def main(argv: list[str] | None = None) -> int:
         print(report)
     elif a.cmd == "stability":
         stability.run(a.cities or candidate_cities())
+    elif a.cmd == "aggregate":
+        from . import aggregate
+
+        stats_path, dim_path = aggregate.run(a.city, a.start, a.end, a.edition)
+        print(f"wrote {stats_path}\nwrote {dim_path}")
+    elif a.cmd == "metrics":
+        from . import metrics
+
+        metrics.run(a.cities, a.start, a.end)
     return 0
 
 

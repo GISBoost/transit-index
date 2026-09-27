@@ -2,7 +2,11 @@
 # Values marked [PROPOSAL] are backed by data but need confirmation on the full window (M2/M3).
 method_version: "ti-1.0-draft"
 
-# 5 classes = --speed-1..5 tokens in design/. Class i (0-based) -> --speed-{i+1}.  [PROPOSAL, freeze after M2]
+# 5 classes = --speed-1..5 tokens in design/. Class i (0-based) -> --speed-{i+1}.
+# Kept as-is (T18, M2, 2026-09-27): NOT a clean pass - 4 of 16 cities exceed 35%/fall under 8% in
+# one class, but 3 of those 4 already have a registered feed defect (city_defects.yaml) that
+# plausibly explains the skew; a shared, comparable edge set can't fit every city's profile
+# anyway. See docs/adr/0006-w10-w11-w12-final-definitions.md for the full table and reasoning.
 speed_classes_kmh: [15, 20, 25, 30]
 
 # Local city hours (obs_local). Hours 6, 9, 14, 18 belong to all_day only.
@@ -23,13 +27,19 @@ segment_min:
 # W3 peak penalty
 peak_penalty: {ref_bands: [midday, evening], min_obs_per_segment: 10}
 
-# W10 punctuality (thresholds from transit_charts C11)
+# W10 punctuality (thresholds from transit_charts C11). Confirmed by T15 (M2): rho >= 0.95 for
+# rankings built with late_s in {120, 300} vs the 180 baseline, so the exact threshold doesn't matter.
 punctuality: {on_time_s: [-60, 180], late_s: 600, exclude_first_stop: true}
 
-# W11 regularity (EWT); threshold to be calibrated in M2
+# W11 regularity (EWT). frequent_headway_s confirmed by T16 (M2): rho >= 0.96 vs 480s/720s
+# variants and vs the median-of-cells aggregation variant, so 600s + pooled Sigma-Sigma stand.
+# min_headways_per_cell stays null: no per-cell floor was needed to get that robustness.
 regularity: {frequent_headway_s: 600, min_headways_per_cell: null}
 
-# W12 service (scheduled departures per hour per stop)
+# W12 service (scheduled departures per hour per stop). Source = same-day static (R10), median
+# per stop confirmed robust for bus (T16/M2: rho >= 0.94 vs share-of-stops variants) but NOT for
+# tram (rho = -0.16) - median stays the published number, tram ranking flagged as method-uncertain.
+# See docs/adr/0006-w10-w11-w12-final-definitions.md.
 service: {band: midday, min_stop_departures: 1}
 
 top_segments: {min_length_m: 100}

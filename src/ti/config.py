@@ -29,6 +29,18 @@ def area_polygon(city: str):
 
 
 @lru_cache
+def holidays(city: str) -> frozenset[str]:
+    """Public holiday dates (ISO, docs/03 §2.2) for `city`, from `config/calendars/<city>.yaml`
+    (built in M0 with the `holidays` PyPI package). School breaks (`school_breaks`) are not
+    filled in yet (C4, 2026-09-27: left for before M3) so they are not excluded here."""
+    path = CONFIG / "calendars" / f"{city}.yaml"
+    if not path.exists():
+        return frozenset()
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    return frozenset(h["date"] for h in data.get("public_holidays", []))
+
+
+@lru_cache
 def has_window_signal(city: str) -> bool:
     """A2 (docs/decisions-needed.md R7): whether the city's RT feed carries current_stop_sequence
     or stop_id on vehicle positions, so `match` can use FA-12's windowed search.

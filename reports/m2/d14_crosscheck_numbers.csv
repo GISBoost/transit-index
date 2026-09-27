@@ -1,0 +1,313 @@
+stop_sequence,bucket,n,speed_kmh,below_min_n,segment
+3,360,16,16.943624051863168,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,480,14,17.5616905442687,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,600,13,19.72338048149892,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,720,15,18.90961710575568,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,840,13,19.441574791337604,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,960,10,20.5737757728523,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,1080,12,17.228583539601786,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+3,1200,11,16.92425637850857,False,3 Telefoniczna Zajezdnia -> Pomorska-CKD szpital
+4,360,15,13.309590885341027,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,480,14,14.130415685910869,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,600,15,12.859143046917076,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,720,14,12.925636107665476,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,840,15,13.767001672977898,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,960,14,12.784074461819337,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,1080,12,14.876371872788667,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+4,1200,11,15.835749853818648,False,4 Pomorska-CKD szpital -> Pomorska-Konstytucyjna
+5,360,15,15.15319289371288,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,480,14,16.336796823089262,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,600,15,17.29962051045824,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,720,14,17.4000786230096,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,840,15,16.0782078465958,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,960,15,17.46458081589601,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,1080,12,17.424128799198904,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+5,1200,11,16.32876139395408,False,5 Pomorska-Konstytucyjna -> Narutowicza-Radiostacja
+6,360,16,19.1288446051557,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,480,14,13.834042985352319,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,600,15,16.329216891694756,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,720,14,17.601513898968413,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,840,15,16.61770781221605,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,960,15,15.926010571048373,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,1080,12,18.522799899036933,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+6,1200,10,18.45318317451187,False,6 Paderewskiego-Tuszyńska -> Paderewskiego-Karpacka
+7,360,16,23.475024888332428,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,480,14,21.2485984029609,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,600,15,22.15571295750457,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,720,14,22.947270776754408,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,840,15,22.232390886544763,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,960,15,23.568726090985837,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,1080,12,21.039243229575547,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+7,1200,10,21.65381369826349,False,7 Paderewskiego-Karpacka -> Paderewskiego-Zaolziańska
+8,360,17,16.260209163602113,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,480,14,19.253204664026697,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,600,15,19.467635924487933,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,720,14,17.798748215556735,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,840,15,18.59204040258596,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,960,15,19.01549486429551,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,1080,12,18.015223739981906,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+8,1200,10,18.6945665062753,False,8 Paderewskiego-Zaolziańska -> Paderewskiego-Rondo Lotników Lwowskich
+9,360,16,17.567166362427763,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,480,14,18.156414887817057,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,600,15,16.24440638634671,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,720,14,15.72167094318565,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,840,15,23.04255807419965,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,960,15,18.00631860937947,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,1080,10,19.72331801866106,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+9,1200,11,19.894711148692156,False,9 Narutowicza-Tramwajowa -> Narutowicza-pl. Dąbrowskiego
+10,360,16,18.428547892861012,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,480,14,17.40538880547713,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,600,15,17.999611499909456,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,720,15,18.07990245841241,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,840,15,19.783627516258854,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,960,14,16.716032336396882,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,1080,11,18.63041480931278,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+10,1200,11,17.811187014204535,False,10 Narutowicza-pl. Dąbrowskiego -> Rodziny Poznańskich-Dw. Łódź Fabryczna
+11,360,16,12.859534229608329,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,480,14,10.865497536323478,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,600,15,10.698151468505944,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,720,14,10.720299207306926,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,840,16,11.160373008944696,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,960,14,14.776068654620387,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,1080,11,12.730526971928908,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+11,1200,11,12.05946831138544,False,11 Rodziny Poznańskich-Dw. Łódź Fabryczna -> Kilińskiego-Przystanek mBank
+12,360,15,19.18823874323733,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,480,14,18.62171273855453,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,600,16,15.91329792195263,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,720,14,17.82898425422096,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,840,15,15.213617608433774,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,960,16,14.687020482168423,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,1080,11,18.105921501092517,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+12,1200,11,16.404281894400302,False,12 Paderewskiego-Rzgowska -> Rzgowska-Dachowa
+13,360,18,18.09529117454506,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,480,14,17.827530838023968,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,600,16,18.1771799393169,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,720,14,19.60620063248855,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,840,15,16.95018801574707,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,960,16,17.22198166515374,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,1080,11,17.957500716021737,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+13,1200,11,18.98721092504209,False,13 Kilińskiego-Północna -> Północna-Nowomiejska
+14,360,17,11.224696856893887,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,480,14,15.242712396960817,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,600,16,16.60379980656232,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,720,14,18.05393092208419,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,840,15,16.49942651566637,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,960,16,14.704767625821955,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,1080,11,18.19616053934011,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+14,1200,11,15.84656692680419,False,14 Północna-Nowomiejska -> Zachodnia-Manufaktura
+15,360,16,11.387773662270458,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,480,15,13.228483164780734,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,600,16,14.101080169739554,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,720,14,13.950670849353276,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,840,15,14.04723079797142,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,960,16,14.006147541850298,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,1080,11,14.8943626302442,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+15,1200,11,17.360775304119628,False,15 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+16,360,16,15.940230794969409,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,480,14,14.570552450176896,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,600,16,12.697592294778175,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,720,14,15.397250463912506,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,840,15,13.141101720324585,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,960,16,16.747013561374096,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,1080,11,14.610364166926033,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+16,1200,11,14.501847723539228,False,16 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+17,360,16,20.754222473625823,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,480,14,19.272941450958626,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,600,16,19.147993194872946,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,720,14,20.270874117449445,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,840,15,18.676328690390672,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,960,16,18.87936206983895,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,1080,11,21.65845466893353,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+17,1200,11,21.384125074412378,False,17 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+18,360,16,18.018493893156567,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,480,13,16.690830344487832,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,600,17,13.527907507990784,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,720,14,17.073881342194408,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,840,15,12.502023287248967,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,960,16,13.663603180070659,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,1080,11,16.638774568591018,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+18,1200,11,19.79774117264005,False,18 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+19,360,17,11.48360144620708,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,480,13,11.286072184109658,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,600,17,8.715930364408855,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,720,15,9.91302043659654,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,840,15,9.693936291432257,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,960,16,9.253563603542963,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,1080,10,9.108363735611345,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+19,1200,11,11.60048098141591,False,19 Kilińskiego-Piłsudskiego -> Kilińskiego-Nawrot
+20,360,16,17.979024282957756,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,480,13,16.878275362641038,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,600,18,18.386975642149547,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,720,14,15.532046938208971,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,840,16,15.131144175027085,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,960,16,17.419385675802886,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,1080,10,15.879834516926397,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+20,1200,11,16.197971895916186,False,20 Kilińskiego-Nawrot -> Kilińskiego-Tuwima
+21,360,15,20.242539747924752,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,480,14,19.369038284871515,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,600,17,19.346495432741733,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,720,15,17.471972908552697,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,840,14,17.004147981785884,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,960,16,16.734622633441717,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,1080,12,17.557897423614847,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+21,1200,11,18.28525956994804,False,21 Kilińskiego-Tuwima -> Kilińskiego-Przystanek mBank
+22,360,15,10.114928123039386,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,480,14,9.761726311922377,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,600,17,11.162997547257527,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,720,14,9.259809501382302,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,840,15,12.599974598956296,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,960,16,12.628807235525814,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,1080,10,9.915935910004755,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+22,1200,12,9.885298527711821,False,22 Kilińskiego-Przystanek mBank -> Kilińskiego-Narutowicza
+23,360,15,12.549195467473378,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,480,14,13.210339717874405,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,600,16,11.826942507314552,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,720,15,11.4439331559699,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,840,15,10.000503232418843,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,960,16,11.05260382857194,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,1080,10,11.609249320812872,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+23,1200,11,14.521723108698511,False,23 Kilińskiego-Narutowicza -> Kilińskiego-Jaracza
+24,360,15,14.928181405875232,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,480,14,14.690710818000316,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,600,16,13.627840877519542,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,720,15,12.237731644866038,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,840,15,12.08391499666283,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,960,16,11.518133055716522,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,1080,10,12.967019441456014,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+24,1200,11,15.522780600535846,False,24 Kilińskiego-Jaracza -> Kilińskiego-Rewolucji 1905r.
+25,360,15,14.094279166017426,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,480,14,12.54420606184786,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,600,16,11.415012482423107,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,720,15,11.886571175147589,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,840,15,12.122594374253694,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,960,16,12.027618683275577,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,1080,10,13.547725035680006,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+25,1200,11,10.750652188730522,False,25 Kilińskiego-Rewolucji 1905r. -> Kilińskiego-Pomorska
+26,360,15,13.901840563360558,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,480,14,8.324321565418654,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,600,16,10.582911640604125,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,720,15,11.360240937011618,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,840,14,6.365837578048826,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,960,17,10.402672160495564,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,1080,10,8.970420685376666,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+26,1200,11,9.811376378447152,False,26 Kilińskiego-Pomorska -> Kilińskiego-Północna
+27,360,15,11.713776443056418,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,480,14,14.236679379837383,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,600,15,11.030985742008475,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,720,16,10.82142242077165,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,840,14,10.259242814768577,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,960,16,11.335920462371625,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,1080,10,14.004934703121245,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+27,1200,11,12.870143317121778,False,27 Kilińskiego-Północna -> Północna-Nowomiejska
+28,360,13,7.360001323146616,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,480,12,7.493269952073984,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,600,16,7.5831965570338555,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,720,16,6.8987554102930275,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,840,14,7.531687987171093,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,960,16,6.689833880714256,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,1080,11,6.038115843098104,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+28,1200,11,7.17850682043563,False,28 Północna-Nowomiejska -> Zachodnia-Manufaktura
+29,360,12,10.473005004802303,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,480,13,9.629888525618323,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,600,16,9.310133571405208,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,720,16,9.921487729790385,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,840,14,10.051930624355432,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,960,16,10.067212841863924,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,1080,11,9.296352140794042,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+29,1200,11,9.376468921434071,False,29 Zachodnia-Manufaktura -> Zachodnia-Lutomierska
+30,360,12,19.801899406664994,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,480,14,18.049881660302322,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,600,16,18.441479081214972,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,720,15,17.52697183172223,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,840,15,14.955824404548617,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,960,15,15.950993197291712,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,1080,12,15.81646780875695,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+30,1200,11,17.164259960079235,False,30 Zachodnia-Lutomierska -> Zachodnia-Limanowskiego
+31,360,12,13.483706613989543,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,480,14,14.831743105522298,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,600,16,15.915836254600876,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,720,15,15.428720384007388,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,840,15,13.586699851673467,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,960,14,14.318170497120203,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,1080,12,18.084911780777034,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+31,1200,11,16.44761172927643,False,31 Zachodnia-Limanowskiego -> Limanowskiego-Piwna
+32,360,12,23.471952645690877,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,480,14,23.235730157265422,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,600,16,22.159746255057183,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,720,15,21.873675807034896,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,840,15,19.244662665936342,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,960,14,19.62325098867032,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,1080,12,23.59275978481976,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+32,1200,11,26.22931575824309,False,32 Limanowskiego-Piwna -> Limanowskiego-Sierakowskiego
+33,360,12,17.32203656153699,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,480,14,16.170840749143387,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,600,16,17.919852334974802,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,720,14,16.735546658064827,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,840,16,14.826270500372196,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,960,14,15.31218520571968,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,1080,12,16.600870849907416,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+33,1200,10,17.682438968639374,False,33 Limanowskiego-Sierakowskiego -> Limanowskiego-Klonowa
+34,360,12,18.481731502922734,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,480,15,17.983064927221093,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,600,16,18.977201380275854,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,720,14,17.46445275143286,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,840,16,18.150418555226985,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,960,14,18.041155332272893,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,1080,12,19.15732839450356,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+34,1200,10,18.755046692756792,False,34 Limanowskiego-Klonowa -> Limanowskiego-Mokra
+35,360,12,9.619251346166022,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,480,14,11.289062951527802,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,600,16,11.331134689169884,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,720,14,10.73437536169256,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,840,16,13.006554889996998,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,960,15,9.009899481578374,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,1080,11,14.917754167649212,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+35,1200,11,9.209331001151437,False,35 Limanowskiego-Mokra -> Limanowskiego-Pułaskiego
+36,360,12,23.382468678461954,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,480,14,27.234644358862283,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,600,16,30.869087802181696,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,720,14,23.74639362483824,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,840,15,23.22162743112882,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,960,16,28.671752633387328,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,1080,11,25.70523771684535,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+36,1200,11,23.065650388203075,False,36 Limanowskiego-Pułaskiego -> Limanowskiego-Woronicza
+37,360,11,20.54863075289228,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,480,15,16.36278351508502,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,600,16,17.779576279234426,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,720,13,16.42611434620839,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,840,15,20.611411498342843,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,960,16,21.11677046456459,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,1080,11,21.10209307709439,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+37,1200,11,18.46651729626653,False,37 Limanowskiego-Woronicza -> Aleksandrowska-Bielicowa
+38,360,11,21.29974095421688,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,480,14,19.667966920353447,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,600,16,17.609562027089943,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,720,14,19.190926346546355,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,840,15,20.257298204428672,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,960,16,19.35254556618935,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,1080,11,18.488596801708866,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+38,1200,11,19.99657228223996,False,38 Aleksandrowska-Bielicowa -> Aleksandrowska-Traktorowa
+39,360,10,17.64278580063086,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,480,15,21.69479960570837,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,600,15,16.57270404518869,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,720,14,20.54652578130801,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,840,14,20.762506577962146,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,960,18,17.149808793855595,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,1080,11,18.594585015829068,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+39,1200,11,18.955654368493608,False,39 Aleksandrowska-Traktorowa -> Aleksandrowska-Kaczeńcowa
+40,360,10,21.085601315674932,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,480,15,18.980836044001848,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,600,15,23.01808471311431,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,720,14,22.944105671407296,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,840,14,23.118141100792226,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,960,16,22.93500809996168,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,1080,13,23.225316269639087,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+40,1200,11,22.742931410277954,False,40 Aleksandrowska-Kaczeńcowa -> Aleksandrowska-Szparagowa
+41,360,8,18.239990634478826,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,480,14,17.99700140161648,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,600,13,17.605245551508965,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,720,13,18.519578294119636,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,840,12,18.226020208722147,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,960,16,18.326850196564287,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,1080,10,18.796341587566047,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
+41,1200,10,17.80074078930147,False,41 Aleksandrowska-Szparagowa -> Aleksandrowska-Szczecińska
