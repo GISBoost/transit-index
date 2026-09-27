@@ -2,6 +2,61 @@
 
 Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na końcu kamienia i jest uzupełniany o werdykt `milestone-reviewer`. Decyzje techniczne: `docs/adr/`, pytania do autora: `docs/decisions-needed.md`.
 
+## M1: ingest i tabela obserwacji L0 (2026-09-27)
+
+**Status: wykonany, przegląd PASS po poprawce (pierwszy przebieg: FAIL, jedna pozycja blokująca — rozwiązana, patrz niżej).**
+
+### Co powstało
+
+| wynik | gdzie |
+|---|---|
+| pakiet produkcyjny: `ti ingest`, `ti obs`, `ti stability`, CLI `ti` (`pyproject.toml`: `[project.scripts]`) | `src/ti/` |
+| statyka dedup po SHA-256 (`routes`/`stops`/`trips`/`shapes` jako Parquet, zip odrzucany) | `data/static/<sha256>/` (poza gitem) |
+| L0: 24 kolumny z `docs/04` §2 (klucze, `mode`, `seg_id`, `sched_pass_time_s`, `band`, kolumny W10/W11, `in_area`) | `data/obs/<miasto>/<data>.parquet` (poza gitem) |
+| pochodzenie (ADR-0004): epoka i commit `easy-OTP` per dzień, z `Last-Modified` załącznika tidy i `config/tidy_epochs.yaml` | pole `epoch`/`easy_otp_commit` w raporcie |
+| flaga `feed_capability_window_signal` (R7, z rejestru `city_defects.yaml`, nie liczona z tidy) | pole w raporcie |
+| raport odrzuceń per miasto-dzień (`rows_tidy`, `rows_ok`, `crossing_rate`, `seg_status_share`, `share_of_obs_in_area`, skróty SHA-256) | `reports/m1/ingest_report.jsonl` |
+| stabilność `seg_id`/`stop_id` dzień-do-dnia, wszystkie miasta kandydujące (M0 sprawdzał tylko Łódź) | `ti stability` -> `reports/m1/stability.csv` |
+| testy: 7 jednostkowych (schemat, pochodzenie, `feed_capability`, transformacja tidy->L0, dedup statyk) + 3 na prawdziwych danych | `tests/test_ti_units.py`, `tests/test_m1_golden.py` |
+
+### Jak powtórzyć
+
+```
+PYTHONPATH=src;reference py -m ti.cli ingest --from 2026-09-01 --to 2026-09-27 --workers 4
+PYTHONPATH=src;reference py -m ti.cli stability
+py -m pytest tests -q
+```
+
+### Najważniejsze ustalenia
+
+1. **Test wzorcowy na prawdziwych danych, Łódź 2026-09-24: 168 507 wierszy `ok`, `ΣL/ΣT` (bus+tram) = 17,58 km/h, epoka `t1`** — dokładnie zgodne z `reference/golden_values.json`; `tidy_sha256` odtworzony w raporcie zgadza się ze skrótem w pliku złotym.
+2. **Ingest pełnego okna wykonany:** 16 miast kandydujących x 2026-09-01…27 (432 dni-miast). 370 zbudowanych, 28 z cache (powtórne uruchomienie), 34 luki jawne (31 `missing_static`, 3 `missing_tidy` — brak release'u lub załącznika, zgodne z lukami z M0: Turyn najwięcej, 17.09 w kilku miastach). **0 nieprzetworzonych, 0 uszkodzonych plików Parquet** (zweryfikowane `pyarrow` na wszystkich 398 plikach). Dane lokalne: `data/obs/` 2,5 GB, `data/static/` 1,8 GB (dedup, mniej unikatowych plików niż dni x miasta).
+3. **Odstąpiono od budowy tabeli rozkładowej "z tidy" pod W12**, którą zakładał pierwotny plan (`docs/decisions-needed.md` §3 sprzed testów): T17 (`docs/sensitivity-report.md` R10) wykazał, że tidy zaniża ofertę nawet o 64% (Turyn), więc budowanie jej teraz byłoby budowaniem znanego złego źródła. Tabela rozkładowa ze statyki zostaje w M2 (R10).
+4. **`feed_capability_window_signal` (R7)** nie jest liczony z tidy per dzień — to własność feedu (okno FA-12), niemierzalna bez surowych pozycji. `ti ingest` publikuje w raporcie to, co już wie `config/city_defects.yaml`, żeby M2/M3 miało to pod ręką bez ponownego liczenia; źródłem prawdy zostaje rejestr, nie raport.
+5. **Incydent podczas budowy:** pierwsze uruchomienie pełnego ingestu w tle zostało przypadkowo podwójnie zbackgroundowane (błąd operatora, nie kodu) i przez pewien czas dwa komplety procesów liczyły równolegle, co doprowadziło do chwilowego krytycznego braku pamięci w systemie i przerwania śledzenia zadania przez harness (sam proces przeżył i dokończył samodzielnie). Skutek: 18 przejściowych błędów `NotADirectoryError` w plikach tymczasowych (naprawione przy odduplikowaniu raportu; idempotencja `ti ingest` — kontrola `dest.exists()` — sprawiła, że nic nie trzeba było liczyć drugi raz). Żadnych danych nie ubyło ani nie uszkodzono.
+
+### Czego M1 nie zrobił / ograniczenia
+
+- L0 nie filtruje po trybie (bus/tram/other) ani po obszarze — trzyma wszystkie `ok` z flagą `in_area`/`mode`, decyzję filtrowania zostawia metrykom (M2), zgodnie z `docs/04` §2.
+- `data/obs/` i `data/static/` nie są jeszcze wysyłane jako załączniki release'ów nowego repo (`docs/04` §6) — repo nie istnieje (decyzja: lokalnie na razie, `docs/decisions-needed.md`).
+- Tabela rozkładowa pod W12 (źródło: statyka) nie została zbudowana — M2 (patrz punkt 3 wyżej).
+- Stabilność `seg_id`/`stop_id` policzona (`ti stability`), ale interpretacja progu "za mało stabilne" nie jest jeszcze ustalona (nie było w kryteriach akceptacji M1).
+- `ti ingest`/`ti obs` nie są zainstalowane jako pakiet (`pip install -e .` nie było uruchamiane w tej sesji) — testy i CLI działają przez `PYTHONPATH`.
+
+### Przegląd `milestone-reviewer`
+
+**Pierwszy przebieg: WERDYKT FAIL** (jedna pozycja blokująca). Recenzent niezależnie przeliczył 5 losowych liczb z `data/obs/*.parquet` przeciw `reports/m1/ingest_report.jsonl` (wszystkie zgodne), zweryfikował integralność 15 losowych plików Parquet (0 uszkodzonych), potwierdził pełne pokrycie 432 dni-miast po odduplikowaniu raportu i przeliczył test wzorcowy Łodzi 24.09 z sieci na żywo (168 507 wierszy, 17,575 km/h — w tolerancji).
+
+| uwaga | rozstrzygnięcie |
+|---|---|
+| **Blokujące:** kryterium "9 dni: 17,59 km/h" nie jest odtwarzane (`ti` daje 17,58, różnica 0,0115 km/h > tolerancja 0,01) i nic tego nie testowało | Zweryfikowane niezależnie i potwierdzone: `golden_values.json`'s wpis 9-dniowy policzono JEDNĄ statyką (24.09) dla wszystkich 9 dni, bo `probe_release_data.py` przyjmuje tylko jedną `--static`; `docs/09` F10 to udokumentował już wcześniej (98,65% dopasowania trybu, nie 100%). `docs/04` §2 i `CLAUDE.md` wymagają statyki **każdego dnia z osobna** — `ti obs` robi to poprawnie, więc 17,58 jest wartością prawidłową, a 17,59 przestarzałą. Poprawiono: `golden_values.json` (nowe pole `_uwaga_2026-09-27` na tym wpisie, oryginalne liczby zostają jako historyczne), `CLAUDE.md`, `docs/07-milestones.md` (17,59 → 17,58), nowy test `tests/test_m1_golden.py::test_ingest_nine_days_matches_corrected_value` |
+| osierocone katalogi `<sha256>.tmp<pid>/` w `data/static/` po incydencie z podwójnym procesem w tle | posprzątane (17 katalogów); `static_store.store()` dostał `try/except`+`shutil.rmtree` na wypadek przerwania w trakcie |
+| `reference/metrics_reference.py` ma `BANDS`/`DEFAULT_SPEED_EDGES_KMH` na sztywno zamiast czytać `config/metrics.yaml` | niekrytyczne (nieużywane w L0), zgodność już pilnowana testem; odłożone do M2 (produkcyjna implementacja metryk) |
+| `area_polygon` używa `within()` (przystanek dokładnie na granicy = "outside") | przypadek brzegowy bez praktycznego znaczenia, zostawione |
+| "kopia L0 jako załączniki release'ów" (`docs/04` §6) nie zrobiona | świadomie odłożone — repo nie istnieje (decyzja właściciela) |
+
+**Po poprawkach: `py -m pytest tests -q` → 26/26 przechodzi** (nowy test wzorcowy 9-dniowy). Werdykt: **PASS**.
+
 ## M0: repo, dane na pełnym oknie, decyzje (2026-09-26)
 
 **Status: wykonany, przegląd PASS (warunkowy), decyzje właściciela wprowadzone** (otwarte pozycje: `docs/decisions-needed.md`, żadna nie blokuje M1).

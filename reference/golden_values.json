@@ -91,6 +91,7 @@
   }
  },
  "lodz_2026-09-14_do_2026-09-24_9_dni_roboczych": {
+  "_uwaga_2026-09-27": "Ten wpis użył JEDNEJ statyki (24.09) dla wszystkich 9 dni, bo probe_release_data.py przyjmuje tylko jedną --static (patrz docs/09 F10: ok. 1,4% wierszy = 'unmapped', bo trasy starszych dni nie mapują się do statyki z 24.09). docs/04 §2 i CLAUDE.md wymagają statyki KAŻDEGO dnia z osobna; M1 (`ti obs`) robi to poprawnie. Skorygowana wartość na tej samej próbce, statyka każdego dnia (data/obs/lodz/2026-09-{14,15,16,17,18,21,22,23,24}.parquet, milestone-reviewer M1 + niezależnie przeliczone): n_obs (bus+tram) = 1 473 575 (nie 1 452 155), v_sum_ratio_kmh = 17,58 (nie 17,59). Pola per-dzień (per_file: rows/trips/crossing_rate/seg_status_share) nie zależą od statyki i zostają bez zmian. Pola mode-zależne poniżej (street/bus/tram/row_share_by_mode/speed_by_day_kmh/segment_length_share_by_quality/peak_penalty_vs_midday_evening/area_effect) są HISTORYCZNE (metoda jednej statyki) i NIE są celem dla ti/M2 — dla przyszłej pracy licz z L0 (statyka każdego dnia), nie z tego wpisu.",
   "city": "lodz",
   "inputs": {
    "lodz_tidy_2026-09-14.csv.gz": "f9debc1d7cda4906f14c44333a0a14485f7dfb3f392137f43a8adcafa8964829",

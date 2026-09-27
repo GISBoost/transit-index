@@ -38,7 +38,7 @@ Jesteś agentem M0 projektu transit-index. Przeczytaj CLAUDE.md, docs/02, docs/0
 - filtr `seg_status == "ok"` i tryb ze statyki **tego samego dnia** (`mode_from_route_type`),
 - `sched_pass_time_s` z `sched_arr` (nie z `sched_seg_time_s`),
 - filtr obszaru (wielokąt) stosowany na poziomie odcinka; zapisany `share_of_obs_in_area`,
-- **test wzorcowy:** dla Łodzi 2026-09-24 liczba obserwacji `ok` = 168 507 i `ΣL/ΣT` (bus+tram) = 17,58 km/h (`golden_values.json`); 9 dni: 17,59,
+- **test wzorcowy:** dla Łodzi 2026-09-24 liczba obserwacji `ok` = 168 507 i `ΣL/ΣT` (bus+tram) = 17,58 km/h (`golden_values.json`); 9 dni (2026-09-14…24, statyka każdego dnia z osobna): 17,58 (nie 17,59 — ta wartość w `golden_values.json` była policzona jedną statyką dla wszystkich 9 dni, patrz `_uwaga_2026-09-27` tamże; skorygowane po recenzji M1),
 - idempotencja (skróty zawartości), brak zmian przy ponownym przebiegu; 404 traktowane jako luka dnia, nie błąd.
 
 ```text

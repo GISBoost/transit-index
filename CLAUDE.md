@@ -26,7 +26,7 @@ Jeśli czegoś nie wiesz albo dokumenty się wykluczają, **zapytaj autora** zam
 - **Statyka:** tryb i geometria ze statyki **tego samego dnia**; statyki deduplikuj po SHA-256.
 - **Wymiary jakości:** W1/W3 (prędkość, kara szczytu), W10 (punktualność), W11 (regularność), W12 (oferta). Każdy ma własny ranking, `n` i status; nie sumuj ich w jedną liczbę. W10–W12 są propozycjami do walidacji w M2, nie faktami.
 - **Statystyka:** mediany i percentyle są normą. Jedyne agregaty zbiorcze: `ΣL/ΣT` (prędkość) i EWT (regularność), z testem czułości (`docs/03` §9).
-- **Testy wzorcowe:** wyniki zgadzają się z `reference/golden_values.json` (Łódź 2026-09-24: ok = 168 507 wierszy, `ΣL/ΣT` = 17,58 km/h; 9 dni: 17,59). W1–W12 to metryki, M0–M7 kamienie milowe, D1–D14 decyzje.
+- **Testy wzorcowe:** wyniki zgadzają się z `reference/golden_values.json` (Łódź 2026-09-24: ok = 168 507 wierszy, `ΣL/ΣT` = 17,58 km/h; 9 dni: **17,58**, statyka każdego dnia z osobna — patrz `_uwaga_2026-09-27` w tym pliku, 17,59 było policzone jedną statyką dla wszystkich 9 dni i jest historyczne). W1–W12 to metryki, M0–M7 kamienie milowe, D1–D14 decyzje.
 - **Brak magicznych liczb.** Progi, pasma, klasy prędkości (5 klas, `[15, 20, 25, 30]`) i bramka żyją w `config/*.yaml`; kod je czyta.
 - **Każda liczba ma `n` i status jakości** (`ok`/`thin`/`none` dla odcinków, `ranked`/`limited`/`excluded` dla miast).
 - **Wersje metody:** wyniki z różnych `method_version` nie są porównywalne. **Nie przypinamy `easy-OTP`** (ADR-0004): dla każdego dnia zapisuj czas budowy tidy i commit `easy-OTP` z tej chwili (epoki: `config/tidy_epochs.yaml`), w manifeście `easy_otp_commits`; dane serwujemy as is.
