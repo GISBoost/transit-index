@@ -4,7 +4,7 @@ Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na ko
 
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
-**Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: na dole.
+**Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.
 
 ### Co powstało
 
@@ -56,6 +56,23 @@ Dni ważne (z 19 dni roboczych okna do 09-27; 1-4.09 odpadają jako `recording_g
 1. Na maszynie z L0: `ti daystats` dla 16 miast, potem `ti gate`; sprawdzić, które dni dostają `speed_outlier` i czy odpowiadają znanym (Poznań 10.09, Rzym, Kraków; `docs/sensitivity-report.md` §3.2).
 2. Porównać `ranking.json` (W1, kolejność miast) z `reports/m2/metrics/*.json`; różnice mają wynikać tylko z wyłączenia dni odrzuconych.
 3. Atrybucje w `config/attributions.yaml`: każdy wiersz z `verified: false` wymaga otwarcia strony licencji (`docs/licenses.md` §5).
+
+### Przegląd `milestone-reviewer`
+
+**Werdykt: PASS (warunkowy), brak pozycji blokujących.** Recenzent (bez dostępu do L0/statyk, jak ta sesja) niezależnie odtworzył: dni ważne Łodzi (15), Turynu (6), Poznania (10), Krakowa (12), Sofii (13), Warszawy (14) z logów M0/M1 (zbiory dat identyczne z `reports/m3/gate_days_2026-pilot.json`), pokrycie sieci Łodzi z L1 (0,9642), skrót wejść (Łódź, Turyn, Poznań), walidację schematów wszystkich wygenerowanych plików i `examples/`. Kryterium liczby kursów działa na prawdziwych danych (Kraków 11, 18, 22.09; Poznań 10, 11, 15, 21, 24.09).
+
+| uwaga | rozstrzygnięcie |
+|---|---|
+| wartości wymiarów, bootstrap, `speed_outlier`, `hourly`, `lines` bez potwierdzenia na prawdziwych danych | otwarte: przed M5 uruchomić `ti daystats` z L0 i porównać W1 Łodzi 2026-09-24 z `reference/golden_values.json` (17,58 km/h); testy syntetyczne nie wystarczą do publikacji liczb |
+| `n_days` w `easy_otp_commits` to dni-miasta; dni `cached` bez commitu (epoka `unknown`) | doprecyzowane w opisie schematu; lista commitów jest niepełna do ponownego `ti ingest` tych dni |
+| zmiany schematów nie w pełni addytywne (`license`, `attributions`, `excluded_days` wymagane; sufiks pasma w `ranking.id`); diff zaszumiony przeformatowaniem | odnotowane (decyzja 9); pliki JSON przeformatowane pretty-print |
+| `ti_commit` z sufiksem `-dirty` (wygenerowane przed commitem) | przed publikacją wygenerować edycję ponownie z czystego commita |
+| commit w repo | na wyraźną prośbę autora (osobna gałąź, bez PR, bez pusha do main) |
+| pokrycie sieci to górne oszacowanie, L1 pooluje też dni odrzucone przez bramkę | opisane; drugi próg `city_gate` nie jest jeszcze realnym filtrem |
+| bramka pasm i wiarygodności `service_date` z przybliżeń M0 | opisane (pkt 6); po `ti daystats` pasma idą z L0 |
+| powód `recording_window_gap` bywa mylący (Turyn traci dni głównie na `no_tidy`/`no_static`) | otwarte: etykieta pochodzi z licznika dwóch powodów w `gate.city_status`; czytać razem z `days.excluded` w `quality.json` |
+| `verified: true` (Poznań, Szczecin, Turyn) = "pewność wysoka" w audycie, nie weryfikacja prawna | doprecyzowane w opisie schematu; docs/licenses.md dla Poznania nadal wymaga sprawdzenia, czy "wspieranie transportu" obejmuje ranking |
+| ścieżka `exclude` z rejestru wad sprawdzona tylko syntetycznie (jedyny wpis `exclude` to Helsinki, poza kandydatami) | zaakceptowane |
 
 ## M2: segmenty i metryki — rdzeń (2026-09-27)
 

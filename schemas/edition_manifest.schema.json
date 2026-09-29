@@ -98,7 +98,8 @@
               },
               "n_days": {
                 "type": "integer",
-                "minimum": 1
+                "minimum": 1,
+                "description": "number of valid city-days (one city x one day) built with this commit; days from `cached` ingest entries carry no commit and are not counted"
               }
             }
           }
@@ -198,7 +199,8 @@
                   "type": "string"
                 },
                 "verified": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "true = audit certainty 'high' in docs/licenses.md (source stated on the operator's page); not a legal verification"
                 },
                 "retrieved_first": {
                   "type": [
