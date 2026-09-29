@@ -1,0 +1,1858 @@
+{
+ "bucharest": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "low_crossing_rate",
+   "detail": "0.585 < 0.6"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": false,
+   "reason": "low_crossing_rate",
+   "detail": "0.596 < 0.6"
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo evening: 0.33 < 0.9"
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo midday: 0.75 < 0.9"
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "gdansk": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo midday: 0.75 < 0.9"
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "krakow": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "7057 kursów < 0.7 x mediana 13228"
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "8237 kursów < 0.7 x mediana 13228"
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "7958 kursów < 0.7 x mediana 13228"
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "lisbon": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo evening: 0.33 < 0.9"
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "ljubljana": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "lodz": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "nicosia": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  }
+ ],
+ "poznan": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "low_crossing_rate",
+   "detail": "0.465 < 0.6"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "1507 kursów < 0.7 x mediana 9278"
+  },
+  {
+   "date": "2026-09-11",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "1537 kursów < 0.7 x mediana 9278"
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "4335 kursów < 0.7 x mediana 9278"
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "1926 kursów < 0.7 x mediana 9278"
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "5348 kursów < 0.7 x mediana 9278"
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "prague": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "rome": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "5950 kursów < 0.7 x mediana 26543"
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "sofia": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": false,
+   "reason": "holiday",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": false,
+   "reason": "holiday",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "szczecin": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_tidy",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "turin": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "low_crossing_rate",
+   "detail": "0.001 < 0.6"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo pm_peak: 0.67 < 0.9"
+  },
+  {
+   "date": "2026-09-10",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": false,
+   "reason": "low_crossing_rate",
+   "detail": "0.598 < 0.6"
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_tidy",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo evening: 0.67 < 0.9"
+  },
+  {
+   "date": "2026-09-23",
+   "valid": false,
+   "reason": "low_trip_count",
+   "detail": "3704 kursów < 0.7 x mediana 7510"
+  },
+  {
+   "date": "2026-09-24",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "vilnius": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "warszawa": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_tidy",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ],
+ "zagreb": [
+  {
+   "date": "2026-09-01",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-02",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.50 < 0.9"
+  },
+  {
+   "date": "2026-09-03",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-04",
+   "valid": false,
+   "reason": "recording_gap",
+   "detail": "pasmo am_peak: 0.00 < 0.9"
+  },
+  {
+   "date": "2026-09-07",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-08",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-09",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-10",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-11",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-14",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-15",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-16",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-17",
+   "valid": false,
+   "reason": "no_static",
+   "detail": ""
+  },
+  {
+   "date": "2026-09-18",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-21",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-22",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-23",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-24",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  },
+  {
+   "date": "2026-09-25",
+   "valid": true,
+   "reason": null,
+   "detail": ""
+  }
+ ]
+}

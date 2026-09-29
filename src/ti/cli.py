@@ -41,6 +41,18 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--to", dest="end", required=True)
     m.add_argument("--cities", nargs="*", default=None)
 
+    d = sub.add_parser("daystats", help="L0 -> per-day sufficient statistics (data/editions/<edition>/<city>/day_stats.parquet); needs data/obs")
+    d.add_argument("--city", required=True)
+    d.add_argument("--from", dest="start", required=True)
+    d.add_argument("--to", dest="end", required=True)
+    d.add_argument("--edition", default=DEFAULT_EDITION)
+    d.add_argument("--valid-only", action="store_true", help="W3 reference from days accepted by `ti gate` only (second pass)")
+
+    t = sub.add_parser("gate", help="day/city gate, anomalous days, day-bootstrap, ranking/summary/hourly/lines/quality/manifest (data/editions/<edition>/)")
+    t.add_argument("--from", dest="start", required=True, help="window start, YYYY-MM-DD")
+    t.add_argument("--to", dest="end", required=True, help="window end, YYYY-MM-DD (days after the last ingested date are 'not yet available')")
+    t.add_argument("--edition", default=DEFAULT_EDITION)
+
     a = ap.parse_args(argv)
 
     if a.cmd == "ingest":
@@ -60,6 +72,19 @@ def main(argv: list[str] | None = None) -> int:
 
         stats_path, dim_path = aggregate.run(a.city, a.start, a.end, a.edition)
         print(f"wrote {stats_path}\nwrote {dim_path}")
+    elif a.cmd == "daystats":
+        from . import daystats
+
+        print("wrote", daystats.run(a.city, a.start, a.end, a.edition, a.valid_only))
+    elif a.cmd == "gate":
+        from . import edition
+
+        res = edition.run(a.edition, a.start, a.end)
+        for city, c in sorted(res["results"].items()):
+            print(f"{city:12s} {c['status']:9s} valid={len(c['valid_dates']):2d}/{c['days']['window_weekdays_elapsed']:2d} reasons={','.join(c['reasons']) or '-'}")
+        print(f"{len(res['rankings'])} rankings; wrote {res['out']}")
+        for n in res["notes"]:
+            print("note:", n)
     elif a.cmd == "metrics":
         from . import metrics
 

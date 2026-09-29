@@ -3,14 +3,63 @@
   "method_version": "ti-1.0-draft",
   "placeholder": true,
   "status": "draft",
-  "window": {"from": "2026-09-01", "to": "2026-12-18", "day_type": "WEEKDAY"},
-  "code": {"ti_commit": "0000000000000000000000000000000000000000", "easy_otp_commits": [{"commit": "bccb17bb0066a358fde547dbe215fd50517838b2", "from": "2026-09-04", "to": "2026-12-18", "epoch": "t1", "n_days": 60}]},
+  "window": {
+    "from": "2026-09-01",
+    "to": "2026-12-18",
+    "day_type": "WEEKDAY"
+  },
+  "code": {
+    "ti_commit": "0000000000000000000000000000000000000000",
+    "easy_otp_commits": [
+      {
+        "commit": "bccb17bb0066a358fde547dbe215fd50517838b2",
+        "from": "2026-09-04",
+        "to": "2026-12-18",
+        "epoch": "t1",
+        "n_days": 60
+      }
+    ]
+  },
   "config_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
   "cities": [
-    {"city": "miasto-a", "status": "ranked", "n_valid_days": 42, "n_input_files": 44, "inputs_sha256": "1111111111111111111111111111111111111111111111111111111111111111"},
-    {"city": "miasto-d", "status": "excluded", "n_valid_days": 0, "n_input_files": 44, "inputs_sha256": "2222222222222222222222222222222222222222222222222222222222222222"}
+    {
+      "city": "miasto-a",
+      "status": "ranked",
+      "n_valid_days": 42,
+      "n_input_files": 44,
+      "inputs_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "attributions": [
+        {
+          "source": "Operator A (zastępczy)",
+          "url": "https://example.invalid/",
+          "license": "CC BY 4.0",
+          "verified": false,
+          "processing_note": "Dane przetworzone przez Transit Index (dane zastępcze)."
+        }
+      ],
+      "excluded_days": []
+    },
+    {
+      "city": "miasto-d",
+      "status": "excluded",
+      "n_valid_days": 0,
+      "n_input_files": 44,
+      "inputs_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "attributions": [
+        {
+          "source": "Operator A (zastępczy)",
+          "url": "https://example.invalid/",
+          "license": "CC BY 4.0",
+          "verified": false,
+          "processing_note": "Dane przetworzone przez Transit Index (dane zastępcze)."
+        }
+      ],
+      "excluded_days": []
+    }
   ],
   "created_at": "2027-01-10T08:00:00Z",
   "doi": null,
-  "errata": []
+  "errata": [],
+  "license": "CC-BY-4.0",
+  "data_through": "2026-12-18"
 }

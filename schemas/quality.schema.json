@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "quality.json - bramka jakości, dni wyłączone i ograniczenia edycji",
+  "type": "object",
+  "required": [
+    "edition",
+    "method_version",
+    "generated_at",
+    "window",
+    "thresholds",
+    "cities"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "edition": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "boolean"
+    },
+    "window": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "data_through"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "data_through": {
+          "type": "string"
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "echo of the config/metrics.yaml gate sections used for this run"
+    },
+    "cities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "city",
+          "status",
+          "reasons",
+          "days",
+          "gate_stats",
+          "network_coverage_share",
+          "dimensions",
+          "known_defects",
+          "criteria_skipped"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ranked",
+              "limited",
+              "excluded"
+            ]
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "days": {
+            "type": "object",
+            "required": [
+              "window_weekdays_elapsed",
+              "n_valid",
+              "not_yet_available",
+              "excluded",
+              "epochs"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "window_weekdays_elapsed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "n_valid": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "not_yet_available": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "excluded": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "date",
+                    "reason"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "date": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "epochs": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "gate_stats": {
+            "type": "object",
+            "required": [
+              "crossing_rate",
+              "ok_share"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "crossing_rate": {
+                "$ref": "#/$defs/minmedmax"
+              },
+              "ok_share": {
+                "$ref": "#/$defs/minmedmax"
+              },
+              "share_of_obs_in_area": {
+                "$ref": "#/$defs/minmedmax"
+              }
+            }
+          },
+          "network_coverage_share": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "network_coverage_note": {
+            "type": "string"
+          },
+          "modes": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "street",
+                "bus",
+                "tram"
+              ]
+            },
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "n_routes",
+                "n_ok_segments",
+                "passes_mode_min"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "n_routes": {
+                  "type": "integer"
+                },
+                "n_ok_segments": {
+                  "type": "integer"
+                },
+                "passes_mode_min": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "dimensions": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "speed",
+                "peak_penalty",
+                "punctuality",
+                "regularity",
+                "service"
+              ]
+            },
+            "additionalProperties": {
+              "enum": [
+                "ranked",
+                "limited",
+                "none"
+              ]
+            }
+          },
+          "known_defects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "action"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "criteria_skipped": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "anomaly": {
+      "type": "object",
+      "description": "median/MAD of the daily city speed used for the speed_outlier criterion, per city"
+    }
+  },
+  "$defs": {
+    "minmedmax": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "min",
+        "median",
+        "max"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "median": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

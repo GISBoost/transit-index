@@ -54,7 +54,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^(street|bus|tram)_(speed|peak_penalty|punctuality|ewt|frequency)$",
+          "pattern": "^(street|bus|tram)_(speed|peak_penalty|punctuality|ewt|frequency)(_(am_peak|midday|pm_peak|evening))?$",
           "description": "<tryb>_<wymiar>, np. bus_punctuality (docs/03 §2 i §4)"
         },
         "dimension": {
@@ -105,6 +105,36 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/entry"
+          }
+        },
+        "mode": {
+          "enum": [
+            "street",
+            "bus",
+            "tram"
+          ]
+        },
+        "uncertainty": {
+          "type": "object",
+          "required": [
+            "method",
+            "n_resamples",
+            "interval"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "n_resamples": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "interval": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "exclusiveMaximum": 1
+            }
           }
         }
       }
@@ -180,6 +210,24 @@
             "radius_fallback"
           ],
           "description": "jak wyznaczono obszar miasta (docs/03 §2); radius_fallback = tymczasowe przybliżenie, nie do publikacji"
+        },
+        "ci_low": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ci_high": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "indistinguishable_with": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

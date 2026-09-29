@@ -100,27 +100,35 @@ def _has_stop_times(sha: str) -> bool:
     return (DATA / "static" / sha / "stop_times.parquet").exists()
 
 
-def _service_offer(city: str, dates: list[str], inside_by_sha: dict) -> dict:
-    """W12 (docs/03 §4.3, R10): median-per-stop computed one reference day at a time (each day
-    has its own static, so departures from different days must not be pooled before dividing by
-    band hours - that double-counts days as if they were more stops per hour), then the median of
-    those daily city values across the window (docs/03 §1: medians are the norm)."""
+def service_offer_day(city: str, date: str, inside_by_sha: dict) -> dict[str, tuple[float, int]] | None:
+    """W12 for one reference day (docs/03 §4.3): {mode: (departures/hour median over stops, n_stops)}
+    from that day's own static, or None when the day has no static with stop_times."""
     svc = CFG["service"]
     band_hours = tuple(CFG["bands"][svc["band"]])
+    sha = static_sha_for(city, date)
+    if sha is None or not _has_stop_times(sha):
+        return None
+    dep = sched.departures(sha, date)
+    if sha not in inside_by_sha:
+        _, inside = static_store.load(sha, city)
+        inside_by_sha[sha] = inside
+    dep = dep[dep.stop_id.isin(inside_by_sha[sha])]
+    return {mode: mr.service_offer_per_hour(dep[dep["mode"] == mode], band_hours, svc["min_stop_departures"]) for mode in ("bus", "tram")}
+
+
+def _service_offer(city: str, dates: list[str], inside_by_sha: dict) -> dict:
+    """W12: median-per-stop computed one reference day at a time (each day has its own static, so
+    departures from different days must not be pooled before dividing by band hours - that
+    double-counts days as if they were more stops per hour), then the median of those daily city
+    values across the window (docs/03 §1: medians are the norm)."""
     per_mode_daily: dict[str, list[float]] = {"bus": [], "tram": []}
     n_days_used = 0
     for date in dates:
-        sha = static_sha_for(city, date)
-        if sha is None or not _has_stop_times(sha):
+        day = service_offer_day(city, date, inside_by_sha)
+        if day is None:
             continue
-        dep = sched.departures(sha, date)
-        if sha not in inside_by_sha:
-            _, inside = static_store.load(sha, city)
-            inside_by_sha[sha] = inside
-        dep = dep[dep.stop_id.isin(inside_by_sha[sha])]
         n_days_used += 1
-        for mode in per_mode_daily:
-            v, _ = mr.service_offer_per_hour(dep[dep["mode"] == mode], band_hours, svc["min_stop_departures"])
+        for mode, (v, _) in day.items():
             if v == v:
                 per_mode_daily[mode].append(v)
     result = {"n_days": n_days_used}

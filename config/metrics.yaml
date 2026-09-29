@@ -61,3 +61,21 @@ city_gate:                           # pilot thresholds; the annual edition need
   limited:  {min_valid_days: 20, min_network_coverage: 0.40}
 
 mode_min: {routes: 3, segments: 50}
+
+# M3 (docs/03 §7, §6). Anomalous-day detection is independent of config/calendars (school breaks are
+# deliberately empty there). mad_scale 1.0 = the literal "3 MAD" of the spec (raw MAD, ~2 sigma for
+# normal data); 1.4826 would make it ~3 sigma. Owner decision pending, see docs/progress.md (M3).
+anomaly:
+  mad_k: 3.0
+  mad_scale: 1.0
+  min_days_for_mad: 5                # fewer surviving days: MAD criterion is skipped, not applied
+
+# docs/03 §6 [PROPOSAL]: bootstrap over days, 200 draws, 90% interval; cities whose intervals
+# overlap in a ranking are marked indistinguishable.
+bootstrap: {n_resamples: 200, interval: 0.90, seed: 20260929}
+
+# Dimension status (docs/03 §6: "status wymiaru wynika z jego n i progów") [PROPOSAL, not calibrated]:
+# a dimension is at most `limited` when its n is below the floor, whatever the city status.
+dimension_gate:
+  min_obs: {speed: 1000, peak_penalty: 1000, punctuality: 1000, regularity: 200, service: 0}
+  min_days: {service: 1}             # W12 has no observations, only days with a static

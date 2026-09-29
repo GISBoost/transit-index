@@ -1,0 +1,26 @@
+# Per-city source attributions for edition manifests (docs/05 §3, docs/licenses.md §2, §6; ADR-0003).
+# Source of every value: docs/licenses.md (preliminary audit 2026-09-26, NOT a legal opinion). A value that the
+# audit did not establish is null with verified: false - never guessed. `ti gate` copies these into
+# manifest.json (`attributions` per city) together with the retrieval dates it measures itself.
+# Results are CC BY 4.0 (D7, ADR-0003). `processing_note` is the "dane przetworzone" sentence required by
+# several operators (docs/licenses.md §3.4).
+license: CC-BY-4.0
+processing_note: "Dane przetworzone przez Transit Index (rekonstrukcja przejazdów z pozycji pojazdów GTFS-RT i rozkładu GTFS, agregacja do wskaźników); nie są danymi operatora."
+osm_attribution: "(c) OpenStreetMap contributors (ODbL)"
+cities:
+  lodz:      {source: "Urząd Miasta Łodzi, portal otwarte.miasto.lodz.pl", url: "https://otwarte.miasto.lodz.pl/", license: null, license_note: "portal: użycie także komercyjne z podaniem źródła (nazwa licencji nie podana)", obligations: "atrybucja", verified: false}
+  warszawa:  {source: "ZTM Warszawa (GTFS przez mkuran.pl)", url: "https://mkuran.pl/gtfs/", license: null, license_note: "warunki użytkowania ZTM; kształty tras autobusowych z OSM (ODbL, share-alike)", obligations: "wszystkie atrybucje z attributions.txt feedu (ZTM, autor feedu, OSM); ODbL share-alike dla baz kształtów", verified: false, osm: true}
+  krakow:    {source: "ZTP Kraków", url: "https://gtfs.ztp.krakow.pl/", license: null, license_note: "licencji nie znaleziono", obligations: "do ustalenia", verified: false}
+  gdansk:    {source: "ZTM Gdańsk, portal ckan.multimediagdansk.pl", url: "https://ckan.multimediagdansk.pl/dataset/tristar", license: "CC BY 4.0", obligations: "atrybucja", verified: false}
+  poznan:    {source: "ZTM Poznań", url: "https://www.ztm.poznan.pl/otwarte-dane/dla-deweloperow/", license: null, license_note: "warunki ZTM: źródło, data ostatniej aktualizacji i fakt przetworzenia danych", obligations: "podać źródło, datę aktualizacji i fakt przetworzenia", verified: true}
+  szczecin:  {source: "ZDiTM Szczecin", url: "https://www.zditm.szczecin.pl/en/zditm/for-developers/gtfs", license: "CC0 1.0", obligations: "brak (cytowanie mile widziane)", verified: true}
+  prague:    {source: "PID (Praha), data.pid.cz", url: "https://pid.cz/en/opendata/", license: "CC BY (wariant do potwierdzenia)", obligations: "atrybucja", verified: false}
+  rome:      {source: "Roma Servizi per la Mobilità", url: "https://romamobilita.it/sistemi-e-tecnologie/open-data/", license: null, license_note: "wymagana akceptacja licencji użytkowania, treść nieustalona; RT: dane wyłącznie jako wsparcie podróży", obligations: "do ustalenia", verified: false}
+  turin:     {source: "Data source: GTT S.p.A. – Gruppo Torinese Trasporti", url: "https://www.gtt.to.it", license: null, license_note: "GTT: użycie wyłącznie niekomercyjne (https://www.gtt.to.it/gtt_gtfs_license.html); AperTO: CC BY 4.0", obligations: "atrybucja 'Data source: GTT S.p.A. – Gruppo Torinese Trasporti' z linkiem; zakaz użycia komercyjnego (w tym reklam) bez zgody GTT", verified: true}
+  vilnius:   {source: "stops.lt (Wilno)", url: "https://stops.lt/", license: null, license_note: "nazwy licencji nie znaleziono", obligations: "do ustalenia", verified: false}
+  sofia:     {source: "Sofia Traffic / BGNAP", url: "https://www.sofiatraffic.bg/en/info-center/gtfs-danni", license: "CC BY 4.0", obligations: "atrybucja", verified: false, osm: true}
+  bucharest: {source: "TPBI (Bukareszt)", url: "https://gtfs.tpbi.ro/", license: null, license_note: "licencji nie znaleziono", obligations: "do ustalenia", verified: false}
+  lisbon:    {source: "Carris (Lizbona)", url: "https://gateway.carris.pt/", license: null, license_note: "licencji nie znaleziono", obligations: "do ustalenia", verified: false, osm: true}
+  zagreb:    {source: "ZET (Zagrzeb)", url: "https://www.zet.hr/odredbe/datoteke-u-gtfs-formatu/669", license: "Otvorena dozvola - Republika Hrvatska", obligations: "atrybucja wg licencji", verified: false}
+  ljubljana: {source: "LPP (Lublana), data.lpp.si", url: "https://data.lpp.si/", license: null, license_note: "licencji nie znaleziono", obligations: "do ustalenia", verified: false}
+  nicosia:   {source: "Motion Bus Card (Nikozja); formalnie Cyprus NAP", url: "https://www.motionbuscard.org.cy/", license: null, license_note: "licencji nie znaleziono", obligations: "do ustalenia", verified: false}

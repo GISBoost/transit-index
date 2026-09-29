@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cities/{city}/hourly.json - profil godzinowy prędkości (W9)",
+  "type": "object",
+  "required": [
+    "city",
+    "edition",
+    "method_version",
+    "day_type",
+    "modes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "city": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "boolean"
+    },
+    "day_type": {
+      "enum": [
+        "WEEKDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    "unit": {
+      "const": "km/h"
+    },
+    "modes": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "street",
+          "bus",
+          "tram"
+        ]
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "hour",
+            "speed_kmh",
+            "n_obs"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "speed_kmh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "n_obs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "quality": {
+              "enum": [
+                "ok",
+                "thin",
+                "none"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
