@@ -29,9 +29,10 @@ Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fe
 ### Wyniki na prawdziwych danych
 
 - **43 590 odcinków** w 16 miastach, wszystkie cechy przechodzą walidację schematu (brak dodatkowych pól). Kafle: 0,8-7,2 MB na miasto, 36 MB razem; artefakt strony bez podkładu 37 MB przy budżecie 700 MB.
-- **Kryterium akceptacji "żaden odcinek >= 200 m nie znika przy z14+": spełnione we wszystkich 16 miastach** (sprawdzone przez zdekodowanie kafli z14 i z15 i porównanie z `seg_id` z L1). Pierwsze uruchomienie Bukaresztu ujawniło 12 odcinków >= 200 m bez geometrii, bo jego statyki z dni `cached` nie były w logu; po ich rozwiązaniu (`resolve_unlogged`) wszystkie mają geometrię. Jeden odcinek Rzymu (< 200 m) nie ma geometrii (nieznane przystanki w statykach), jest zliczony w raporcie, nie zmyślony.
-- **Udział `geometry_quality = straight`** (według długości): Lublana 5,9%, Lizbona 3,1%, Łódź 2,6%, Zagrzeb 2,3%, Poznań 1,9%; pozostałe miasta < 1% (Sofia i Wilno 0%). Pełna tabela w ADR-0007 i w raporcie.
-- **Niezależna kontrola geometrii:** długość zbudowanej polilinii vs `length_m` z L1 (liczone innym torem, w M2 z `shape_dist_m`): p5-p95 = 0,983-1,013 w prawie wszystkich miastach (Warszawa 0,956-1,039, Rzym 0,985-1,028). To zgadza się z F8 z `docs/09` (1,000 długości kształtu).
+- **Kryterium akceptacji "żaden odcinek >= 200 m nie znika przy z14+": spełnione we wszystkich 16 miastach** (sprawdzone przez zdekodowanie kafli z14 i z15 i porównanie z `seg_id` z L1). Pierwsze uruchomienie Bukaresztu ujawniło 12 odcinków >= 200 m bez geometrii, bo jego statyki z dni `cached` nie były w logu; po ich rozwiązaniu (`resolve_unlogged`) wszystkie mają geometrię. Jeden odcinek Rzymu (`70118>73353`, n_obs = 1) ma geometrię, ale nie ma wiersza `all_day` w L1 (brak `length_m` i `q_all`, wymaganych przez schemat), więc nie trafia do kafli; zliczony w raporcie jako `segments_without_all_day_row`.
+- **Udział `geometry_quality = straight`** (według długości, po zamianie wadliwych cięć, patrz niżej): Lublana 5,9%, Poznań 3,7%, Lizbona 3,6%, Łódź 3,2%, Zagrzeb 2,4%, Turyn 1,2%, Praga 1,2%, Rzym 1,1%; pozostałe miasta < 1% (Sofia i Wilno 0%). Pełna tabela w ADR-0007 i w raporcie.
+- **Cięcia poza `length_ratio_bounds` [0,8; 1,25]** (długość polilinii / `length_m` z L1; pętle, objazdy) zamieniane są na `straight`: 191 z 43 590 odcinków (0,4%), rozkład per miasto w raporcie (`shape_downgraded_length_ratio`). Wykryte przez recenzenta; przed poprawką cechy miały polilinie kilkukrotnie dłuższe niż odcinek.
+- **Niezależna kontrola geometrii:** długość zbudowanej polilinii vs `length_m` z L1 (liczone innym torem, w M2 z `shape_dist_m`): p5-p95 = 0,983-1,013 w prawie wszystkich miastach (Warszawa 0,956-1,039, Rzym 0,985-1,028); ogon poza 0,8-1,25 obsługuje zamiana na `straight` (wyżej). To zgadza się z F8 z `docs/09` (1,000 długości kształtu).
 - **Stabilność wzorca:** mediana udziału dominującego wzorca = 1,0, ale dolny decyl bywa niski (Łódź 0,54, Turyn 0,55, Lizbona 0,55, Rzym 0,67, Lublana 0,70, Kraków 0,79): na części odcinków wzorzec zmieniał się w oknie (objazdy, nowe statyki), rysujemy najczęstszy.
 
 ### Decyzje i założenia do potwierdzenia
@@ -46,7 +47,7 @@ Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fe
 
 ### Czego M4 nie zrobił
 
-- Nie uruchomiono workflow na GitHubie (brak dostępu, i Pages dla repo prywatnego wymaga płatnego planu; repo ma być publiczne). Czas i minuty runnera nieznane (ADR-0007).
+- Nie uruchomiono workflow na GitHubie; jest tylko ręczny (`workflow_dispatch`), bo publikacja wymaga Twojej zgody (brak dostępu, i Pages dla repo prywatnego wymaga płatnego planu; repo ma być publiczne). Czas i minuty runnera nieznane (ADR-0007).
 - Nie zbudowano podkładu OSM. Bez niego strona pokazuje tło jednolite i mówi to w panelu ("brak (tło jednolite)").
 - Nie sprawdzono Firefoksa ani Safari. Sprawdzono tylko headless Chromium 141 z lokalnym serwerem obsługującym `Range` (status 206, sygnatura PMTiles, poprawne długości).
 - Nie liczono rankingu ani bramki (M3), nie ruszano serwisu Astro (M5). Szczegóły godzinowe (`hourly`) nie są w kaflach (ładowane po kliknięciu, M5).
@@ -57,6 +58,22 @@ Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fe
 2. **Link do strony testowej: `https://gisboost.github.io/transit-index/`** (adres po pierwszym udanym wdrożeniu przy repo publicznym i włączonym Pages ze źródłem "GitHub Actions"; nie został sprawdzony).
 3. Podkład: w logu workflow i w `basemap/basemap_report.json` (dodawany do podsumowania joba) sprawdź, czy wszystkie 16 wycinków się udało i ile ważą; jeśli nazwy warstw Protomaps różnią się od założonych (`earth`, `water`, `roads`), popraw `site-test/app.js`.
 4. Kilka odcinków na oko: Łódź (Piotrkowska), Warszawa (Marszałkowska): czy dwa kierunki leżą po dwóch stronach ulicy, czy trasy nie "skaczą" na rondach i pętlach.
+
+### Werdykt `milestone-reviewer` (2026-09-29) i poprawki
+
+**PASS warunkowy**: geometria i kafle PASS z dowodami (schemat: 5 miast, 0 błędów; pokrycie seg_id względem L1 100%; przeliczenie udziału `straight` zgodne z raportem; kafle z13-z15 Szczecina bez brakujących odcinków; końce polilinii 0-7 m od przystanków na losowych odcinkach); wdrożenie na Pages, podkład i test w przeglądarkach niesprawdzone (zgodnie z wpisem). Uwagi recenzenta i co z nimi zrobiono:
+
+| # | uwaga | stan |
+|---|---|---|
+| 1 | test zakresu środkowego (1 000 000 B) fałszywie zawodziłby dla plików < 1 MB (Lublana, Nikozja) | poprawione: pozycja z rozmiaru pliku (`site-test/app.js`) |
+| 2 | `setup-python` z `cache: pip` bez `requirements.txt` | poprawione: `cache-dependency-path: pyproject.toml`; `apt install tippecanoe` i `go install ...@latest` na runnerze nadal niesprawdzone |
+| 3 | odcinek bez wiersza `all_day` znikał bez alarmu, a wpis mylnie tłumaczył go nieznanymi przystankami | poprawione: osobny licznik `segments_without_all_day_row`, poprawiony opis (Rzym, jeden odcinek, n_obs = 1) |
+| 4 | ogon stosunku długości poza 0,8-1,25 (ok. 0,7-0,8% cech, polilinie kilkukrotnie za długie) | poprawione: próg `length_ratio_bounds` w `config/geometry.yaml`, zamiana na `straight`, licznik w raporcie, test |
+| 5 | trigger `push` wdrażał na Pages bez zgody | poprawione: tylko `workflow_dispatch` |
+| 6 | `docs/04` §3/E mówi `ti tiles` i `segments.pmtiles` | wdrożono `ti geometry` i `tiles/<miasto>.pmtiles`; do uzgodnienia przy M5 (rozbieżność zapisana tu) |
+| 7 | `setHTML` bez ucieczki nazw z GTFS | poprawione (`esc`) |
+| 8 | `m4_basemap.py` łapał tylko `URLError` | poprawione (`OSError`) |
+| 9-11 | atrybucja per miasto na stronie, `simplify()` przez `np.allclose`, brak testu bez tippecanoe | otwarte; atrybucje przy publikacji (M5), reszta drobna |
 
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 

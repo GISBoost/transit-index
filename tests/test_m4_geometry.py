@@ -206,3 +206,14 @@ def test_committed_pilot_geojson_validates_against_the_feature_schema():
         for x in feats:
             validator.validate(x)
             assert not x["properties"].get("placeholder")
+
+
+def test_implausible_shape_cut_is_downgraded_to_straight_and_counted(geom_store):
+    stats, dim = _l1()
+    lo, hi = geometry_cfg()["length_ratio_bounds"]
+    good = np.array([[20.0, 52.0], [20.0, 52.01]])          # ~1112 m, matches length_m 1113
+    detour = np.array([[20.0, 52.0], [20.05, 52.0], [20.05, 52.02], [20.01, 52.01]])  # far longer than 1112 m
+    feats, cnt = T.build_features(stats, dim, {"A>B": ("shape", good), "B>C": ("shape", detour)}, {})
+    q = {f["properties"]["seg_id"]: f["properties"]["geometry_quality"] for f in feats}
+    assert q == {"A>B": "shape", "B>C": "straight"} and cnt["shape_downgraded_length_ratio"] == 1 and lo < 1 < hi
+    assert len([f for f in feats if f["properties"]["seg_id"] == "B>C"][0]["geometry"]["coordinates"]) == 2

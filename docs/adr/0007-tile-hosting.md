@@ -15,27 +15,27 @@ Mapa (M5) czyta kafle PMTiles przez `pmtiles://` i zapytania HTTP `Range`. Trzeb
 
 Rozmiary: patrz `reports/m4/geometry_2026-pilot.json` (per miasto) i tabela poniżej (wygenerowana z tego raportu). Kafle segmentów z tippecanoe 2.49 (`-Z8 -z15`, bez zrzucania cech) są małe: rzędu 1-4 MB na miasto, kilkadziesiąt MB łącznie, czyli ułamek budżetu 700 MB. Jeden plik na miasto nigdzie nie zbliża się do limitu 100 MB na plik w git.
 
-| miasto | odcinki | GeoJSON.gz (kB) | PMTiles (MB) | prosta geometria (długość) | segmenty ≥ 200 m bez geometrii |
-|---|---|---|---|---|---|
-| bucharest | 2341 | 197 | 1,82 | 0,0% | 0 |
-| gdansk | 1486 | 139 | 1,45 | 0,2% | 0 |
-| krakow | 2407 | 213 | 2,13 | 0,1% | 0 |
-| lisbon | 2549 | 199 | 1,69 | 3,1% | 0 |
-| ljubljana | 626 | 87 | 0,81 | 5,9% | 0 |
-| lodz | 2284 | 199 | 1,92 | 2,6% | 0 |
-| nicosia | 1087 | 103 | 0,93 | 0,1% | 0 |
-| poznan | 1688 | 137 | 1,50 | 1,9% | 0 |
-| prague | 4083 | 395 | 3,46 | 0,4% | 0 |
-| rome | 9497 | 911 | 7,20 | 0,8% | 0 |
-| sofia | 2601 | 245 | 2,00 | 0,0% | 0 |
-| szczecin | 1320 | 109 | 1,17 | 0,3% | 0 |
-| turin | 2721 | 218 | 2,07 | 0,3% | 0 |
-| vilnius | 1744 | 159 | 1,80 | 0,0% | 0 |
-| warszawa | 5051 | 395 | 4,01 | 0,2% | 0 |
-| zagreb | 2105 | 211 | 2,02 | 2,3% | 0 |
-| **razem** | | 3917 | 36,0 | | |
+| miasto | odcinki | GeoJSON.gz (kB) | PMTiles (MB) | prosta geometria (długość) | zamienione na prostą (zły stosunek długości) | segmenty ≥ 200 m bez geometrii |
+|---|---|---|---|---|---|---|
+| bucharest | 2341 | 197 | 1,82 | 0,1% | 1 | 0 |
+| gdansk | 1486 | 139 | 1,45 | 0,5% | 6 | 0 |
+| krakow | 2407 | 213 | 2,12 | 0,8% | 9 | 0 |
+| lisbon | 2549 | 198 | 1,69 | 3,6% | 12 | 0 |
+| ljubljana | 626 | 87 | 0,81 | 5,9% | 0 | 0 |
+| lodz | 2284 | 199 | 1,92 | 3,2% | 8 | 0 |
+| nicosia | 1087 | 103 | 0,93 | 0,1% | 0 | 0 |
+| poznan | 1688 | 136 | 1,50 | 3,7% | 31 | 0 |
+| prague | 4083 | 394 | 3,46 | 1,2% | 31 | 0 |
+| rome | 9497 | 910 | 7,20 | 1,1% | 43 | 0 |
+| sofia | 2601 | 245 | 2,00 | 0,0% | 0 | 0 |
+| szczecin | 1320 | 109 | 1,17 | 0,3% | 0 | 0 |
+| turin | 2721 | 218 | 2,07 | 1,2% | 13 | 0 |
+| vilnius | 1744 | 159 | 1,80 | 0,0% | 0 | 0 |
+| warszawa | 5051 | 394 | 4,01 | 0,8% | 35 | 0 |
+| zagreb | 2105 | 211 | 2,01 | 2,4% | 2 | 0 |
+| **razem** | | 3912 | 36,0 | | 191 | |
 
-Artefakt strony testowej (16 miast, bez podkładu): 37,1 MB przy budżecie 700 MB (`docs/06` §5). Podkład dojdzie w workflow; jego rozmiar nie jest znany (patrz niżej).
+Artefakt strony testowej (16 miast, bez podkładu): 37,2 MB przy budżecie 700 MB (`docs/06` §5). Podkład dojdzie w workflow; jego rozmiar nie jest znany (patrz niżej).
 
 ## Decyzja
 
@@ -46,7 +46,7 @@ Artefakt strony testowej (16 miast, bez podkładu): 37,1 MB przy budżecie 700 M
 
 ## Koszt w minutach runnera
 
-Nie zmierzony (workflow nie był jeszcze uruchomiony na GitHubie). Szacunek z lokalnego przebiegu: budowa 16 kafli i kontrola akceptacji z14+ trwa poniżej minuty na 4 rdzeniach; ekstrakty podkładu zależą od sieci i rozmiaru bbox (do zmierzenia). Ograniczenie ryzyka: workflow odpala się na `push` tylko przy zmianie plików strony testowej lub kodu kafli oraz ręcznie (`workflow_dispatch`), a `concurrency` anuluje starsze przebiegi.
+Nie zmierzony (workflow nie był jeszcze uruchomiony na GitHubie). Szacunek z lokalnego przebiegu: budowa 16 kafli i kontrola akceptacji z14+ trwa poniżej minuty na 4 rdzeniach; ekstrakty podkładu zależą od sieci i rozmiaru bbox (do zmierzenia). Ograniczenie ryzyka: workflow odpala się wyłącznie ręcznie (`workflow_dispatch`; publikacja wymaga zgody autora, CLAUDE.md), a `concurrency` anuluje starsze przebiegi.
 
 ## Konsekwencje
 

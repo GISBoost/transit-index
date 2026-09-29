@@ -30,7 +30,8 @@ def build_features(stats: pd.DataFrame, dim: pd.DataFrame, geom: dict, names: di
     nd, cd = cfg["value_decimals"], cfg["coordinate_decimals"]
     by = {b: g.set_index("seg_id") for b, g in stats.groupby("band")}
     dim = dim.set_index("seg_id")
-    feats, no_geom, no_name, lost = [], 0, 0, []
+    feats, no_geom, no_name, lost, downgraded, no_stats = [], 0, 0, [], 0, 0
+    lo, hi = cfg["length_ratio_bounds"]
     min_len = cfg["tiles"]["acceptance_min_length_m"]
     all_len = by["all_day"]["length_m"] if "all_day" in by else pd.Series(dtype=float)
     for sid, row in dim.iterrows():
@@ -44,9 +45,13 @@ def build_features(stats: pd.DataFrame, dim: pd.DataFrame, geom: dict, names: di
         fn, tn = names.get(a), names.get(b)
         no_name += (fn is None) + (tn is None)
         allr = by["all_day"].loc[sid] if sid in by["all_day"].index else None
-        if allr is None:
+        if allr is None:  # no all_day statistics row: no L1 length/quality, so the schema-required fields are missing
             no_geom += 1
+            no_stats += 1
             continue
+        ratio = G.length_m(coords) / float(allr.length_m)
+        if q == "shape" and not lo <= ratio <= hi:  # implausible cut (loop/detour): straight between the cut's ends
+            q, coords, downgraded = "straight", coords[[0, -1]], downgraded + 1
         p = {"seg_id": sid, "from_stop_id": a, "to_stop_id": b, "from_name": fn or a, "to_name": tn or b,
              "mode": str(row.primary_mode), "routes": sorted(str(r) for r in row.routes),
              "length_m": round(float(allr.length_m), 1),
@@ -61,7 +66,7 @@ def build_features(stats: pd.DataFrame, dim: pd.DataFrame, geom: dict, names: di
         feats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": np.round(coords, cd).tolist()},
                       "properties": p})
     return feats, {"segments_no_geometry": no_geom, "stop_names_missing": no_name,
-                   "no_geometry_long": len(lost), "no_geometry_long_examples": sorted(lost)[:5]}
+                   "segments_without_all_day_row": no_stats, "shape_downgraded_length_ratio": downgraded, "no_geometry_long": len(lost), "no_geometry_long_examples": sorted(lost)[:5]}
 
 
 def write_geojson_gz(feats: list[dict], path: Path) -> None:

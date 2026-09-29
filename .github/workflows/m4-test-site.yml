@@ -1,5 +1,6 @@
 name: M4 test site (PMTiles + MapLibre)
 
+# Manual only (workflow_dispatch): publishing needs the author's consent (CLAUDE.md).
 # Builds tiles from the committed pilot GeoJSON (site-test/geojson/), extracts an own basemap from a
 # Protomaps daily build, and deploys the test page to GitHub Pages. Not the M5 site.
 # Cost: no L0/L1/statics are needed; expect a few minutes of a 2 vCPU / 7 GB runner per run
@@ -7,15 +8,6 @@ name: M4 test site (PMTiles + MapLibre)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "site-test/**"
-      - "scripts/m4_*.py"
-      - "config/geometry.yaml"
-      - "src/ti/tiles.py"
-      - "src/ti/geometry.py"
-      - ".github/workflows/m4-test-site.yml"
 
 permissions:
   contents: read
@@ -33,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.11", cache: pip}
+        with: {python-version: "3.11", cache: pip, cache-dependency-path: pyproject.toml}
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - uses: actions/setup-go@v5

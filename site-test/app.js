@@ -4,6 +4,7 @@
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const protocol = new pmtiles.Protocol();
   maplibregl.addProtocol("pmtiles", protocol.tile);
+  const esc = (x) => String(x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const $ = (id) => document.getElementById(id);
   const state = { cfg: null, city: null, band: "all", map: null, errors: 0, tilesLoaded: 0 };
 
@@ -69,8 +70,8 @@
       if (!f) return;
       const p = f.properties, v = (k) => p[k] == null || p[k] === "null" ? "n/d" : String(p[k]).replace(".", ",");
       new maplibregl.Popup().setLngLat(e.lngLat).setHTML(
-        `<strong>${p.from_name} → ${p.to_name}</strong><br>tryb: ${p.mode}, linie: ${p.routes}<br>długość: ${v("length_m")} m<br>` +
-        `prędkość (mediana): ${v("v_" + state.band)} km/h [${p["q_" + state.band]}]<br>n = ${v("n_all")}, dni = ${v("n_days")}<br>geometria: ${p.geometry_quality}`).addTo(map);
+        `<strong>${esc(p.from_name)} → ${esc(p.to_name)}</strong><br>tryb: ${esc(p.mode)}, linie: ${esc(p.routes)}<br>długość: ${v("length_m")} m<br>` +
+        `prędkość (mediana): ${v("v_" + state.band)} km/h [${esc(p["q_" + state.band])}]<br>n = ${v("n_all")}, dni = ${v("n_days")}<br>geometria: ${esc(p.geometry_quality)}`).addTo(map);
     });
     info();
   }
@@ -95,7 +96,8 @@
     const head = await probe("nagłówek (0–126)", 0, 126);
     if (head) { const magic = String.fromCharCode(...head.slice(0, 7)); if (magic !== "PMTiles") { bad++; say("BŁĄD  sygnatura PMTiles: " + magic); } else say("OK    sygnatura PMTiles, wersja " + head[7]); }
     await probe("zakres od 16 KiB (16384–32767)", 16384, 32767);
-    await probe("zakres środkowy (1 000 000–1 000 999)", 1000000, 1000999);
+    const size = state.city.tiles_bytes, mid = Math.floor(size / 2);
+    await probe(`zakres środkowy (${mid}–${mid + 999})`, mid, Math.min(mid + 999, size - 1));
     const before = state.errors;
     say("Ładowanie kafli mapy: " + state.tilesLoaded + " zdarzeń danych, " + before + " błędów od otwarcia miasta");
     if (before) bad++;

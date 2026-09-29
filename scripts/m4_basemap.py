@@ -34,7 +34,7 @@ def newest_build(cfg: dict, today: dt.date) -> tuple[str, str]:
         try:
             with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=30):
                 return date, url
-        except urllib.error.URLError:
+        except (urllib.error.URLError, OSError):
             continue
     raise SystemExit(f"no Protomaps build found in the last {cfg['lookback_days']} days")
 
