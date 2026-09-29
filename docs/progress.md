@@ -57,6 +57,10 @@ Dni ważne (z 19 dni roboczych okna do 09-27; 1-4.09 odpadają jako `recording_g
 2. Porównać `ranking.json` (W1, kolejność miast) z `reports/m2/metrics/*.json`; różnice mają wynikać tylko z wyłączenia dni odrzuconych.
 3. Atrybucje w `config/attributions.yaml`: każdy wiersz z `verified: false` wymaga otwarcia strony licencji (`docs/licenses.md` §5).
 
+### Test progu `city_gate.limited.min_valid_days` = 10 (2026-09-29, na życzenie autora)
+
+Tymczasowa zmiana progu tylko w pamięci (`config/metrics.yaml` bez zmian, próg 20 zostaje), na tych samych danych do 2026-09-27: 15 miast wychodzi `limited`, Turyn (6 dni) `excluded` z `too_few_days`. Test sprawdza wyłącznie logikę statusu i pokrycie sieci; **rankingów i wartości nadal nie ma**, bo wymagają `day_stats` z L0. Ten wynik nie jest rekomendacją zmiany progu: przy 10 dniach większość miast trafia do `limited` z 10-15 dniami, a statystycznie (R4) o `ranked` decyduje reprezentatywność, nie liczba dni. Decyzja o progach odłożona: `docs/decisions-needed.md` §2b.
+
 ### Przegląd `milestone-reviewer`
 
 **Werdykt: PASS (warunkowy), brak pozycji blokujących.** Recenzent (bez dostępu do L0/statyk, jak ta sesja) niezależnie odtworzył: dni ważne Łodzi (15), Turynu (6), Poznania (10), Krakowa (12), Sofii (13), Warszawy (14) z logów M0/M1 (zbiory dat identyczne z `reports/m3/gate_days_2026-pilot.json`), pokrycie sieci Łodzi z L1 (0,9642), skrót wejść (Łódź, Turyn, Poznań), walidację schematów wszystkich wygenerowanych plików i `examples/`. Kryterium liczby kursów działa na prawdziwych danych (Kraków 11, 18, 22.09; Poznań 10, 11, 15, 21, 24.09).

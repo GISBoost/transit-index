@@ -41,6 +41,17 @@ Właściciel wszystkich repo: GISBoost (Michał Kaczorowski). Zmiany w innych re
 | R10 | W12 ze statyki tego samego dnia (tidy zaniża ofertę, Turyn 36%); agregacja (mediana / udział przystanków >= 4 odj./h) zmienia ranking (rho 0,83-0,93) | **Rozstrzygnięte (M2, 2026-09-27, ADR-0006):** źródło = statyka (C1: `stop_times`/`calendar`/`calendar_dates`/`frequencies` doekstrahowane do wszystkich zdeduplikowanych statyk z M1). Agregacja = mediana po przystankach (dzień po dniu, potem mediana po dniach), potwierdzona odporna dla autobusów (rho 0,965/0,939 wobec udziału >=4/6 odj./h, 16 miast), ale **niepewna dla tramwajów** (rho = -0,155 — mediana i próg udziału dają praktycznie niepowiązane rankingi). Mediana zostaje jedyną publikowaną liczbą; ranking tramwajowy W12 dostaje jawną adnotację niepewności metodycznej. Forma prezentacji (mapa, nie tabela) do zaprojektowania w M5 | zrobione (M2); prezentacja w M5 |
 | R7 | flaga `feed_capability` przy mieście (okno FA-12: sygnał pozycji w feedzie) | **Zaimplementowane w M1 (2026-09-27, autor: "policzyć i zapisać teraz"):** pole `feed_capability_window_signal` w `reports/m1/ingest_report.jsonl` per miasto-dzień, wyprowadzone z rejestru `city_defects.yaml` (`no_stop_sequence`). Uwaga: to własność feedu (stała, nie dzienna) — nie da się jej policzyć z samego tidy, wymagałaby surowych pozycji; źródłem prawdy nadal jest `city_defects.yaml`, `ti ingest` tylko go publikuje w raporcie | zrobione (M1) |
 
+## 2b. Decyzje odłożone po M3 (2026-09-29): wrócić, gdy będą dane z L0
+
+Autor (2026-09-29): nie decydujemy o tych progach bez danych. Wartości w `config/metrics.yaml` są tymczasowe (oznaczone `[PROPOSAL]`), nie zatwierdzone.
+
+| # | co | wartość tymczasowa | co trzeba zobaczyć przed decyzją | gdzie |
+|---|---|---|---|---|
+| M3-1 | skala MAD dla dni anomalnych (`anomaly.mad_scale`) | 1,0 = dosłowne "3 MAD" (ok. 2 sigma, odrzuca ok. 5% dobrych dni); alternatywa 1,4826 (ok. 3 sigma) | dzienne prędkości miast z `ti daystats`: które dni dostają `speed_outlier` przy obu wartościach i czy pokrywają się ze znanymi (Poznań 10.09, Rzym, Kraków; `docs/sensitivity-report.md` §3.2) | `config/metrics.yaml` `anomaly` |
+| M3-2 | minimalne `n` wymiaru (`dimension_gate.min_obs`) | 1000/1000/1000/200/0 (speed/peak_penalty/punctuality/regularity/service), niekalibrowane | rozkład `n_obs` per miasto i wymiar w prawdziwych rankingach; ile wpisów spadłoby do `limited` | `config/metrics.yaml` `dimension_gate` |
+| M3-3 | minimalna liczba dni ważnych miasta (`city_gate.limited.min_valid_days`, dziś 20) | 20 (test na 10 dniach: patrz `progress.md`, wpis M3) | liczba dni ważnych na koniec okna i wynik T7 przy >= 40 dniach (R4) | `config/metrics.yaml` `city_gate` |
+| M3-4 | mianownik pokrycia sieci (dziś: odcinki z jakąkolwiek obserwacją w L1, górne oszacowanie) | bez zmian | czy potrzebny jest mianownik z `stop_times` statyki, skoro wszystkie miasta mają 0,91-0,999 | `src/ti/coverage.py` |
+
 ## 3. Przed M1: co warto wiedzieć
 
 **Ustalenia z M0, które M1 dziedziczy (`docs/progress.md`, `docs/data-inventory.generated.md`):**
