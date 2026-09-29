@@ -1,0 +1,22 @@
+# M4: physical-segment geometry and tiles (docs/04 §4, docs/06 §4). Numbers live here, not in code.
+projection:
+  candidate_slack_m: 30        # a shape segment is a candidate for a stop if it is within nearest+slack metres
+  max_candidates_per_stop: 8
+  max_snap_m: 60               # a stop farther than this from its shape gets a `straight` pair (docs/04 §4 pt 3)
+  monotone_tolerance_m: 1.0    # stop positions along the shape may not go backwards by more than this
+simplify_tolerance_m: 5        # Douglas-Peucker before tiling (docs/04 §4 pt 5: ~5 m for z >= 14)
+coordinate_decimals: 6         # GeoJSON coordinate precision (about 0.1 m)
+value_decimals: 1              # speeds (km/h) and penalty (%) in features
+earth_radius_m: 6371008.8      # haversine
+tiles:
+  min_zoom: 8
+  max_zoom: 15
+  acceptance_zoom: 14          # every segment >= acceptance_min_length_m must appear at this zoom and above
+  acceptance_min_length_m: 200
+  layer: segments
+  site_ceiling_mb: 700         # docs/06 §5: the build fails above this (Pages limit 1 GB)
+basemap:                       # own basemap = per-city extracts of a Protomaps daily build (ODbL, docs/06 §1)
+  source_url_template: "https://build.protomaps.com/{date}.pmtiles"
+  lookback_days: 14            # newest daily build found by probing back from today
+  max_zoom: 14                 # z15 and above overzoom; keeps the extracts small
+  margin_deg: 0.02             # around the segment bounds

@@ -1,0 +1,69 @@
+name: M4 test site (PMTiles + MapLibre)
+
+# Builds tiles from the committed pilot GeoJSON (site-test/geojson/), extracts an own basemap from a
+# Protomaps daily build, and deploys the test page to GitHub Pages. Not the M5 site.
+# Cost: no L0/L1/statics are needed; expect a few minutes of a 2 vCPU / 7 GB runner per run
+# (private repos have 2000 min/month, docs/10 §8). ADR: docs/adr/0007-tile-hosting.md.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "site-test/**"
+      - "scripts/m4_*.py"
+      - "config/geometry.yaml"
+      - "src/ti/tiles.py"
+      - "src/ti/geometry.py"
+      - ".github/workflows/m4-test-site.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11", cache: pip}
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - uses: actions/setup-go@v5
+        with: {go-version: stable, cache: false}
+      - name: Tools (tippecanoe, go-pmtiles, python deps)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tippecanoe
+          go install github.com/protomaps/go-pmtiles@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          pip install -e ".[tiles]"
+      - name: Vendor MapLibre and PMTiles (pinned in site-test/package.json)
+        run: npm ci --prefix site-test
+      - name: Own basemap (Protomaps extract per city)
+        run: python scripts/m4_basemap.py --geojson-dir site-test/geojson/2026-pilot --out basemap
+      - name: Build site (tiles, config, size and acceptance checks)
+        run: python scripts/m4_build_testsite.py --geojson-dir site-test/geojson/2026-pilot --basemap-dir basemap --out _site
+      - name: Summary
+        run: |
+          { echo "### M4 test site"; echo; echo '```'; cat _site/sizes.json; echo '```'; echo; cat basemap/basemap_report.json | head -c 4000; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: {path: _site}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

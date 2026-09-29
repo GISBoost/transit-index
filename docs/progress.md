@@ -2,6 +2,62 @@
 
 Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na końcu kamienia i jest uzupełniany o werdykt `milestone-reviewer`. Decyzje techniczne: `docs/adr/`, pytania do autora: `docs/decisions-needed.md`.
 
+## M4: geometria odcinków, kafle PMTiles, strona testowa (2026-09-29)
+
+**Status: geometria i kafle dla 16 miast gotowe i sprawdzone lokalnie; strona testowa i workflow napisane, ale workflow NIE był uruchomiony na GitHubie, a podkład (Protomaps) NIE został zbudowany ani sprawdzony** (sandbox nie ma dostępu do `build.protomaps.com`). Test zakresów bajtów w >= 2 przeglądarkach zostaje po Twojej stronie. Werdykt `milestone-reviewer`: na dole.
+
+### Dane i skąd się wzięły
+
+Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fetch_release_assets.py`), bo `data/static/` nie ma w sandboxie. Pobranie 212 unikalnych wersji (SHA-256 zgodne z `reports/m1/ingest_report.jsonl`) to ok. 8,4 GB transferu; zipy są kasowane po redukcji. **Pomiar rozmiaru (pierwszy krok z briefu):** wyciąg do geometrii (`stops`, wzorce kursów, używane kształty, kalendarze; bez czasów `stop_times`) zajmuje 855 MB dla wszystkich 212 wersji, czyli ok. 10% rozmiaru zipów. Statyki dla dni, których log M1 nie zapisał (`cached` bez `static_sha256`: Bukareszt 7 dni, Łódź 3, Nikozja 4, Szczecin 3, Kraków 1, Poznań 1) pobrano i zahaszowano ponownie (`resolve_unlogged`, cache `data/geom/date_sha.json`).
+
+### Co powstało
+
+| wynik | gdzie |
+|---|---|
+| projekcja przystanków na kształt (Viterbi, pozycje niemalejące), cięcie po skumulowanej odległości haversine, `straight` gdy brak kształtu lub przystanek > `max_snap_m` od kształtu | `src/ti/geometry.py` |
+| najczęstszy wzorzec per odcinek: waga = liczba kursów aktywnych usług danego dnia ze statyki tego dnia, sumowana po dniach okna | `src/ti/geometry.py` (`build_city`) |
+| cechy GeoJSON zgodne 1:1 ze `schemas/segment_feature.schema.json`, PMTiles (tippecanoe 2.49), kontrola akceptacji z14+ | `src/ti/tiles.py`, `ti geometry` |
+| parametry (tolerancje, uproszczenie 5 m, zoomy, podkład) | `config/geometry.yaml` |
+| strona testowa MapLibre + przycisk testu zakresów bajtów | `site-test/` |
+| budowa strony i podkładu | `scripts/m4_build_testsite.py`, `scripts/m4_basemap.py`, `scripts/m4_serve.py` (lokalny serwer z `Range`) |
+| workflow Actions -> Pages | `.github/workflows/m4-test-site.yml` |
+| ADR hostingu | `docs/adr/0007-tile-hosting.md` |
+| raport per miasto (udział `straight`, odcinki bez geometrii, zgodność długości, akceptacja, rozmiary) | `reports/m4/geometry_2026-pilot.json` |
+| zwarty GeoJSON pilotażu (3,8 MB, wejście workflow) | `site-test/geojson/2026-pilot/` |
+| testy (14 nowych; walidacja wszystkich cech z 16 miast względem schematu) | `tests/test_m4_geometry.py` |
+
+### Wyniki na prawdziwych danych
+
+- **43 590 odcinków** w 16 miastach, wszystkie cechy przechodzą walidację schematu (brak dodatkowych pól). Kafle: 0,8-7,2 MB na miasto, 36 MB razem; artefakt strony bez podkładu 37 MB przy budżecie 700 MB.
+- **Kryterium akceptacji "żaden odcinek >= 200 m nie znika przy z14+": spełnione we wszystkich 16 miastach** (sprawdzone przez zdekodowanie kafli z14 i z15 i porównanie z `seg_id` z L1). Pierwsze uruchomienie Bukaresztu ujawniło 12 odcinków >= 200 m bez geometrii, bo jego statyki z dni `cached` nie były w logu; po ich rozwiązaniu (`resolve_unlogged`) wszystkie mają geometrię. Jeden odcinek Rzymu (< 200 m) nie ma geometrii (nieznane przystanki w statykach), jest zliczony w raporcie, nie zmyślony.
+- **Udział `geometry_quality = straight`** (według długości): Lublana 5,9%, Lizbona 3,1%, Łódź 2,6%, Zagrzeb 2,3%, Poznań 1,9%; pozostałe miasta < 1% (Sofia i Wilno 0%). Pełna tabela w ADR-0007 i w raporcie.
+- **Niezależna kontrola geometrii:** długość zbudowanej polilinii vs `length_m` z L1 (liczone innym torem, w M2 z `shape_dist_m`): p5-p95 = 0,983-1,013 w prawie wszystkich miastach (Warszawa 0,956-1,039, Rzym 0,985-1,028). To zgadza się z F8 z `docs/09` (1,000 długości kształtu).
+- **Stabilność wzorca:** mediana udziału dominującego wzorca = 1,0, ale dolny decyl bywa niski (Łódź 0,54, Turyn 0,55, Lizbona 0,55, Rzym 0,67, Lublana 0,70, Kraków 0,79): na części odcinków wzorzec zmieniał się w oknie (objazdy, nowe statyki), rysujemy najczęstszy.
+
+### Decyzje i założenia do potwierdzenia
+
+1. **Waga wzorca = liczba kursów rozkładowych** (ze statyki, aktywnych tego dnia wg `calendar`/`calendar_dates`), nie kursów zaobserwowanych (do tego trzeba L0, którego tu nie ma). Dni to dni robocze z wpisem w logu M1 (`ok`/`cached`), tak jak okno L1.
+2. **Tryb `trolleybus` nie występuje**: `mode_from_route_type` liczy trolejbusy jako autobusy (zasada M0), więc `mode` w cechach to `bus` albo `tram`.
+3. **`length_m` w cechach pochodzi z L1**, nie z geometrii (jedno źródło prawdy z metryk); geometria jest z nim spójna (patrz wyżej).
+4. **Nazwy przystanków** z `stops.txt` statyki; przy braku użyto `stop_id` (licznik `stop_names_missing` = 0 dla 16 miast).
+5. **Wartości w cechach**: `v_*` = mediana `v_p50` pasma, `null` gdy `q = none`; `pen_pm` z `segments.parquet` (null gdy brak); `v_sched` = `v_sched_p50` całego dnia; zaokrąglenie do 0,1 (`config/geometry.yaml`).
+6. **Zwarty GeoJSON jest w gicie** (`site-test/geojson/`, 3,8 MB) tylko po to, by Actions zbudowały kafle bez L1 i statyk; to odstępstwo od `docs/06` §5 pkt 2 (release'y), uzasadnione w ADR-0007 (sandbox nie tworzy release'ów). Kafle (`*.pmtiles`) nadal nie są w gicie.
+7. **Podkład**: wycinki dziennego buildu Protomaps per miasto (`go-pmtiles extract`, `maxzoom` 14), styl własny z tokenów `design/` (bez etykiet). Wersja kodu nieprzetestowana z prawdziwymi kaflami Protomaps: styl założył nazwy warstw i pól schematu Protomaps (`earth`, `water`, `roads` z `kind`); sprawdzony tylko na syntetycznym podkładzie o tych nazwach.
+
+### Czego M4 nie zrobił
+
+- Nie uruchomiono workflow na GitHubie (brak dostępu, i Pages dla repo prywatnego wymaga płatnego planu; repo ma być publiczne). Czas i minuty runnera nieznane (ADR-0007).
+- Nie zbudowano podkładu OSM. Bez niego strona pokazuje tło jednolite i mówi to w panelu ("brak (tło jednolite)").
+- Nie sprawdzono Firefoksa ani Safari. Sprawdzono tylko headless Chromium 141 z lokalnym serwerem obsługującym `Range` (status 206, sygnatura PMTiles, poprawne długości).
+- Nie liczono rankingu ani bramki (M3), nie ruszano serwisu Astro (M5). Szczegóły godzinowe (`hourly`) nie są w kaflach (ładowane po kliknięciu, M5).
+
+### Co sprawdzić ręcznie
+
+1. **Test zakresów bajtów (Twój)**: po wdrożeniu (Actions -> "M4 test site" -> Run workflow na gałęzi z domyślną ochroną środowiska `github-pages`, albo po scaleniu do `main`) otwórz stronę w Chrome, Firefox i Safari, wybierz miasto, kliknij "Uruchom test". Oczekiwane: cztery linie `OK` (status 206, długości zgodne, sygnatura `PMTiles`) i "WYNIK: OK". Potem przesuń i przybliż mapę (z9 do z16) i sprawdź, że odcinki rysują się bez błędów w konsoli. Wynik (przeglądarka, wersja, OK/PROBLEM, tekst z pola) dopisz poniżej.
+2. **Link do strony testowej: `https://gisboost.github.io/transit-index/`** (adres po pierwszym udanym wdrożeniu przy repo publicznym i włączonym Pages ze źródłem "GitHub Actions"; nie został sprawdzony).
+3. Podkład: w logu workflow i w `basemap/basemap_report.json` (dodawany do podsumowania joba) sprawdź, czy wszystkie 16 wycinków się udało i ile ważą; jeśli nazwy warstw Protomaps różnią się od założonych (`earth`, `water`, `roads`), popraw `site-test/app.js`.
+4. Kilka odcinków na oko: Łódź (Piotrkowska), Warszawa (Marszałkowska): czy dwa kierunki leżą po dwóch stronach ulicy, czy trasy nie "skaczą" na rondach i pętlach.
+
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
 **Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.

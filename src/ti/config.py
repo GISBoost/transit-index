@@ -82,3 +82,9 @@ def school_breaks(city: str) -> frozenset[str]:
             out.add(d.isoformat())
             d += dt.timedelta(days=1)
     return frozenset(out)
+
+
+@lru_cache
+def geometry_cfg() -> dict:
+    """config/geometry.yaml (M4): projection tolerances, simplification, tile zooms."""
+    return yaml.safe_load((CONFIG / "geometry.yaml").read_text(encoding="utf-8"))

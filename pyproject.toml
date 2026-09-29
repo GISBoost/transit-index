@@ -20,6 +20,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest"]
+tiles = ["pmtiles", "mapbox-vector-tile"]   # M4: tile acceptance check (tippecanoe itself is a system tool)
 
 [project.scripts]
 ti = "ti.cli:main"

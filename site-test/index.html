@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transit Index: test kafli (M4)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="tokens/colors.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Test kafli PMTiles <small>strona techniczna M4, nie serwis</small></h1>
+  <p class="warn">Dane zastępcze do testu geometrii: prędkości z okna pilotażowego, bez bramki jakości i bez rankingu. Nie są wynikiem projektu.</p>
+</header>
+<main>
+  <div id="map" role="application" aria-label="Mapa odcinków"></div>
+  <aside id="panel">
+    <label>Miasto <select id="city"></select></label>
+    <label>Pasmo
+      <select id="band">
+        <option value="all">cały dzień (06–22)</option>
+        <option value="am">szczyt poranny</option>
+        <option value="mid">międzyszczyt</option>
+        <option value="pm">szczyt popołudniowy</option>
+        <option value="eve">wieczór</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="night"> tryb nocny</label>
+    <div id="legend" aria-label="Legenda prędkości"></div>
+    <section id="info"></section>
+    <section id="diag">
+      <h2>Test zakresów bajtów</h2>
+      <button id="run-range" type="button">Uruchom test</button>
+      <pre id="range-out" aria-live="polite">Jeszcze nie uruchomiono.</pre>
+    </section>
+  </aside>
+</main>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="vendor/pmtiles.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+{
+ "cities": {
+  "bucharest": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2260,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 197378,
+    "pmtiles": 1820389
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 1.0,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 1.0,
+   "geom_length_ratio_p05_p95": [
+    0.995,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0,
+   "geometry_straight_share_length": 0.0,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 1117,
+   "segments_in_tiles": 2341,
+   "segments_l1": 2341,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 7,
+    "days_with_static": 18,
+    "status": {
+     "cached": 3
+    },
+    "unique": 3
+   },
+   "stop_names_missing": 0
+  },
+  "gdansk": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 1450,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 139093,
+    "pmtiles": 1446991
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.901959690614309,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.998,
+   "geom_length_ratio_p05_p95": [
+    0.985,
+    1.009
+   ],
+   "geometry_straight_share_count": 0.0034,
+   "geometry_straight_share_length": 0.0016,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 8151,
+   "segments_in_tiles": 1486,
+   "segments_l1": 1486,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 18,
+    "status": {
+     "cached": 16
+    },
+    "unique": 16
+   },
+   "stop_names_missing": 0
+  },
+  "krakow": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2374,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 212857,
+    "pmtiles": 2125137
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.7846910365456444,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.998,
+   "geom_length_ratio_p05_p95": [
+    0.983,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0012,
+   "geometry_straight_share_length": 0.0014,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 7600,
+   "segments_in_tiles": 2407,
+   "segments_l1": 2407,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 1,
+    "days_with_static": 19,
+    "status": {
+     "cached": 14
+    },
+    "unique": 14
+   },
+   "stop_names_missing": 0
+  },
+  "lisbon": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2232,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 198734,
+    "pmtiles": 1694929
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.5483341918777062,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.997,
+   "geom_length_ratio_p05_p95": [
+    0.987,
+    1.002
+   ],
+   "geometry_straight_share_count": 0.029,
+   "geometry_straight_share_length": 0.0313,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 4446,
+   "segments_in_tiles": 2549,
+   "segments_l1": 2549,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 19,
+    "status": {
+     "cached": 16
+    },
+    "unique": 16
+   },
+   "stop_names_missing": 0
+  },
+  "ljubljana": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 612,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 87368,
+    "pmtiles": 812050
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.7,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.998,
+   "geom_length_ratio_p05_p95": [
+    0.987,
+    0.999
+   ],
+   "geometry_straight_share_count": 0.0447,
+   "geometry_straight_share_length": 0.0593,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 3131,
+   "segments_in_tiles": 626,
+   "segments_l1": 626,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 18,
+    "status": {
+     "cached": 18
+    },
+    "unique": 18
+   },
+   "stop_names_missing": 0
+  },
+  "lodz": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2183,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 198704,
+    "pmtiles": 1917230
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.5429783433802188,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.987,
+    1.008
+   ],
+   "geometry_straight_share_count": 0.0302,
+   "geometry_straight_share_length": 0.0263,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 8390,
+   "segments_in_tiles": 2284,
+   "segments_l1": 2284,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 3,
+    "days_with_static": 19,
+    "status": {
+     "cached": 9
+    },
+    "unique": 9
+   },
+   "stop_names_missing": 0
+  },
+  "nicosia": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 1023,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 103030,
+    "pmtiles": 928535
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 1.0,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.993,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0009,
+   "geometry_straight_share_length": 0.0006,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 1580,
+   "segments_in_tiles": 1087,
+   "segments_l1": 1087,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 4,
+    "days_with_static": 18,
+    "status": {
+     "cached": 18
+    },
+    "unique": 18
+   },
+   "stop_names_missing": 0
+  },
+  "poznan": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 1619,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 137131,
+    "pmtiles": 1504719
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.9195483870967742,
+   "fallback_straight_no_pattern": 14,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.984,
+    1.013
+   ],
+   "geometry_straight_share_count": 0.0136,
+   "geometry_straight_share_length": 0.0192,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 2816,
+   "segments_in_tiles": 1688,
+   "segments_l1": 1688,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 1,
+    "days_with_static": 18,
+    "status": {
+     "cached": 10
+    },
+    "unique": 10
+   },
+   "stop_names_missing": 0
+  },
+  "prague": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 3984,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 395192,
+    "pmtiles": 3460568
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.826989898989899,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.997,
+   "geom_length_ratio_p05_p95": [
+    0.99,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0059,
+   "geometry_straight_share_length": 0.0041,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 30559,
+   "segments_in_tiles": 4083,
+   "segments_l1": 4083,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 18,
+    "status": {
+     "cached": 18
+    },
+    "unique": 18
+   },
+   "stop_names_missing": 0
+  },
+  "rome": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 8087,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 911382,
+    "pmtiles": 7199795
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.6684478609408283,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 1.0,
+   "geom_length_ratio_p05_p95": [
+    0.985,
+    1.028
+   ],
+   "geometry_straight_share_count": 0.0062,
+   "geometry_straight_share_length": 0.0078,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 15978,
+   "segments_in_tiles": 9497,
+   "segments_l1": 9498,
+   "segments_no_geometry": 1,
+   "static_versions": {
+    "days_with_static": 18,
+    "status": {
+     "cached": 18
+    },
+    "unique": 18
+   },
+   "stop_names_missing": 0
+  },
+  "sofia": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2544,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 245390,
+    "pmtiles": 1999843
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 1.0,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.993,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0,
+   "geometry_straight_share_length": 0.0,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 8535,
+   "segments_in_tiles": 2601,
+   "segments_l1": 2601,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 19,
+    "status": {
+     "cached": 19
+    },
+    "unique": 19
+   },
+   "stop_names_missing": 0
+  },
+  "szczecin": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 1288,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 108686,
+    "pmtiles": 1171135
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 1.0,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.992,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.003,
+   "geometry_straight_share_length": 0.0028,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 1605,
+   "segments_in_tiles": 1320,
+   "segments_l1": 1320,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_resolved_by_download": 3,
+    "days_with_static": 19,
+    "status": {
+     "cached": 3
+    },
+    "unique": 3
+   },
+   "stop_names_missing": 0
+  },
+  "turin": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2496,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 217911,
+    "pmtiles": 2074667
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.5451002227171492,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 1.0,
+   "geom_length_ratio_p05_p95": [
+    0.987,
+    1.01
+   ],
+   "geometry_straight_share_count": 0.0022,
+   "geometry_straight_share_length": 0.0028,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 5926,
+   "segments_in_tiles": 2721,
+   "segments_l1": 2721,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 16,
+    "status": {
+     "cached": 12
+    },
+    "unique": 12
+   },
+   "stop_names_missing": 0
+  },
+  "vilnius": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 1724,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 158998,
+    "pmtiles": 1802631
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 1.0,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.994,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0,
+   "geometry_straight_share_length": 0.0,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 10865,
+   "segments_in_tiles": 1744,
+   "segments_l1": 1744,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 19,
+    "status": {
+     "cached": 18
+    },
+    "unique": 18
+   },
+   "stop_names_missing": 0
+  },
+  "warszawa": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 4903,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 394804,
+    "pmtiles": 4009117
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.9473684210526315,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.998,
+   "geom_length_ratio_p05_p95": [
+    0.956,
+    1.039
+   ],
+   "geometry_straight_share_count": 0.0024,
+   "geometry_straight_share_length": 0.0018,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 27916,
+   "segments_in_tiles": 5051,
+   "segments_l1": 5051,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 19,
+    "status": {
+     "cached": 19
+    },
+    "unique": 19
+   },
+   "stop_names_missing": 0
+  },
+  "zagreb": {
+   "acceptance": {
+    "lost_no_geometry": 0,
+    "min_length_m": 200,
+    "n_long": 2070,
+    "pass": true,
+    "zooms": {
+     "14": {
+      "examples": [],
+      "missing": 0
+     },
+     "15": {
+      "examples": [],
+      "missing": 0
+     }
+    }
+   },
+   "bytes": {
+    "geojson_gz": 210588,
+    "pmtiles": 2015735
+   },
+   "dominant_share_median": 1.0,
+   "dominant_share_p10": 0.8327892636924193,
+   "fallback_straight_no_pattern": 0,
+   "geom_length_ratio_median": 0.999,
+   "geom_length_ratio_p05_p95": [
+    0.992,
+    1.0
+   ],
+   "geometry_straight_share_count": 0.0257,
+   "geometry_straight_share_length": 0.0231,
+   "no_geometry_long": 0,
+   "no_geometry_long_examples": [],
+   "patterns_cached": 510,
+   "segments_in_tiles": 2105,
+   "segments_l1": 2105,
+   "segments_no_geometry": 0,
+   "static_versions": {
+    "days_with_static": 15,
+    "status": {
+     "cached": 1
+    },
+    "unique": 1
+   },
+   "stop_names_missing": 0
+  }
+ },
+ "edition": "2026-pilot"
+}
