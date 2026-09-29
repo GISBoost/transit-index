@@ -2,6 +2,82 @@
 
 Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na końcu kamienia i jest uzupełniany o werdykt `milestone-reviewer`. Decyzje techniczne: `docs/adr/`, pytania do autora: `docs/decisions-needed.md`.
 
+## M3: bramka jakości, ranking, manifest (2026-09-29)
+
+**Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.
+
+### Co powstało
+
+| wynik | gdzie |
+|---|---|
+| bramka dnia i miasta, dni anomalne (`low_trip_count`, `speed_outlier`, luka nagrania jako `recording_gap`) | `src/ti/gate.py` |
+| bootstrap po dniach (200 losowań, przedział 90%, ziarno per miasto+ranking) i nierozróżnialność (nakładanie przedziałów) | `src/ti/uncertainty.py` |
+| statystyki dzienne z L0 (jedyny etap M3 czytający L0): sumy `ΣL/ΣT`, W3, W10, W11, W12, profil godzinowy, linie, pokrycie pasm | `src/ti/daystats.py`, `ti daystats` |
+| pokrycie sieci i minima trybu z L1 | `src/ti/coverage.py` |
+| `ranking.json`, `summary.json`, `hourly.json`, `lines.csv`, `quality.json`, `manifest.json` (`license`, `attributions`, `easy_otp_commits`, `inputs_sha256`, `config_sha256`) | `src/ti/edition.py`, `ti gate` |
+| atrybucje per miasto (wyłącznie z `docs/licenses.md`, nieznane = `null`, `verified: false`) | `config/attributions.yaml` |
+| nowe schematy `hourly`, `quality`; rozszerzone `ranking` (tryb, przedziały, nierozróżnialność, sufiks pasma w `id`) i `edition_manifest` (`license`, `attributions`, `excluded_days`, `data_through`) | `schemas/` |
+| progi M3 (`anomaly`, `bootstrap`, `dimension_gate`) | `config/metrics.yaml` |
+| zapis decyzji dni (małe, do przeglądu) | `reports/m3/gate_days_2026-pilot.json` |
+| testy (28 nowych; m.in. sumy dzienne = `reference/metrics_reference.py` dla W1, W3, W10, W11) | `tests/test_m3_gate.py` |
+
+Przepływ: `ti daystats --city X ...` (tam, gdzie jest L0) -> `ti gate --from 2026-09-01 --to 2026-12-18` -> (opcjonalnie drugi przebieg `ti daystats --valid-only`, potem `ti gate`) . `ti gate` czyta tylko `day_stats.parquet`, L1 i `reports/`.
+
+### Wynik bramki na prawdziwych danych (dane do 2026-09-27, L1 z 09-27)
+
+Dni ważne (z 19 dni roboczych okna do 09-27; 1-4.09 odpadają jako `recording_gap`, część miast traci dni na `no_static`/`no_tidy`/`low_crossing_rate`/`low_trip_count`):
+Łódź 15, Lizbona 15, Wilno 15, Lublana 14, Praga 14, Szczecin 14, Warszawa 14, Gdańsk 13, Rzym 13, Sofia 13, Bukareszt 12, Kraków 12, Nikozja 12, Zagrzeb 12, Poznań 10, Turyn 6.
+**Żadne miasto nie ma jeszcze 20 dni ważnych (`city_gate.limited`), więc wszystkie 16 mają status `excluded` z powodem `too_few_days`** (tak jak zapowiadała prognoza M0; `ranking.json` ma dziś 0 rankingów i 16 wykluczonych). Pokrycie sieci (górne oszacowanie, patrz niżej) 0,91-0,999, więc drugi próg bramki nie jest wąskim gardłem. Tryb tramwajowy nie przechodzi `mode_min` w Lizbonie, Lublanie, Nikozji, Rzymie i Wilnie (za mało linii/odcinków).
+
+### Decyzje i założenia do potwierdzenia przez autora
+
+1. **`anomaly.mad_scale: 1.0`** = dosłowne "3 MAD" ze specyfikacji (surowe MAD, ok. 2 sigma dla rozkładu normalnego; odrzuci ok. 5% dobrych dni). Wartość 1,4826 dawałaby ok. 3 sigma. Do rozstrzygnięcia po zobaczeniu prawdziwych dziennych prędkości.
+2. **`dimension_gate.min_obs`** (1000/1000/1000/200/0) to propozycje bez kalibracji ("status wymiaru wynika z jego n i progów", docs/03 §6); poniżej progu wymiar jest co najwyżej `limited`.
+3. **Pokrycie sieci** = długość odcinków `q = ok` / długość wszystkich odcinków, na których L1 ma jakąkolwiek obserwację. To górne oszacowanie (sieć rozkładowa bez obserwacji nie jest w mianowniku); dokładniejsze wymaga `stop_times` statyki. Zapisane w `quality.json`.
+4. **Dzienna prędkość miasta do kryterium MAD** = `ΣL/ΣT` (W1) dnia, tryb `street`, `all_day`; mediana i MAD po dniach, które przeszły wcześniejsze kryteria.
+5. **Kryterium liczby kursów** używa `trips` z logu ingestu (kursy w tidy), mediana po dniach, które przeszły resztę bramki dnia (jeden `day_type`, bo dzień odniesienia to WEEKDAY).
+6. **Wiarygodność `service_date`** jest dostępna tylko w statystykach M0; gdy brak, kryterium jest pomijane, a `quality.json` to zapisuje. Pokrycie pasm: z `day_stats` (L0), a bez niego ze statystyk M0 (to samo przybliżenie: godzina nagrana, gdy >= 1% wierszy `ok`).
+7. **W3 z dwóch przebiegów**: odniesienie (prędkość pasm `midday`+`evening` per odcinek) jest liczone z dni podanych do `ti daystats`; przebieg `--valid-only` wyklucza dni odrzucone przez bramkę.
+8. **Epoki**: dni z różnych epok tidy nie są wykluczane (ADR-0004, dane as is); notatka przy wpisach rankingu i liczniki w `quality.json`. Dziś wszystkie dni to epoka `t1` (dni `cached` w logu ingestu nie mają epoki: `unknown`).
+9. **Zmiany schematów** (wszystkie addytywne poza `id`): `ranking.id` = `<tryb>_<wymiar>` z istniejącego wzorca plus `_<pasmo>` poza widokiem domyślnym; `edition_manifest` wymaga teraz `license` i `attributions`/`excluded_days` per miasto; `examples/edition_manifest.example.json` zaktualizowany.
+10. **`placeholder: true`**: `edition.validate` odrzuca dowolny dokument z tym polem (test na plikach z `examples/`).
+11. **`slowest_segments`** (opcjonalne w `city_summary`) pominięte: wymaga nazw przystanków i geometrii (M4).
+
+### Czego M3 nie zrobił / ograniczenia
+
+- **Sesja bez L0 i statyk.** Nie uruchomiono `ti daystats`, więc nie ma wartości W1/W3/W10/W11/W12, bootstrapu, nierozróżnialności, `hourly`/`lines` z danymi ani kryterium `speed_outlier` na prawdziwych dniach. Te ścieżki są sprawdzone tylko na danych syntetycznych, z sumami dziennymi zgodnymi z `reference/metrics_reference.py`. Wyniki z tych ścieżek nie istnieją i nie wolno ich cytować.
+- `inputs_sha256` oznacza znakiem `?` dni bez skrótu tidy/statyki (wpisy `cached` w logu ingestu: Bukareszt 4, Kraków 1, Łódź 2, Nikozja 1); do domknięcia po ponownym `ti ingest` tych dni.
+- Ferie szkolne w `config/calendars/` nadal puste (świadomie); wykrywanie dni anomalnych od nich nie zależy.
+- `ti_commit` w manifeście ma sufiks `-dirty`, dopóki zmiany nie są scommitowane.
+- Godziny 6-21 (`range(6, 22)` w `hourly`, `between(6, 21)` w `daystats`) są zapisane w kodzie tak jak w `aggregate.py` z M2, nie w configu.
+
+### Co autor ma zweryfikować ręcznie
+
+1. Na maszynie z L0: `ti daystats` dla 16 miast, potem `ti gate`; sprawdzić, które dni dostają `speed_outlier` i czy odpowiadają znanym (Poznań 10.09, Rzym, Kraków; `docs/sensitivity-report.md` §3.2).
+2. Porównać `ranking.json` (W1, kolejność miast) z `reports/m2/metrics/*.json`; różnice mają wynikać tylko z wyłączenia dni odrzuconych.
+3. Atrybucje w `config/attributions.yaml`: każdy wiersz z `verified: false` wymaga otwarcia strony licencji (`docs/licenses.md` §5).
+
+### Test progu `city_gate.limited.min_valid_days` = 10 (2026-09-29, na życzenie autora)
+
+Tymczasowa zmiana progu tylko w pamięci (`config/metrics.yaml` bez zmian, próg 20 zostaje), na tych samych danych do 2026-09-27: 15 miast wychodzi `limited`, Turyn (6 dni) `excluded` z `too_few_days`. Test sprawdza wyłącznie logikę statusu i pokrycie sieci; **rankingów i wartości nadal nie ma**, bo wymagają `day_stats` z L0. Ten wynik nie jest rekomendacją zmiany progu: przy 10 dniach większość miast trafia do `limited` z 10-15 dniami, a statystycznie (R4) o `ranked` decyduje reprezentatywność, nie liczba dni. Decyzja o progach odłożona: `docs/decisions-needed.md` §2b.
+
+### Przegląd `milestone-reviewer`
+
+**Werdykt: PASS (warunkowy), brak pozycji blokujących.** Recenzent (bez dostępu do L0/statyk, jak ta sesja) niezależnie odtworzył: dni ważne Łodzi (15), Turynu (6), Poznania (10), Krakowa (12), Sofii (13), Warszawy (14) z logów M0/M1 (zbiory dat identyczne z `reports/m3/gate_days_2026-pilot.json`), pokrycie sieci Łodzi z L1 (0,9642), skrót wejść (Łódź, Turyn, Poznań), walidację schematów wszystkich wygenerowanych plików i `examples/`. Kryterium liczby kursów działa na prawdziwych danych (Kraków 11, 18, 22.09; Poznań 10, 11, 15, 21, 24.09).
+
+| uwaga | rozstrzygnięcie |
+|---|---|
+| wartości wymiarów, bootstrap, `speed_outlier`, `hourly`, `lines` bez potwierdzenia na prawdziwych danych | otwarte: przed M5 uruchomić `ti daystats` z L0 i porównać W1 Łodzi 2026-09-24 z `reference/golden_values.json` (17,58 km/h); testy syntetyczne nie wystarczą do publikacji liczb |
+| `n_days` w `easy_otp_commits` to dni-miasta; dni `cached` bez commitu (epoka `unknown`) | doprecyzowane w opisie schematu; lista commitów jest niepełna do ponownego `ti ingest` tych dni |
+| zmiany schematów nie w pełni addytywne (`license`, `attributions`, `excluded_days` wymagane; sufiks pasma w `ranking.id`); diff zaszumiony przeformatowaniem | odnotowane (decyzja 9); pliki JSON przeformatowane pretty-print |
+| `ti_commit` z sufiksem `-dirty` (wygenerowane przed commitem) | przed publikacją wygenerować edycję ponownie z czystego commita |
+| commit w repo | na wyraźną prośbę autora (osobna gałąź, bez PR, bez pusha do main) |
+| pokrycie sieci to górne oszacowanie, L1 pooluje też dni odrzucone przez bramkę | opisane; drugi próg `city_gate` nie jest jeszcze realnym filtrem |
+| bramka pasm i wiarygodności `service_date` z przybliżeń M0 | opisane (pkt 6); po `ti daystats` pasma idą z L0 |
+| powód `recording_window_gap` bywa mylący (Turyn traci dni głównie na `no_tidy`/`no_static`) | otwarte: etykieta pochodzi z licznika dwóch powodów w `gate.city_status`; czytać razem z `days.excluded` w `quality.json` |
+| `verified: true` (Poznań, Szczecin, Turyn) = "pewność wysoka" w audycie, nie weryfikacja prawna | doprecyzowane w opisie schematu; docs/licenses.md dla Poznania nadal wymaga sprawdzenia, czy "wspieranie transportu" obejmuje ranking |
+| ścieżka `exclude` z rejestru wad sprawdzona tylko syntetycznie (jedyny wpis `exclude` to Helsinki, poza kandydatami) | zaakceptowane |
+
 ## M2: segmenty i metryki — rdzeń (2026-09-27)
 
 **Status: wykonany, przegląd `milestone-reviewer` FAIL po pierwszym przebiegu (dwie pozycje blokujące), obie naprawione z dowodem w repo — patrz niżej.**

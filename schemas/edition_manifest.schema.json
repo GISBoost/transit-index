@@ -2,62 +2,250 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "editions/{edition}/manifest.json - odcisk edycji (niezmienny po publikacji)",
   "type": "object",
-  "required": ["edition", "method_version", "window", "code", "config_sha256", "cities", "created_at"],
+  "required": [
+    "edition",
+    "method_version",
+    "window",
+    "code",
+    "config_sha256",
+    "cities",
+    "created_at",
+    "license"
+  ],
   "additionalProperties": false,
   "properties": {
-    "edition": {"type": "string"},
-    "method_version": {"type": "string"},
-    "placeholder": {"type": "boolean"},
-    "status": {"enum": ["draft", "operator_review", "published", "superseded"]},
+    "edition": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "operator_review",
+        "published",
+        "superseded"
+      ]
+    },
     "window": {
       "type": "object",
-      "required": ["from", "to", "day_type"],
+      "required": [
+        "from",
+        "to",
+        "day_type"
+      ],
       "additionalProperties": false,
-      "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "day_type": {"enum": ["WEEKDAY"]}}
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "day_type": {
+          "enum": [
+            "WEEKDAY"
+          ]
+        }
+      }
     },
     "code": {
       "type": "object",
-      "required": ["ti_commit", "easy_otp_commits"],
+      "required": [
+        "ti_commit",
+        "easy_otp_commits"
+      ],
       "additionalProperties": false,
       "properties": {
-        "ti_commit": {"type": "string"},
+        "ti_commit": {
+          "type": "string"
+        },
         "easy_otp_commits": {
           "type": "array",
           "minItems": 1,
           "description": "commity easy-OTP, z których faktycznie zbudowano tidy dni w edycji (bez przypinania, ADR-0004); dane serwowane as is",
           "items": {
             "type": "object",
-            "required": ["commit", "from", "to", "epoch", "n_days"],
+            "required": [
+              "commit",
+              "from",
+              "to",
+              "epoch",
+              "n_days"
+            ],
             "additionalProperties": false,
             "properties": {
-              "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$", "description": "commit easy-OTP aktualny w chwili budowy tidy (z Last-Modified pliku tidy)"},
-              "from": {"type": "string", "description": "pierwszy dzień z tym commitem"},
-              "to": {"type": "string", "description": "ostatni dzień z tym commitem"},
-              "epoch": {"type": "string", "description": "epoka semantyczna z config/tidy_epochs.yaml"},
-              "n_days": {"type": "integer", "minimum": 1}
+              "commit": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{7,40}$",
+                "description": "commit easy-OTP aktualny w chwili budowy tidy (z Last-Modified pliku tidy)"
+              },
+              "from": {
+                "type": "string",
+                "description": "pierwszy dzień z tym commitem"
+              },
+              "to": {
+                "type": "string",
+                "description": "ostatni dzień z tym commitem"
+              },
+              "epoch": {
+                "type": "string",
+                "description": "epoka semantyczna z config/tidy_epochs.yaml"
+              },
+              "n_days": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "number of valid city-days (one city x one day) built with this commit; days from `cached` ingest entries carry no commit and are not counted"
+              }
             }
           }
         }
       }
     },
-    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "cities": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["city", "status", "n_valid_days", "n_input_files", "inputs_sha256"],
+        "required": [
+          "city",
+          "status",
+          "n_valid_days",
+          "n_input_files",
+          "inputs_sha256",
+          "attributions",
+          "excluded_days"
+        ],
         "additionalProperties": false,
         "properties": {
-          "city": {"type": "string"},
-          "status": {"enum": ["ranked", "limited", "excluded"]},
-          "n_valid_days": {"type": "integer", "minimum": 0},
-          "n_input_files": {"type": "integer", "minimum": 0},
-          "inputs_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "skrót z posortowanych skrótów plików tidy"}
+          "city": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ranked",
+              "limited",
+              "excluded"
+            ]
+          },
+          "n_valid_days": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "n_input_files": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "inputs_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "skrót z posortowanych skrótów plików tidy"
+          },
+          "excluded_days": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "date",
+                "reason"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "attributions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "source",
+                "url",
+                "license",
+                "verified",
+                "processing_note"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "license": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "license_note": {
+                  "type": "string"
+                },
+                "obligations": {
+                  "type": "string"
+                },
+                "verified": {
+                  "type": "boolean",
+                  "description": "true = audit certainty 'high' in docs/licenses.md (source stated on the operator's page); not a legal verification"
+                },
+                "retrieved_first": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "retrieved_last": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "processing_note": {
+                  "type": "string"
+                },
+                "osm_attribution": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
-    "created_at": {"type": "string"},
-    "doi": {"type": ["string", "null"]},
-    "errata": {"type": "array", "items": {"type": "string"}}
+    "created_at": {
+      "type": "string"
+    },
+    "doi": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "errata": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "license": {
+      "const": "CC-BY-4.0"
+    },
+    "data_through": {
+      "type": "string"
+    }
   }
 }
