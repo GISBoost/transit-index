@@ -78,6 +78,15 @@ Tymczasowa zmiana progu tylko w pamięci (`config/metrics.yaml` bez zmian, próg
 | `verified: true` (Poznań, Szczecin, Turyn) = "pewność wysoka" w audycie, nie weryfikacja prawna | doprecyzowane w opisie schematu; docs/licenses.md dla Poznania nadal wymaga sprawdzenia, czy "wspieranie transportu" obejmuje ranking |
 | ścieżka `exclude` z rejestru wad sprawdzona tylko syntetycznie (jedyny wpis `exclude` to Helsinki, poza kandydatami) | zaakceptowane |
 
+### Walidacja na prawdziwych danych L0 (2026-09-29, lokalnie, po scaleniu cloud-sesji M3)
+
+Zamknięcie otwartego punktu recenzenta ("przed M5 uruchomić `ti daystats` z L0"): `ti daystats` dla 16 miast (2026-09-01…26) + `ti gate` na tym samym oknie, na maszynie z `data/obs/`/`data/static/`.
+
+- **Bramka na realnych danych: wszystkie 16 miast `excluded`, 0 rankingów** — okno ma dopiero 19 dni roboczych od 09-01, żadne miasto nie ma 20 dni ważnych (`city_gate.limited`). Zgodne z prognozą M0 i z syntetycznym przebiegiem cloud-sesji M3.
+- **Sanity check golden:** Łódź 2026-09-24, `street`, po filtrze obszaru — 161 522 wierszy (zgodne z liczbą już zweryfikowaną w przeglądzie M2), W1 = 17,29 km/h vs golden 17,58 km/h (168 507 wierszy, bez filtra obszaru). Różnica 0,3 km/h mieści się w udokumentowanym wpływie filtra obszaru (0–6,2 km/h). Wartości wymiarów z `ti daystats` uznaję za zweryfikowane na prawdziwych danych.
+- **Warszawa: `ti daystats` trwało ~45 min zamiast ~1-2 min jak reszta miast** (L0 i kardynalność linii porównywalne z Rzymem, który poszedł szybko; pojedyncze `sched.departures()` to tylko ~4 s/dzień). Proces nie był zawieszony (CPU rosło, working set 3,9-4,9 GB), niski stosunek CPU/czas ścienny (~6%) wskazuje na I/O-bound, najpewniej presję pamięci na tej maszynie (~5 GB wolne przed startem, 16 GB total) a nie błąd w `daystats.py`. Dokończyło się samo z kodem wyjścia 0. Do obserwacji przy kolejnych przebiegach, bez zmian w kodzie na razie.
+- Pliki wygenerowane lokalnie: `data/editions/2026-pilot/{ranking,quality,manifest}.json` (nie w gicie, jak reszta `data/`).
+
 ## M2: segmenty i metryki — rdzeń (2026-09-27)
 
 **Status: wykonany, przegląd `milestone-reviewer` FAIL po pierwszym przebiegu (dwie pozycje blokujące), obie naprawione z dowodem w repo — patrz niżej.**

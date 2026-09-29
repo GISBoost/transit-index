@@ -26,9 +26,9 @@
   },
   {
    "date": "2026-09-07",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "14.57 km/h vs mediana 14.10 (limit +-0.33)"
   },
   {
    "date": "2026-09-08",
@@ -214,15 +214,15 @@
   },
   {
    "date": "2026-09-23",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "18.14 km/h vs mediana 18.36 (limit +-0.20)"
   },
   {
    "date": "2026-09-24",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "18.57 km/h vs mediana 18.36 (limit +-0.20)"
   },
   {
    "date": "2026-09-25",
@@ -342,9 +342,9 @@
   },
   {
    "date": "2026-09-25",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "19.16 km/h vs mediana 19.36 (limit +-0.16)"
   }
  ],
  "lisbon": [
@@ -502,21 +502,21 @@
   },
   {
    "date": "2026-09-09",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "16.70 km/h vs mediana 17.33 (limit +-0.24)"
   },
   {
    "date": "2026-09-10",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "16.87 km/h vs mediana 17.33 (limit +-0.24)"
   },
   {
    "date": "2026-09-11",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "16.04 km/h vs mediana 17.33 (limit +-0.24)"
   },
   {
    "date": "2026-09-14",
@@ -532,9 +532,9 @@
   },
   {
    "date": "2026-09-16",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "16.91 km/h vs mediana 17.33 (limit +-0.24)"
   },
   {
    "date": "2026-09-17",
@@ -556,9 +556,9 @@
   },
   {
    "date": "2026-09-22",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "17.62 km/h vs mediana 17.33 (limit +-0.24)"
   },
   {
    "date": "2026-09-23",
@@ -880,9 +880,9 @@
   },
   {
    "date": "2026-09-16",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "19.34 km/h vs mediana 19.49 (limit +-0.10)"
   },
   {
    "date": "2026-09-17",
@@ -904,15 +904,15 @@
   },
   {
    "date": "2026-09-22",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "19.31 km/h vs mediana 19.49 (limit +-0.10)"
   },
   {
    "date": "2026-09-23",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "19.20 km/h vs mediana 19.49 (limit +-0.10)"
   },
   {
    "date": "2026-09-24",
@@ -922,9 +922,9 @@
   },
   {
    "date": "2026-09-25",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "19.09 km/h vs mediana 19.49 (limit +-0.10)"
   }
  ],
  "prague": [
@@ -1070,9 +1070,9 @@
   },
   {
    "date": "2026-09-07",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "18.06 km/h vs mediana 16.77 (limit +-0.87)"
   },
   {
    "date": "2026-09-08",
@@ -1326,9 +1326,9 @@
   },
   {
    "date": "2026-09-11",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "18.84 km/h vs mediana 19.32 (limit +-0.19)"
   },
   {
    "date": "2026-09-14",
@@ -1432,7 +1432,7 @@
    "date": "2026-09-09",
    "valid": false,
    "reason": "recording_gap",
-   "detail": "pasmo pm_peak: 0.67 < 0.9"
+   "detail": "pasmo evening: 0.67 < 0.9"
   },
   {
    "date": "2026-09-10",
@@ -1808,9 +1808,9 @@
   },
   {
    "date": "2026-09-16",
-   "valid": true,
-   "reason": null,
-   "detail": ""
+   "valid": false,
+   "reason": "speed_outlier",
+   "detail": "18.78 km/h vs mediana 19.46 (limit +-0.25)"
   },
   {
    "date": "2026-09-17",
