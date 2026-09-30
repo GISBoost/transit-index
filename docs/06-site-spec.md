@@ -35,7 +35,7 @@
 | adres | dane (pliki z `public/data/<edycja>/`) | uwagi techniczne |
 |---|---|---|
 | `/` | `ranking.json` | prerender tabeli do HTML; przełączniki **wymiaru**, trybu i pasma działają na JSON w przeglądarce (komponent `Tabs` z designu) |
-| `/miasto/<id>/` | `<id>/summary.json`, `hourly.json`, `lines.csv`, `segments.pmtiles` | prerender KPI i tabel; mapa i wykres godzinowy ładowane leniwie |
+| `/miasto/<id>/` | `<id>/summary.json`, `hourly.json`, `lines.csv`, `tiles/<id>.pmtiles` | prerender KPI i tabel; mapa i wykres godzinowy ładowane leniwie |
 | `/mapa/?miasto=<id>&pasmo=&h=&p=` | kafle PMTiles + `summary.json` | stan w URL-u; `?embed=1` dla osadzania |
 | `/dane/` | `manifest.json` + linki do plików w release'ach | pełne pliki poza Pages (limit 1 GB): ranking (CSV), odcinki (**GeoPackage**, `.geojson.gz`), profile godzinowe (CSV): lista pobierań z footera designu |
 | `/metodyka/`, `/jakosc/` | `docs`-owe treści + `quality.json` | treści z tych samych źródeł co `docs/03` (jedna definicja) |

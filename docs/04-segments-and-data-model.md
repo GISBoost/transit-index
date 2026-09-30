@@ -42,7 +42,7 @@ Kontrakty JSON: `schemas/`, przykłady: `examples/` (wartości zastępcze, `plac
 | B obs | `ti obs` | tidy + statyka dnia → L0 (filtr `ok`, **filtr obszaru W0**, tryb, `seg_id`, pasmo, `sched_pass_time_s`) |
 | C aggregate | `ti aggregate --edition E` | L0 z okna edycji → L1 |
 | D metrics | `ti metrics`, `ti gate` | L1 → L2 (wymiary: prędkość W1, kara szczytu W3 parami odcinków, punktualność W10, EWT W11, oferta W12), kwalifikacja dni i miast, bootstrap po dniach, `ranking.json` (rankingi per wymiar), `manifest.json` |
-| E geometry | `ti tiles` | statyka + L1 → `segments.pmtiles`, `segments.geojson.gz` |
+| E geometry | `ti geometry` | statyka + L1 → `segments.geojson.gz` (per miasto, `data/editions/<edycja>/<miasto>/`) i `tiles/<miasto>.pmtiles` (jedna paczka na miasto, ADR-0007) |
 | F site | `ti build-site` | JSON + kafle + `design/` → statyczna strona |
 
 Wszystkie etapy są **idempotentne** (skrót zawartości w nazwie pliku; ponowny przebieg nie zmienia wyniku). Etap A czyta dane publiczne przez `reference/fetch_release_assets.py` (bezpośrednie adresy release'ów, bez API; lista dni z `git ls-remote --tags`); brak pliku (404) to jawny wpis `missing`, nie błąd.

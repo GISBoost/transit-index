@@ -77,10 +77,16 @@ Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fe
 | 3 | odcinek bez wiersza `all_day` znikał bez alarmu, a wpis mylnie tłumaczył go nieznanymi przystankami | poprawione: osobny licznik `segments_without_all_day_row`, poprawiony opis (Rzym, jeden odcinek, n_obs = 1) |
 | 4 | ogon stosunku długości poza 0,8-1,25 (ok. 0,7-0,8% cech, polilinie kilkukrotnie za długie) | poprawione: próg `length_ratio_bounds` w `config/geometry.yaml`, zamiana na `straight`, licznik w raporcie, test |
 | 5 | trigger `push` wdrażał na Pages bez zgody | poprawione: tylko `workflow_dispatch` |
-| 6 | `docs/04` §3/E mówi `ti tiles` i `segments.pmtiles` | wdrożono `ti geometry` i `tiles/<miasto>.pmtiles`; do uzgodnienia przy M5 (rozbieżność zapisana tu) |
+| 6 | `docs/04` §3/E mówi `ti tiles` i `segments.pmtiles` | rozstrzygnięte przy domknięciu M4: poprawiono `docs/04` i `docs/06` pod kod (`ti geometry`, `tiles/<miasto>.pmtiles`); CLI bez zmian |
 | 7 | `setHTML` bez ucieczki nazw z GTFS | poprawione (`esc`) |
 | 8 | `m4_basemap.py` łapał tylko `URLError` | poprawione (`OSError`) |
-| 9-11 | atrybucja per miasto na stronie, `simplify()` przez `np.allclose`, brak testu bez tippecanoe | otwarte; atrybucje przy publikacji (M5), reszta drobna |
+| 9 | atrybucja per miasto na stronie testowej | poprawione przy domknięciu M4: panel "Źródło danych" (operator z linkiem, licencja, wymagania, zdanie o przetworzeniu) z `config/attributions.yaml`; licencja nieustalona pokazana jako "nie ustalona", niepotwierdzona jako "do potwierdzenia" |
+| 10 | `simplify()` przez `np.allclose` | już tak w kodzie na `main` (`src/ti/geometry.py`), bez zmian |
+| 11 | brak testu bez tippecanoe | dodany test: czytelny `RuntimeError` i brak pliku wyjściowego |
+
+### Domknięcie M4 (2026-09-30)
+
+Uwagi recenzenta #6, #9-#11 zamknięte (tabela wyżej), bez nowego kamienia i bez zmian ADR-0007. Zmiany: `config.json` strony testowej niesie `attribution` per miasto (`tiles.city_attribution`), panel boczny i podpis mapy pokazują operatora i licencję; testy: atrybucja dla wszystkich 16 miast (licencja nieustalona zostaje `null`) i brak `tippecanoe` w PATH; `docs/04` §3/E i `docs/06` poprawione pod wdrożone nazwy. `pytest -m "not network"`: 70 passed, 1 skipped. Do sprawdzenia ręcznie po wdrożeniu: czy panel "Źródło danych" wyświetla się dla kilku miast (np. Szczecin CC0, Łódź "nie ustalona", Turyn z zakazem użycia komercyjnego).
 
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
