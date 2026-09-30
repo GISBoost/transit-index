@@ -75,10 +75,10 @@
   "speed_vs_sched_pct": -5.2,
   "speed_by_band_kmh": {
    "am_peak": 17.39,
-   "evening": 18.92,
-   "midday": 17.44,
-   "pm_peak": 16.55,
-   "shoulder": 17.88
+   "evening": 18.68,
+   "midday": 17.49,
+   "pm_peak": 16.62,
+   "shoulder": 19.02
   },
   "speed_by_day_kmh": {
    "2026-09-24": 17.58

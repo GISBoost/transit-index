@@ -18,8 +18,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 197390,
-    "pmtiles": 1820486
+    "geojson_gz": 197151,
+    "pmtiles": 1818878
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 1.0,
@@ -37,6 +37,7 @@
    "segments_in_tiles": 2341,
    "segments_l1": 2341,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 1,
    "static_versions": {
     "days_resolved_by_download": 7,
@@ -66,8 +67,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 138753,
-    "pmtiles": 1445603
+    "geojson_gz": 138811,
+    "pmtiles": 1445581
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.901959690614309,
@@ -85,12 +86,13 @@
    "segments_in_tiles": 1486,
    "segments_l1": 1486,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 6,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 18,
     "status": {
-     "cached": 16
+     "ok": 16
     },
     "unique": 16
    },
@@ -114,8 +116,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 212713,
-    "pmtiles": 2124837
+    "geojson_gz": 212376,
+    "pmtiles": 2122842
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.7846910365456444,
@@ -133,12 +135,14 @@
    "segments_in_tiles": 2407,
    "segments_l1": 2407,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 9,
    "static_versions": {
     "days_resolved_by_download": 1,
     "days_with_static": 19,
     "status": {
-     "cached": 14
+     "cached": 1,
+     "ok": 13
     },
     "unique": 14
    },
@@ -162,8 +166,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 198449,
-    "pmtiles": 1693908
+    "geojson_gz": 198092,
+    "pmtiles": 1692438
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.5483341918777062,
@@ -181,12 +185,13 @@
    "segments_in_tiles": 2549,
    "segments_l1": 2549,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 12,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 19,
     "status": {
-     "cached": 16
+     "ok": 16
     },
     "unique": 16
    },
@@ -210,8 +215,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 87368,
-    "pmtiles": 812050
+    "geojson_gz": 87501,
+    "pmtiles": 813040
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.7,
@@ -229,12 +234,13 @@
    "segments_in_tiles": 626,
    "segments_l1": 626,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 0,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 18,
     "status": {
-     "cached": 18
+     "ok": 18
     },
     "unique": 18
    },
@@ -258,8 +264,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 198573,
-    "pmtiles": 1916788
+    "geojson_gz": 198522,
+    "pmtiles": 1915999
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.5429783433802188,
@@ -277,12 +283,14 @@
    "segments_in_tiles": 2284,
    "segments_l1": 2284,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 8,
    "static_versions": {
     "days_resolved_by_download": 3,
     "days_with_static": 19,
     "status": {
-     "cached": 9
+     "cached": 3,
+     "ok": 6
     },
     "unique": 9
    },
@@ -306,8 +314,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 103030,
-    "pmtiles": 928535
+    "geojson_gz": 103221,
+    "pmtiles": 931535
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 1.0,
@@ -325,12 +333,14 @@
    "segments_in_tiles": 1087,
    "segments_l1": 1087,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 0,
    "static_versions": {
     "days_resolved_by_download": 4,
     "days_with_static": 18,
     "status": {
-     "cached": 18
+     "cached": 4,
+     "ok": 14
     },
     "unique": 18
    },
@@ -354,11 +364,11 @@
     }
    },
    "bytes": {
-    "geojson_gz": 136421,
-    "pmtiles": 1502384
+    "geojson_gz": 136236,
+    "pmtiles": 1500709
    },
    "dominant_share_median": 1.0,
-   "dominant_share_p10": 0.9195483870967742,
+   "dominant_share_p10": 0.9180082864752885,
    "fallback_straight_no_pattern": 14,
    "geom_length_ratio_median": 0.999,
    "geom_length_ratio_p05_p95": [
@@ -373,12 +383,14 @@
    "segments_in_tiles": 1688,
    "segments_l1": 1688,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 31,
    "static_versions": {
     "days_resolved_by_download": 1,
     "days_with_static": 18,
     "status": {
-     "cached": 10
+     "cached": 1,
+     "ok": 9
     },
     "unique": 10
    },
@@ -402,11 +414,11 @@
     }
    },
    "bytes": {
-    "geojson_gz": 394011,
-    "pmtiles": 3457704
+    "geojson_gz": 393889,
+    "pmtiles": 3455019
    },
    "dominant_share_median": 1.0,
-   "dominant_share_p10": 0.826989898989899,
+   "dominant_share_p10": 0.8221771467207574,
    "fallback_straight_no_pattern": 0,
    "geom_length_ratio_median": 0.997,
    "geom_length_ratio_p05_p95": [
@@ -421,12 +433,13 @@
    "segments_in_tiles": 4083,
    "segments_l1": 4083,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 31,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 18,
     "status": {
-     "cached": 18
+     "ok": 18
     },
     "unique": 18
    },
@@ -450,8 +463,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 909932,
-    "pmtiles": 7196364
+    "geojson_gz": 909491,
+    "pmtiles": 7205246
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.6684478609408283,
@@ -475,7 +488,7 @@
     "days_resolved_by_download": 0,
     "days_with_static": 18,
     "status": {
-     "cached": 18
+     "ok": 18
     },
     "unique": 18
    },
@@ -499,8 +512,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 245390,
-    "pmtiles": 1999843
+    "geojson_gz": 245010,
+    "pmtiles": 1996317
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 1.0,
@@ -518,12 +531,13 @@
    "segments_in_tiles": 2601,
    "segments_l1": 2601,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 0,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 19,
     "status": {
-     "cached": 19
+     "ok": 19
     },
     "unique": 19
    },
@@ -547,8 +561,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 108686,
-    "pmtiles": 1171135
+    "geojson_gz": 108734,
+    "pmtiles": 1170463
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 1.0,
@@ -566,12 +580,14 @@
    "segments_in_tiles": 1320,
    "segments_l1": 1320,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 0,
    "static_versions": {
     "days_resolved_by_download": 3,
     "days_with_static": 19,
     "status": {
-     "cached": 3
+     "cached": 1,
+     "ok": 2
     },
     "unique": 3
    },
@@ -595,8 +611,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 217510,
-    "pmtiles": 2073466
+    "geojson_gz": 217616,
+    "pmtiles": 2075913
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.5451002227171492,
@@ -614,12 +630,13 @@
    "segments_in_tiles": 2721,
    "segments_l1": 2721,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 13,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 16,
     "status": {
-     "cached": 12
+     "ok": 12
     },
     "unique": 12
    },
@@ -643,8 +660,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 158998,
-    "pmtiles": 1802631
+    "geojson_gz": 158826,
+    "pmtiles": 1799675
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 1.0,
@@ -662,12 +679,13 @@
    "segments_in_tiles": 1744,
    "segments_l1": 1744,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 0,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 19,
     "status": {
-     "cached": 18
+     "ok": 18
     },
     "unique": 18
    },
@@ -691,8 +709,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 394074,
-    "pmtiles": 4008208
+    "geojson_gz": 393700,
+    "pmtiles": 4004909
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.9473684210526315,
@@ -710,12 +728,13 @@
    "segments_in_tiles": 5051,
    "segments_l1": 5051,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 35,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 19,
     "status": {
-     "cached": 19
+     "ok": 19
     },
     "unique": 19
    },
@@ -739,8 +758,8 @@
     }
    },
    "bytes": {
-    "geojson_gz": 210505,
-    "pmtiles": 2014338
+    "geojson_gz": 210501,
+    "pmtiles": 2014834
    },
    "dominant_share_median": 1.0,
    "dominant_share_p10": 0.8327892636924193,
@@ -758,12 +777,13 @@
    "segments_in_tiles": 2105,
    "segments_l1": 2105,
    "segments_no_geometry": 0,
+   "segments_without_all_day_row": 0,
    "shape_downgraded_length_ratio": 2,
    "static_versions": {
     "days_resolved_by_download": 0,
     "days_with_static": 15,
     "status": {
-     "cached": 1
+     "ok": 1
     },
     "unique": 1
    },
