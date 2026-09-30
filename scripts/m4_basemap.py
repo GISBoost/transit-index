@@ -31,8 +31,9 @@ def newest_build(cfg: dict, today: dt.date) -> tuple[str, str]:
     for back in range(cfg["lookback_days"] + 1):
         date = (today - dt.timedelta(days=back)).strftime("%Y%m%d")
         url = cfg["source_url_template"].format(date=date)
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "curl/8.0"})
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=30):
+            with urllib.request.urlopen(req, timeout=30):
                 return date, url
         except (urllib.error.URLError, OSError):
             continue
