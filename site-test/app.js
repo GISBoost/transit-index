@@ -6,7 +6,7 @@
   maplibregl.addProtocol("pmtiles", protocol.tile);
   const esc = (x) => String(x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const $ = (id) => document.getElementById(id);
-  const state = { cfg: null, city: null, band: "all", map: null, errors: 0, tilesLoaded: 0, feats: null, featsCity: null, picked: null };
+  const state = { cfg: null, city: null, band: "all", map: null, errors: 0, tilesLoaded: 0, baseHidden: new Set((new URLSearchParams(location.search).get("hide") || "").split(",").filter(Boolean)), feats: null, featsCity: null, picked: null };
   window.tiDebug = state;  // console access for debugging (state.map, state.feats, state.picked)
   const BAND_KEY = { am: "am_peak", mid: "midday", pm: "pm_peak", eve: "evening" };
   const BAND_NAME = { all: "cały dzień", am: "szczyt poranny", mid: "międzyszczyt", pm: "szczyt popołudniowy", eve: "wieczór" };
@@ -34,11 +34,17 @@
       const road = (id, kinds, w) => ({ id, type: "line", source: "base", "source-layer": "roads",
         filter: ["in", ["get", "kind"], ["literal", kinds]], layout: { "line-cap": "round", "line-join": "round" },
         paint: { "line-color": css("--map-street"), "line-width": ["interpolate", ["exponential", 1.6], ["zoom"], 8, w * 0.3, 15, w * 4] } });
+      const group = { earth: "earth", water: "water" };
       layers.push(
         { id: "earth", type: "fill", source: "base", "source-layer": "earth", paint: { "fill-color": css("--map-base") } },
         { id: "water", type: "fill", source: "base", "source-layer": "water", paint: { "fill-color": css("--paper-3") } },
         road("roads-minor", ["minor_road", "other"], 0.5), road("roads-medium", ["medium_road"], 0.8),
         road("roads-major", ["major_road", "highway"], 1.2));
+      // debug: hide basemap groups (checkboxes in the Debug panel or ?hide=earth,water,roads) to find which layer draws an artefact
+      for (let i = layers.length - 1; i >= 0; i--) {
+        const id = layers[i].id, g = id.startsWith("roads") ? "roads" : group[id];
+        if (g && state.baseHidden.has(g)) layers.splice(i, 1);
+      }
     }
     const field = "v_" + state.band, qf = "q_" + state.band;
     const color = speedStep(field, state.cfg.speed_classes_kmh);
@@ -137,7 +143,12 @@
     map.on("data", (e) => { if (e.tile) state.tilesLoaded++; });
     map.on("click", (e) => {
       const seen = new Set(), hits = map.queryRenderedFeatures(e.point, { layers: ["seg-ok", "seg-thin", "seg-none"] }).filter((x) => !seen.has(x.properties.seg_id) && seen.add(x.properties.seg_id));
-      if (!hits.length) return;
+      if (!hits.length) {
+        const bl = ["earth", "water", "roads-minor", "roads-medium", "roads-major"].filter((id) => map.getLayer(id));
+        const bf = bl.length ? map.queryRenderedFeatures(e.point, { layers: bl }) : [];
+        if (bf.length) new maplibregl.Popup({ maxWidth: "340px" }).setLngLat(e.lngLat).setHTML("<strong>Podkład</strong><br>" + bf.slice(0, 4).map((x) => `warstwa: ${esc(x.sourceLayer)}, kind: ${esc(x.properties.kind)}, geometria: ${esc(x.geometry.type)}`).join("<br>")).addTo(map);
+        return;
+      }
       const p = hits[0].properties;
       const lngLat = [Number(e.lngLat.lng.toFixed(6)), Number(e.lngLat.lat.toFixed(6))];
       state.picked = { city: state.city.id, band: state.band, click_lng_lat: lngLat, properties: p, also_under_click: hits.slice(1).map((x) => x.properties.seg_id) };
@@ -196,6 +207,10 @@
     });
     $("run-range").addEventListener("click", rangeTest);
     $("q").addEventListener("input", search);
+    document.querySelectorAll("#basetoggles input").forEach((cb) => {
+      cb.checked = !state.baseHidden.has(cb.value);
+      cb.addEventListener("change", () => { cb.checked ? state.baseHidden.delete(cb.value) : state.baseHidden.add(cb.value); state.map.setStyle(buildStyle(state.city)); });
+    });
     $("copy").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("picked").textContent); $("copy").textContent = "Skopiowano"; setTimeout(() => { $("copy").textContent = "Kopiuj"; }, 1500); } catch (e) { $("copy").textContent = "Zaznacz i skopiuj ręcznie"; } });
     legend(); labelBands(); pick();
   }

@@ -91,10 +91,10 @@ Jesteś agentem M4. Przeczytaj CLAUDE.md, docs/04 (sekcja 4), docs/06 (sekcje 1 
 **Cel:** działająca strona ze wszystkimi trasami i danymi z M3/M4, z eksportem z Claude Design.
 **Wejście:** `docs/06`, zaimportowany design w `design/` (bez kopiowania do `site/`).
 **Wyjście:** Astro, trasy z `docs/06` §3, prerender, mapa z filtrami i widokiem tabelarycznym, przełącznik PL/EN, workflow Actions do Pages, testy kontraktu z designem (`docs/06` §2).
-**Kryteria akceptacji:** build w Actions bez ręcznych kroków; klasy prędkości w tokenach zgodne z `config/metrics.yaml`; brak literalnych kolorów poza tokenami; przykłady z `placeholder: true` blokują deploy; polskie znaki poprawne w każdym foncie stosu.
+**Kryteria akceptacji:** build w Actions bez ręcznych kroków; klasy prędkości w tokenach zgodne z `config/metrics.yaml`; brak literalnych kolorów poza tokenami; przykłady z `placeholder: true` blokują deploy; polskie znaki poprawne w każdym foncie stosu; testy mobilne (360x740, 390x844) zaliczone; zmierzony budżet JS z propozycją limitu; komponenty z `design/` jako wyspy React (decyzja autora 2026-09-30).
 
 ```text
-Jesteś agentem M5. Przeczytaj CLAUDE.md i docs/06. Wykorzystaj design z katalogu design/ (tokeny, komponenty, ui_kits/landing; nie kopiuj go, nie zmieniaj wyglądu; jeśli czegoś brakuje, zatrzymaj się i zgłoś to Michałowi zamiast wymyślać wygląd). Ranking ma przełącznik wymiarów (prędkość, obciążenie szczytu, punktualność, regularność, oferta). Zbuduj serwis Astro z trasami z docs/06 sekcja 3, prerenderem, mapą MapLibre i widokiem tabelarycznym. Dane z public/data/<edycja>/. Dodaj testy kontraktu z designem z docs/06 sekcja 2 i workflow Actions do Pages. Na koniec uruchom milestone-reviewer.
+Jesteś agentem M5. Przeczytaj CLAUDE.md i docs/06. Wykorzystaj design z katalogu design/ (tokeny, komponenty, ui_kits/landing; nie kopiuj go, nie zmieniaj wyglądu; jeśli czegoś brakuje, zatrzymaj się i zgłoś to Michałowi zamiast wymyślać wygląd). Ranking ma przełącznik wymiarów (prędkość, obciążenie szczytu, punktualność, regularność, oferta). Zbuduj serwis Astro z trasami z docs/06 sekcja 3, prerenderem, mapą MapLibre i widokiem tabelarycznym. Dane z public/data/<edycja>/. Dodaj testy kontraktu z designem z docs/06 sekcja 2 i workflow Actions do Pages. Zrób pomiar budżetu JS i testy mobilne opisane w docs/prompts/2026-09-30-m5-agent.md. Na koniec uruchom milestone-reviewer.
 ```
 
 ---

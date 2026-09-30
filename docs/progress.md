@@ -105,6 +105,12 @@ Poprawki na stronie testowej (`site-test/`): kolejność warstw (brak danych na 
 
 Nowe pasma (07-09 / **09-14** / **14-18** / **18-22**, godzina 6 tylko `all_day`) wprowadzone w `config/metrics.yaml`, `reference/metrics_reference.py`, `docs/03`; pasmo w L0 jest teraz wyliczane z `hour` przy wczytywaniu (`aggregate.apply_config_bands`), więc **bez ponownego ingestu**. Testy (72 passed, 1 skipped) przechodzą na danych syntetycznych, m.in. zgodność config ↔ reference i przeliczenie starego `band`. **Przeliczenie pilotażu nie było robione** (sandbox bez L0); opis zadania dla sesji z danymi: `docs/prompts/2026-09-30-bands-recompute.md`. Decyzje do potwierdzenia: `method_version` bez zmian (draft do zamrożenia w listopadzie); W12 podąża za `midday` (okno 09-14).
 
+### Przygotowanie do M5: telefon i budżet JS (2026-09-30)
+
+- Sprawdzenie strony testowej w emulacji telefonu (Chromium, 390x844 i 360x740, dotyk): **mapa miała wysokość 0 px** (`flex:1` nadpisywał `height:60vh`); poprawione (`flex:none`), mapa 506 px, dotknięcie odcinka działa. Bez przewijania poziomego, brak błędów JS. Cele dotykowe < 44 px (zoom 29 px, listy 33 px) zostawione na M5/M6.
+- Landing z `design/` nie dał się ocenić (React i Babel z CDN niedostępne w sandboxie); CSS ma breakpoint 860 px.
+- Limit "<= 100 kB JS" z `docs/06` był założeniem, nie pomiarem; M5 ma go zmierzyć (React zostaje jako wyspy, decyzja autora). Prompt: `docs/prompts/2026-09-30-m5-agent.md`; `docs/06` §4/§8 i `docs/07` (M5) zaktualizowane.
+
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
 **Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.
