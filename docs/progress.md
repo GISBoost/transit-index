@@ -101,6 +101,12 @@ Zgłoszenie z testu ręcznego: w paśmie szczytu popołudniowego wiele odcinków
 
 Poprawki na stronie testowej (`site-test/`): kolejność warstw (brak danych na spodzie, dane na wierzchu); popup zależny od pasma (przy `none`: "brak obserwacji w paśmie ...", n i dni oznaczone jako "cały dzień", linie jako "linie (cały dzień)", `seg_id`); lista innych odcinków pod kliknięciem; godziny pasm w liście wyboru (z `config/metrics.yaml` przez `config.json`); **narzędzia do debugowania**: wyszukiwarka po `seg_id` lub nazwie przystanku (przybliża i podświetla odcinek), pole z pełnymi właściwościami i współrzędnymi kliknięcia z przyciskiem "Kopiuj", `window.tiDebug` w konsoli. Do artefaktu dochodzą zwarte GeoJSON (4 MB). Schemat cech bez zmian (liczby n per pasmo nie są w kontrakcie; jeśli mają być na mapie, to zmiana schematu do uzgodnienia w M5).
 
+### Przygotowanie do M5: telefon i budżet JS (2026-09-30)
+
+- Sprawdzenie strony testowej w emulacji telefonu (Chromium, 390x844 i 360x740, dotyk): **mapa miała wysokość 0 px** (`flex:1` nadpisywał `height:60vh`); poprawione (`flex:none`), mapa 506 px, dotknięcie odcinka działa. Bez przewijania poziomego, brak błędów JS. Cele dotykowe < 44 px (zoom 29 px, listy 33 px) zostawione na M5/M6.
+- Landing z `design/` nie dał się ocenić (React i Babel z CDN niedostępne w sandboxie); CSS ma breakpoint 860 px.
+- Limit "<= 100 kB JS" z `docs/06` był założeniem, nie pomiarem; M5 ma go zmierzyć (React zostaje jako wyspy, decyzja autora). Prompt: `docs/prompts/2026-09-30-m5-agent.md`; `docs/06` §4/§8 i `docs/07` (M5) zaktualizowane.
+
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
 **Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.

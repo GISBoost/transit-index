@@ -48,7 +48,7 @@
 - Dwa kierunki jako osobne cechy, rysowane z `line-offset`.
 - Protokół `pmtiles://`; **test zakresów bajtów w Chrome, Firefox i Safari w M4** (zgłoszenie #584 w protomaps/PMTiles opisuje sporadyczne błędy dla plików z GitHub Pages; stan aktualny nie sprawdzony). Plan B: lustro na Cloudflare Pages/R2 (jak dla izochron) albo kafle jako pliki `z/x/y`.
 - Widok tabelaryczny: te same dane w `<table>`; źródło: `segments.geojson.gz` lub `lines.csv`.
-- Wydajność: cel ≤ 100 kB JS (gzip) na stronie rankingu bez mapy; MapLibre ładowany po interakcji lub po pierwszym renderze; `min/maxzoom` warstwy dobrane do kafli (`docs/04` §4).
+- Wydajność: wstępny cel ≤ 100 kB JS (gzip) na stronie rankingu bez mapy (założenie, nie pomiar; do zmierzenia w M5, `docs/prompts/2026-09-30-m5-agent.md`); MapLibre ładowany po interakcji lub po pierwszym renderze; `min/maxzoom` warstwy dobrane do kafli (`docs/04` §4).
 
 ## 5. Build i CI
 
@@ -75,10 +75,11 @@ GitHub Pages: witryna ≤ 1 GB, miękki limit 100 GB transferu miesięcznie, dep
 
 ## 8. Budżety i kryteria akceptacji technicznej
 
-- Strona rankingu bez mapy ≤ 100 kB JS (gzip); LCP ≤ 2,5 s na profilu 4G; CLS ≈ 0.
+- Strona rankingu bez mapy ≤ 100 kB JS (gzip) jako wstępny cel (M5 mierzy i proponuje ostateczny limit; komponenty zostają w React, wyspy); LCP ≤ 2,5 s na profilu 4G; CLS ≈ 0.
 - Zero literalnych kolorów poza tokenami; klasy prędkości zgodne z konfiguracją; polskie znaki renderują się w każdym foncie stosu.
 - Wszystkie liczby na stronie pochodzą z plików danych; przykłady z `examples/` nigdy nie trafiają do buildu produkcyjnego (test: `placeholder: true` w danych blokuje deploy).
 - Widok tabelaryczny mapy i nawigacja klawiaturą; brak zależności od animacji do odczytania treści.
+- Telefon: brak przewijania poziomego, mapa widoczna, cele dotykowe ≥ 44 px, testy Playwright w emulacji 360x740 i 390x844 (regresja M4: mapa o wysokości 0 px na telefonie).
 
 ## 9. Rozbieżności docs ↔ design wykryte przy imporcie
 
