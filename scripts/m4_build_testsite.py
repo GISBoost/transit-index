@@ -78,6 +78,7 @@ def main() -> int:
             "tiles": f"tiles/{city}.pmtiles", "tiles_bytes": pm.stat().st_size,
             "basemap": f"basemap/{city}.pmtiles" if has_base else None,
             "basemap_bytes": (out / "basemap" / f"{city}.pmtiles").stat().st_size if has_base else 0,
+            "attribution": T.city_attribution(city),
             "straight_share_length": r.get("geometry_straight_share_length"),
         })
         print(f"{city:10s} segments={n:6d} tiles={pm.stat().st_size/1e6:6.2f} MB accept={acc['pass']}", flush=True)

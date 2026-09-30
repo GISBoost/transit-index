@@ -217,3 +217,21 @@ def test_implausible_shape_cut_is_downgraded_to_straight_and_counted(geom_store)
     q = {f["properties"]["seg_id"]: f["properties"]["geometry_quality"] for f in feats}
     assert q == {"A>B": "shape", "B>C": "straight"} and cnt["shape_downgraded_length_ratio"] == 1 and lo < 1 < hi
     assert len([f for f in feats if f["properties"]["seg_id"] == "B>C"][0]["geometry"]["coordinates"]) == 2
+
+
+def test_city_attribution_covers_every_pilot_city_and_keeps_unknown_licence_null():
+    from ti.config import candidate_cities
+
+    for city in candidate_cities():
+        a = T.city_attribution(city)
+        assert a["source"] and a["url"].startswith("http") and a["processing_note"], city
+    assert T.city_attribution("szczecin")["license"] == "CC0 1.0"
+    lodz = T.city_attribution("lodz")
+    assert lodz["license"] is None and lodz["verified"] is False  # never guessed
+
+
+def test_tippecanoe_missing_gives_clear_error(monkeypatch, tmp_path):
+    monkeypatch.setattr(T.shutil, "which", lambda name: None)
+    with pytest.raises(RuntimeError, match="tippecanoe not found"):
+        T.tippecanoe(tmp_path / "in.geojson.gz", tmp_path / "out.pmtiles")
+    assert not (tmp_path / "out.pmtiles").exists()

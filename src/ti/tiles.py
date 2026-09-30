@@ -75,6 +75,18 @@ def write_geojson_gz(feats: list[dict], path: Path) -> None:
         json.dump({"type": "FeatureCollection", "features": feats}, f, ensure_ascii=False, separators=(",", ":"))
 
 
+def city_attribution(city: str) -> dict:
+    """Source attribution shown next to the map (config/attributions.yaml, docs/licenses.md). A licence the
+    audit did not establish stays null and is shown as unconfirmed, never guessed."""
+    from .config import attributions
+
+    att = attributions()
+    c = att["cities"][city]
+    return {"source": c["source"], "url": c["url"], "license": c.get("license"), "license_note": c.get("license_note"),
+            "obligations": c.get("obligations"), "verified": bool(c.get("verified")), "osm": bool(c.get("osm")),
+            "processing_note": att["processing_note"], "results_license": att["license"]}
+
+
 def tippecanoe(geojson_gz: Path, out: Path) -> None:
     """GeoJSON -> PMTiles. No feature/tile-size dropping: an acceptance criterion is that no segment
     >= 200 m disappears at z14+. Simplification was already done (`simplify_tolerance_m`), so the

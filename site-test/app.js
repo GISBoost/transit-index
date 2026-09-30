@@ -18,7 +18,7 @@
   function offsetExpr() { return ["interpolate", ["linear"], ["zoom"], 12, 0.8, 15, 3]; }
 
   function buildStyle(city) {
-    const sources = { segments: { type: "vector", url: "pmtiles://" + city.tiles, attribution: "Dane: Transit Index (CC BY 4.0), źródła miejskie: patrz docs/licenses.md" } };
+    const sources = { segments: { type: "vector", url: "pmtiles://" + city.tiles, attribution: "Dane: Transit Index (CC BY 4.0); źródło: " + (city.attribution ? esc(city.attribution.source) : "patrz docs/licenses.md") } };
     const layers = [{ id: "bg", type: "background", paint: { "background-color": css("--map-base") } }];
     if (city.basemap) {
       sources.base = { type: "vector", url: "pmtiles://" + city.basemap, attribution: "© OpenStreetMap contributors (ODbL), Protomaps" };
@@ -57,6 +57,16 @@
       `<dt>Kafle:</dt><dd>${(c.tiles_bytes / 1e6).toFixed(1).replace(".", ",")} MB</dd><dt>Podkład:</dt><dd>${c.basemap ? (c.basemap_bytes / 1e6).toFixed(1).replace(".", ",") + " MB" : "brak (tło jednolite)"}</dd></dl>`;
   }
 
+  function attribution() {
+    const a = state.city.attribution;
+    if (!a) { $("attrib").innerHTML = ""; return; }
+    const lic = a.license ? esc(a.license) + (a.verified ? "" : " (do potwierdzenia)") : "nie ustalona" + (a.license_note ? ": " + esc(a.license_note) : "");
+    $("attrib").innerHTML = `<h2>Źródło danych</h2><dl><dt>Operator:</dt><dd><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.source)}</a></dd>` +
+      `<dt>Licencja źródła:</dt><dd>${lic}</dd>` + (a.obligations ? `<dt>Wymagania:</dt><dd>${esc(a.obligations)}</dd>` : "") + `</dl>` +
+      `<p class="note">${esc(a.processing_note)} Wyniki: ${esc(a.results_license)}. Ustalenia licencyjne wstępne, nie opinia prawna.` +
+      (a.osm ? " Kształty tras mogą pochodzić z OSM (© współtwórcy OpenStreetMap, ODbL)." : "") + `</p>`;
+  }
+
   function mount() {
     const city = state.city;
     if (state.map) state.map.remove();
@@ -74,6 +84,7 @@
         `prędkość (mediana): ${v("v_" + state.band)} km/h [${esc(p["q_" + state.band])}]<br>n = ${v("n_all")}, dni = ${v("n_days")}<br>geometria: ${esc(p.geometry_quality)}`).addTo(map);
     });
     info();
+    attribution();
   }
 
   async function rangeTest() {
