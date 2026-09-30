@@ -44,7 +44,7 @@ Dokument roboczy: zawiera uwagi wizerunkowe i prawne, więc **nie commituj go do
 - **Licencje danych.** Release'y zawierają dane przewoźników; README easy-GTFS-RT ostrzega, że warunki są różne (od CC po własne regulaminy) i mogą przechodzić na pochodne. Audyt w M0 (`docs/licenses.md`) przed publikacją czegokolwiek z nazwą operatora.
 - **Ranking operatorów.** Zmierzone wyniki mogą być niekorzystne dla konkretnego przewoźnika. Prawo do odpowiedzi i zasada poprawek tylko przy błędach faktycznych (`docs/05` §5).
 - **Znak i nazwa.** Nie używaj nazwy ani grafiki "Traffic Index" ani stylu marki producenta danych o ruchu drogowym.
-- **Relacja z pracodawcą.** Autor pracuje w firmie z branży map i danych o ruchu. Przed publikacją: sprawdź politykę działalności pobocznej i własności intelektualnej, uzgodnij na piśmie, jeśli to potrzebne; nie używaj danych, narzędzi ani materiałów pracodawcy; wyraźnie oddziel projekt od pracodawcy w treści strony.
+- **Niezależność od pracodawców.** Projekt nie używa danych, narzędzi ani materiałów żadnego pracodawcy autorów i jest z nimi wyraźnie oddzielony w treści strony.
 - **Wyniki niekorzystne bez kontekstu.** Nie publikuj rankingów bez `n`, przedziałów i ograniczeń.
 - **Treść wygenerowana przez AI.** Jeśli fragmenty raportów powstają z pomocą AI, oznacz to (wzór: tag "eksperymentalne" na stronie `mapy-analizy`).
 
