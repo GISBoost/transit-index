@@ -76,7 +76,7 @@ Inne progi metryk: kara szczytu liczona tylko dla odcinków z ≥ {m['peak_penal
 **Co znaczą kolumny:**
 - `crossing_rate`: jaki odsetek rozkładowych przystanków kursów miał zaobserwowany przejazd (`obs_time` niepuste). To miara **pokrycia obserwacjami**: pojazdy, które zniknęły z feedu albo nie zostały dopasowane, obniżają ją. Typowo mediana miasta 0,78–0,89 (2026-09); poniżej {gate['min_crossing_rate']} dzień odpada.
 - udział `ok`: jaki odsetek wierszy przeszedł filtry `family_a` (nie jest pierwszą parą przystanków, nie jest postojem, prędkość wiarygodna, para pingów nie za daleko). Typowo mediana miasta 0,62–0,84 (2026-09); poniżej {gate['min_ok_share']} dzień odpada.
-- pokrycie pasm: pasma to `am_peak` 7–8, `midday` 10–13, `pm_peak` 15–17, `evening` 19–21. Godzina liczy się jako nagrana, jeśli ma ≥ {m['inventory']['hour_covered_min_share']:.0%} wierszy `ok` (przybliżenie); 1.00 = wszystkie godziny pasma, 0.5 = połowa. Dzień odpada, jeśli którekolwiek pasmo ma poniżej {gate['min_band_recorded_share']}. Stąd wczesne dni września (nagranie startowało w ciągu dnia).
+- pokrycie pasm: pasma (`config/metrics.yaml`): `am_peak` 7–8, `midday` 9–13, `pm_peak` 14–17, `evening` 18–21. Godzina liczy się jako nagrana, jeśli ma ≥ {m['inventory']['hour_covered_min_share']:.0%} wierszy `ok` (przybliżenie); 1.00 = wszystkie godziny pasma, 0.5 = połowa. Dzień odpada, jeśli którekolwiek pasmo ma poniżej {gate['min_band_recorded_share']}. Stąd wczesne dni września (nagranie startowało w ciągu dnia).
 - statyka "liczba różnych wersji": ile różnych zawartości pliku statycznego GTFS pojawiło się w oknie. Jeśli statyka zmienia się co dzień, do każdego dnia trzeba użyć statyki z tego samego dnia.
 
 **Jak czytać sekcje raportu:**

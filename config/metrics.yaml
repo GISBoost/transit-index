@@ -9,12 +9,13 @@ method_version: "ti-1.0-draft"
 # anyway. See docs/adr/0006-w10-w11-w12-final-definitions.md for the full table and reasoning.
 speed_classes_kmh: [15, 20, 25, 30]
 
-# Local city hours (obs_local). Hours 6, 9, 14, 18 belong to all_day only.
+# Local city hours (obs_local; hour h = h:00-h+1:00). Only hour 6 belongs to all_day alone. Issue #5: 07-09 / 09-14 / 14-18 / 18-22.
+# L0 stores `band` from ingest time; `aggregate.apply_config_bands` re-derives it from `hour` with THIS table on load.
 bands:
   am_peak: [7, 8]
-  midday: [10, 11, 12, 13]
-  pm_peak: [15, 16, 17]
-  evening: [19, 20, 21]
+  midday: [9, 10, 11, 12, 13]
+  pm_peak: [14, 15, 16, 17]
+  evening: [18, 19, 20, 21]
 band_min_recorded_share: 0.90        # a city has a band if the recording covers >= 90% of its hours
 
 area:

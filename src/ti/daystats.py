@@ -211,7 +211,7 @@ def run(city: str, from_date: str, to_date: str, edition: str, valid_only: bool 
         date = f.stem
         if not (from_date <= date <= to_date) or date in holi or date in brk:
             continue
-        raw = pd.read_parquet(f)
+        raw = aggregate.apply_config_bands(pd.read_parquet(f))
         if raw.empty or not (raw.day_type.astype(str) == "WEEKDAY").any():
             continue
         cov[date] = band_coverage(raw)

@@ -57,12 +57,12 @@ Godzina lokalna miasta z `obs_local` (kolumna jest już w czasie lokalnym z offs
 |---|---|
 | `all_day` | 6–21 (06:00–22:00) |
 | `am_peak` | 7, 8 |
-| `midday` | 10–13 |
-| `pm_peak` | 15–17 |
-| `evening` | 19–21 |
+| `midday` | 9–13 (09:00–14:00) |
+| `pm_peak` | 14–17 (14:00–18:00) |
+| `evening` | 18–21 (18:00–22:00) |
 | `h06`…`h21` | pojedyncze godziny (suwak, profil godzinowy) |
 
-Godziny 6, 9, 14, 18 należą tylko do `all_day` (przejścia). Okna szczytów to moja propozycja; w Łodzi wykazują sens (tabela w sekcji 3). Pasmo obowiązuje miasto, gdy nagranie pokrywa ≥ 90% jego godzin.
+Godzina 6 należy tylko do `all_day`; pasma nazwane pokrywają 07:00–22:00 bez luk. Okna są decyzją autora z 2026-09-30 (issue #5; wcześniej propozycja 7–8 / 10–13 / 15–17 / 19–21 z godzinami przejściowymi 9, 14, 18); tabela w sekcji 3 i wyniki M2 były liczone na starych oknach i po zmianie wymagają przeliczenia. Pasmo obowiązuje miasto, gdy nagranie pokrywa ≥ 90% jego godzin.
 
 ### 2.4 Tryby i statyka tego samego dnia
 
@@ -140,7 +140,7 @@ Wartość miasta: sumy `Σh²` i `Σh` zbiorcze po wszystkich komórkach (tak ja
 
 ### 4.3 Oferta rozkładowa (W12)
 
-Mediana po przystankach w obszarze miasta z liczby **rozkładowych** odjazdów na godzinę w paśmie `midday` (10–13), osobno dla trybu; źródło: `stop_times.txt` statyki tego samego dnia (**rozstrzygnięte, R10**: tidy zaniża ofertę nawet o 64%, bo obejmuje tylko obserwowane kursy). Mediana liczona dzień po dniu (własny kalendarz/`stop_times` każdego dnia), potem mediana po dniach okna. Jednostka: odj./h (obie strony razem).
+Mediana po przystankach w obszarze miasta z liczby **rozkładowych** odjazdów na godzinę w paśmie `midday` (9–13, 09:00–14:00; okno pasma z `config/metrics.yaml`), osobno dla trybu; źródło: `stop_times.txt` statyki tego samego dnia (**rozstrzygnięte, R10**: tidy zaniża ofertę nawet o 64%, bo obejmuje tylko obserwowane kursy). Mediana liczona dzień po dniu (własny kalendarz/`stop_times` każdego dnia), potem mediana po dniach okna. Jednostka: odj./h (obie strony razem).
 
 - To jest **jakość rozkładu, nie wykonania**: metryka nie mówi, czy kursy naprawdę wyjechały (patrz "poza modelem" w §1). Na stronie zawsze podpisana "według rozkładu".
 - **Agregacja (T17, M2, ADR-0006):** mediana po przystankach potwierdzona jako odporna dla autobusów (ρ = 0,965/0,939 wobec udziału przystanków ≥ 4/6 odj./h, 16 miast), ale **niepewna dla tramwajów** (ρ = −0,155 — sieci tramwajowe są mniejsze i gęstsze, mediana i próg udziału dają praktycznie niepowiązane rankingi). Mediana zostaje jedyną publikowaną liczbą, ale ranking W12 tramwajów ma jawną adnotację niepewności metodycznej (nie status jakości danych) — forma prezentacji do ustalenia z designem w M5, propozycja R10: mapa (kolor odcinka/przystanku), nie surowa tabela rankingu.
@@ -182,7 +182,7 @@ Bramka na trzech poziomach. Wartości domyślne oparte na progach `family_a` (FA
 # config/metrics.yaml (fragment)
 method_version: "ti-1.0-draft"
 speed_classes_kmh: [15, 20, 25, 30]   # 5 klas = --speed-1..5 z design/
-bands: {am_peak: [7, 8], midday: [10, 11, 12, 13], pm_peak: [15, 16, 17], evening: [19, 20, 21]}
+bands: {am_peak: [7, 8], midday: [9, 10, 11, 12, 13], pm_peak: [14, 15, 16, 17], evening: [18, 19, 20, 21]}
 area: {require_polygon: true}
 segment_min:
   ok:   {n_obs: 10, n_days: 5}

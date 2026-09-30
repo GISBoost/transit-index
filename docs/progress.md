@@ -101,6 +101,10 @@ Zgłoszenie z testu ręcznego: w paśmie szczytu popołudniowego wiele odcinków
 
 Poprawki na stronie testowej (`site-test/`): kolejność warstw (brak danych na spodzie, dane na wierzchu); popup zależny od pasma (przy `none`: "brak obserwacji w paśmie ...", n i dni oznaczone jako "cały dzień", linie jako "linie (cały dzień)", `seg_id`); lista innych odcinków pod kliknięciem; godziny pasm w liście wyboru (z `config/metrics.yaml` przez `config.json`); **narzędzia do debugowania**: wyszukiwarka po `seg_id` lub nazwie przystanku (przybliża i podświetla odcinek), pole z pełnymi właściwościami i współrzędnymi kliknięcia z przyciskiem "Kopiuj", `window.tiDebug` w konsoli. Do artefaktu dochodzą zwarte GeoJSON (4 MB). Schemat cech bez zmian (liczby n per pasmo nie są w kontrakcie; jeśli mają być na mapie, to zmiana schematu do uzgodnienia w M5).
 
+### Zmiana pasm: przygotowanie (issue #5, 2026-09-30)
+
+Nowe pasma (07-09 / **09-14** / **14-18** / **18-22**, godzina 6 tylko `all_day`) wprowadzone w `config/metrics.yaml`, `reference/metrics_reference.py`, `docs/03`; pasmo w L0 jest teraz wyliczane z `hour` przy wczytywaniu (`aggregate.apply_config_bands`), więc **bez ponownego ingestu**. Testy (72 passed, 1 skipped) przechodzą na danych syntetycznych, m.in. zgodność config ↔ reference i przeliczenie starego `band`. **Przeliczenie pilotażu nie było robione** (sandbox bez L0); opis zadania dla sesji z danymi: `docs/prompts/2026-09-30-bands-recompute.md`. Decyzje do potwierdzenia: `method_version` bez zmian (draft do zamrożenia w listopadzie); W12 podąża za `midday` (okno 09-14).
+
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
 **Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.

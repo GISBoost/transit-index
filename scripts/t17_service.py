@@ -25,7 +25,10 @@ import t_metrics as tm  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "reports" / "tests" / "sens"
-W0, W1 = 10 * 3600, 14 * 3600  # midday band 10:00-14:00 (config bands.midday hours 10-13)
+import yaml  # noqa: E402
+
+_H = yaml.safe_load((ROOT / "config" / "metrics.yaml").read_text(encoding="utf-8"))["bands"]["midday"]
+W0, W1 = min(_H) * 3600, (max(_H) + 1) * 3600  # midday band window from config bands.midday
 
 
 def secs(t: pd.Series) -> pd.Series:

@@ -129,8 +129,8 @@ def test_service_offer_averages_across_days_not_pools_raw_departures(monkeypatch
     departures get counted as if they were N times the departures in one day (71/h instead of
     ~3.75/h). Each day must produce its own rate; the days are combined by taking the median."""
     same_stop_two_days = {
-        "2026-09-07": pd.DataFrame({"stop_id": ["A"] * 4, "mode": ["bus"] * 4, "hour": [10, 11, 12, 13]}),
-        "2026-09-08": pd.DataFrame({"stop_id": ["A"] * 4, "mode": ["bus"] * 4, "hour": [10, 11, 12, 13]}),
+        "2026-09-07": pd.DataFrame({"stop_id": ["A"] * 5, "mode": ["bus"] * 5, "hour": [9, 10, 11, 12, 13]}),
+        "2026-09-08": pd.DataFrame({"stop_id": ["A"] * 5, "mode": ["bus"] * 5, "hour": [9, 10, 11, 12, 13]}),
     }
     monkeypatch.setattr(metrics, "static_sha_for", lambda city, date: date)
     monkeypatch.setattr(metrics, "_has_stop_times", lambda sha: True)
@@ -138,7 +138,7 @@ def test_service_offer_averages_across_days_not_pools_raw_departures(monkeypatch
     monkeypatch.setattr(metrics.sched, "departures", lambda sha, date: same_stop_two_days[sha])
 
     out = metrics._service_offer("testcity", list(same_stop_two_days), {})
-    assert out["bus"]["w12_departures_per_hour"] == pytest.approx(1.0)  # 4 deps / 4h, same every day - not 2.0
+    assert out["bus"]["w12_departures_per_hour"] == pytest.approx(1.0)  # 5 deps / 5h, same every day - not 2.0
 
 
 def test_static_store_backfills_missing_tables_without_full_redownload(tmp_path, monkeypatch):
@@ -162,3 +162,26 @@ def test_static_store_backfills_missing_tables_without_full_redownload(tmp_path,
     assert sha2 == sha
     assert (static_store.STATIC_STORE / sha / "stop_times.parquet").exists()
     assert (static_store.STATIC_STORE / sha / "routes.parquet").exists()  # untouched, still there
+
+
+# ---- bands (issue #5): one table in config/metrics.yaml, L0 `band` re-derived on load ------------------
+
+def test_bands_config_matches_reference():
+    import metrics_reference as mr
+    from ti.config import metrics_cfg
+
+    cfg = {k: tuple(v) for k, v in metrics_cfg()["bands"].items()}
+    assert cfg == mr.BANDS
+    hours = sorted(h for v in cfg.values() for h in v)
+    assert hours == list(range(7, 22)) and len(set(hours)) == len(hours)  # 07:00-22:00 in 4 bands, no gaps/overlaps
+    assert mr.band_of_hour(6) == "shoulder" and mr.band_of_hour(14) == "pm_peak" and mr.band_of_hour(9) == "midday" and mr.band_of_hour(18) == "evening"
+
+
+def test_apply_config_bands_rederives_stale_band_from_hour():
+    import pandas as pd
+
+    from ti import aggregate
+
+    old = pd.DataFrame({"hour": [6, 8, 9, 13, 14, 17, 18, 21, 22], "band": ["shoulder", "am_peak", "shoulder", "midday", "shoulder", "pm_peak", "shoulder", "evening", "shoulder"]})
+    new = aggregate.apply_config_bands(old)
+    assert new.band.astype(str).tolist() == ["shoulder", "am_peak", "midday", "midday", "pm_peak", "pm_peak", "evening", "evening", "shoulder"]

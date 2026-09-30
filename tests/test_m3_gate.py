@@ -235,7 +235,7 @@ def test_hourly_lines_and_coverage_from_daystats():
 
 def test_band_coverage_uses_recorded_hours():
     l0 = _l0(n_days=1)
-    late_only = l0[l0.hour >= 15]
+    late_only = l0[l0.hour >= 14]
     cov = daystats.band_coverage(late_only)
     assert cov["am_peak"] == 0.0 and cov["midday"] == 0.0 and cov["pm_peak"] == 1.0 and cov["evening"] == 1.0
 
