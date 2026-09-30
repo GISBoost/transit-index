@@ -134,7 +134,32 @@ Do wdrożenia strony testowej z nowymi kaflami: uruchom workflow "M4 test site" 
 
 Uwagi niekrytyczne: (1) wyjaśnienie skoku `shoulder` dopisane wyżej; (2) trzy nieaktualne wpisy w `golden_values.json` i tabela "kara szczytu" w `docs/03` (9 dni Łodzi) zostają nieaktualne — warto założyć osobne zgłoszenie, żeby nie zgubić tego w historii; (3) ten wpis domyka kryterium akceptacji 5 z promptu (recenzja + zapis werdyktu).
 
-### Przygotowanie do M5: telefon i budżet JS (2026-09-30)
+### Wdrożenie nowych pasm i test w przeglądarce (2026-09-30)
+
+Gałąź scalona do `main` (PR #11, `98291c5`), workflow "M4 test site" uruchomiony na `main` (run `36760769395`) — **sukces, build i deploy zielone**. Strona: `https://gisboost.github.io/transit-index/`.
+
+**Test w przeglądarce (autor, Chrome 154, Windows):** `tiles/lodz.pmtiles` — nagłówek, zakres 16 KiB, zakres środkowy: wszystkie OK (206 Partial Content, sygnatura PMTiles v3, długości zgodne); 128 zdarzeń danych, 0 błędów przy otwarciu miasta; WYNIK: OK. Firefox i Safari **jeszcze nie sprawdzone** (zostaje do zrobienia). `docs/adr/0007-tile-hosting.md` status zmieniony na "potwierdzone w Chrome".
+
+Waga podkładu (Łódź: kafle 1,9 MB, podkład 11,8 MB) — pytanie autora, wyjaśnienie: podkład to pełny wycinek Protomaps (budynki, drogi, tereny, woda, granice — wszystkie warstwy OSM) dla bboxa miasta + margines (`config/geometry.yaml::basemap.margin_deg`), a nasze kafle segmentów to tylko linie z kilkunastoma polami (bez poligonów budynków/terenu). Różnica rzędu wielkości jest oczekiwana dla tego typu podkładu, nie błąd.
+
+### Issue #10: kliny na podkładzie — zbadane i naprawione (2026-09-30)
+
+**Przyczyna znaleziona i potwierdzona empirycznie, nie tylko podejrzewana.** Warstwa źródłowa `water` Protomaps miesza poligony (prawdziwe zbiorniki/rzeki, `kind=water`) z liniami środkowymi mniejszych cieków (`kind=river`/`canal`, `LineString`/`MultiLineString` — na z11 Krakowa: 53 z 87 cech). Nasza warstwa stylu `water` (i `earth`) była typu `fill` **bez filtra geometrii**, więc MapLibre triangulował też wierzchołki linii jak poligon — stąd kliny.
+
+Droga do znalezienia przyczyny (żeby nie powtarzać ślepych zaułków):
+1. Filtr `["==", ["geometry-type"], "Polygon"]` zastosowany na żywo przez `setFilter` **nie usunął** klinów — fałszywy trop, porzucony.
+2. Analiza geometrii poligonów `water` (dekodowanie kafli z `pmtiles`+`mapbox_vector_tile`, sprawdzenie zwrotności pierścieni, `shapely.is_valid`) na z9-z13 dla Krakowa i Poznania: **wszystkie poligony są geometrycznie poprawne** (brak samoprzecięć) — to nie błąd danych.
+3. Porównanie z oficjalnym stylem Protomaps (`maps.protomaps.com`, wczytany nasz własny plik `krakow.pmtiles`): **ten sam plik renderuje się bez żadnych klinów** — dowód, że wina leży w naszym stylu, nie w danych ani w naszej ekstrakcji.
+4. Wyciągnięcie realnego stylu z pakietu `protomaps-themes-base` (npm) pokazało, że oficjalna warstwa `water`/`earth` ma `filter:["==","$type","Polygon"]` (stara, "legacy" składnia filtra, różna od nowszej `["==", ["geometry-type"], "Polygon"]` testowanej w punkcie 1).
+5. Zmiana w `site-test/app.js` na dokładnie ten filtr, zbudowana lokalnie (`scripts/m4_build_testsite.py` + Docker-owy tippecanoe, patrz niżej) i sprawdzona na czystym, świeżym załadowaniu strony (dzień i noc, ten sam obszar co wcześniej): **kliny znikają całkowicie**, rzeka rysuje się jako naturalna wstęga.
+
+**Zmiana:** `site-test/app.js`, warstwy `earth` i `water` dostają `filter: ["==", "$type", "Polygon"]`.
+
+**Lokalne narzędzia użyte do diagnozy (nie commitowane, jednorazowe):** dekodowanie kafli PMTiles przez Python (`pmtiles`, `mapbox_vector_tile`, `shapely` — doinstalowane `pip install -e ".[tiles]"` wcześniej przy przeliczeniu pasm), obraz Docker `ti-tippecanoe:local` (tippecanoe 2.49.0, ta sama wersja co CI) do przebudowy kafli lokalnie przez `scripts/bin/tippecanoe_docker.py`, lokalny build strony testowej (`scripts/m4_build_testsite.py` + `scripts/m4_serve.py`, serwer z obsługą `Range`).
+
+**Nie sprawdzone osobno:** Poznań (drugie miasto ze zgłoszenia) — mechanizm poprawki jest ogólny (błąd stylu, nie dane konkretnego miasta), ale warto rzucić okiem po wdrożeniu.
+
+### Wdrożenie nowych pasm i test w przeglądarce (2026-09-30)
 
 - Sprawdzenie strony testowej w emulacji telefonu (Chromium, 390x844 i 360x740, dotyk): **mapa miała wysokość 0 px** (`flex:1` nadpisywał `height:60vh`); poprawione (`flex:none`), mapa 506 px, dotknięcie odcinka działa. Bez przewijania poziomego, brak błędów JS. Cele dotykowe < 44 px (zoom 29 px, listy 33 px) zostawione na M5/M6.
 - Landing z `design/` nie dał się ocenić (React i Babel z CDN niedostępne w sandboxie); CSS ma breakpoint 860 px.

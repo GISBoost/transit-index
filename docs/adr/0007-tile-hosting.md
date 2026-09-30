@@ -1,6 +1,6 @@
 # ADR-0007: Hosting kafli PMTiles i podkładu (M4)
 
-Status: propozycja, do potwierdzenia po ręcznym teście zakresów bajtów (Chrome, Firefox, Safari). Dotyczy `docs/06` §1, §4, §5, §7 i `docs/10` §8.
+Status: **potwierdzone w Chrome** (2026-09-30, patrz `docs/progress.md`); Firefox i Safari jeszcze nie sprawdzone. Dotyczy `docs/06` §1, §4, §5, §7 i `docs/10` §8.
 
 ## Kontekst
 

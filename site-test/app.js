@@ -36,8 +36,8 @@
         paint: { "line-color": css("--map-street"), "line-width": ["interpolate", ["exponential", 1.6], ["zoom"], 8, w * 0.3, 15, w * 4] } });
       const group = { earth: "earth", water: "water" };
       layers.push(
-        { id: "earth", type: "fill", source: "base", "source-layer": "earth", paint: { "fill-color": css("--map-base") } },
-        { id: "water", type: "fill", source: "base", "source-layer": "water", paint: { "fill-color": css("--paper-3") } },
+        { id: "earth", type: "fill", source: "base", "source-layer": "earth", filter: ["==", "$type", "Polygon"], paint: { "fill-color": css("--map-base") } },
+        { id: "water", type: "fill", source: "base", "source-layer": "water", filter: ["==", "$type", "Polygon"], paint: { "fill-color": css("--paper-3") } },
         road("roads-minor", ["minor_road", "other"], 0.5), road("roads-medium", ["medium_road"], 0.8),
         road("roads-major", ["major_road", "highway"], 1.2));
       // debug: hide basemap groups (checkboxes in the Debug panel or ?hide=earth,water,roads) to find which layer draws an artefact
