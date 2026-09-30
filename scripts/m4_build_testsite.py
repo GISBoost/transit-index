@@ -49,6 +49,7 @@ def main() -> int:
     (out / "tokens").mkdir()
     (out / "tiles").mkdir()
     (out / "basemap").mkdir()
+    (out / "geojson").mkdir()
     site = ROOT / "site-test"
     for f in ("index.html", "style.css", "app.js"):
         shutil.copy(site / f, out / f)
@@ -73,16 +74,17 @@ def main() -> int:
         if has_base:
             shutil.copy(base, out / "basemap" / f"{city}.pmtiles")
         r = rep.get(city, {})
+        shutil.copy(gz, out / "geojson" / gz.name)  # debug search on the test page reads the compact GeoJSON
         entries.append({
             "id": city, "name": cities()[city]["display_name"], "bounds": bb, "segments": n,
-            "tiles": f"tiles/{city}.pmtiles", "tiles_bytes": pm.stat().st_size,
+            "tiles": f"tiles/{city}.pmtiles", "geojson": f"geojson/{gz.name}", "tiles_bytes": pm.stat().st_size,
             "basemap": f"basemap/{city}.pmtiles" if has_base else None,
             "basemap_bytes": (out / "basemap" / f"{city}.pmtiles").stat().st_size if has_base else 0,
             "attribution": T.city_attribution(city),
             "straight_share_length": r.get("geometry_straight_share_length"),
         })
         print(f"{city:10s} segments={n:6d} tiles={pm.stat().st_size/1e6:6.2f} MB accept={acc['pass']}", flush=True)
-    cfg = {"edition": a.edition, "speed_classes_kmh": metrics_cfg()["speed_classes_kmh"], "layer": gcfg["tiles"]["layer"], "cities": entries}
+    cfg = {"edition": a.edition, "speed_classes_kmh": metrics_cfg()["speed_classes_kmh"], "layer": gcfg["tiles"]["layer"], "bands": metrics_cfg()["bands"], "cities": entries}
     (out / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=1), encoding="utf-8")
     total = sum(p.stat().st_size for p in out.rglob("*") if p.is_file()) / 1e6
     (out / "sizes.json").write_text(json.dumps({"total_mb": round(total, 2), "cities": {e["id"]: {"tiles": e["tiles_bytes"], "basemap": e["basemap_bytes"]} for e in entries}}, indent=1))

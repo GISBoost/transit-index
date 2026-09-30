@@ -88,6 +88,19 @@ Statyki pobrałem w tej sesji bezpośrednimi adresami release'ów (`reference/fe
 
 Uwagi recenzenta #6, #9-#11 zamknięte (tabela wyżej), bez nowego kamienia i bez zmian ADR-0007. Zmiany: `config.json` strony testowej niesie `attribution` per miasto (`tiles.city_attribution`), panel boczny i podpis mapy pokazują operatora i licencję; testy: atrybucja dla wszystkich 16 miast (licencja nieustalona zostaje `null`) i brak `tippecanoe` w PATH; `docs/04` §3/E i `docs/06` poprawione pod wdrożone nazwy. `pytest -m "not network"`: 70 passed, 1 skipped. Do sprawdzenia ręcznie po wdrożeniu: czy panel "Źródło danych" wyświetla się dla kilku miast (np. Szczecin CC0, Łódź "nie ustalona", Turyn z zakazem użycia komercyjnego).
 
+### Łódź: szare odcinki w szczycie popołudniowym (2026-09-30)
+
+Zgłoszenie z testu ręcznego: w paśmie szczytu popołudniowego wiele odcinków Łodzi jest szarych (`n/d [none]`), a popup dla N7B (linia nocna) pokazuje `n = 12`. Dwa przykłady: `65>2579` (N7B, 3863 m) i `749>1988` (64A, 4303 m).
+
+**Wynik dochodzenia: to nie błąd geometrii ani agregacji, tylko dane i sposób ich pokazania.**
+- Pasma to podzbiory godzin (`config/metrics.yaml`): szczyt popołudniowy = 15:00-18:00, wieczór = 19:00-22:00. Godziny 6, 9, 14, 18 liczą się tylko do `all_day`.
+- `65>2579` ma w L1 wiersze tylko `all_day` i `evening` (12 obs w 12 dniach). Kontrola na tidy z 2026-09-22: N7B ma kurs planowy 21:58, obserwacja 21:57 lokalnie, `seg_status=ok`. Czyli linia "nocna" ma w rozkładzie kurs wieczorny; w szczycie popołudniowym nie ma obserwacji, więc odcinek jest szary. Popup pokazywał jednak `linie` i `n` z całego dnia obok prędkości z wybranego pasma, co wyglądało jak błąd.
+- `749>1988` (64A) ma 5 obserwacji w 5 dniach (`thin`, tylko `all_day`); tidy z 2026-09-22 nie zawiera tej pary przystanków, więc to rzadki wariant kursu, nie strata danych.
+- Skala w Łodzi (pm_peak): 133 z 2284 odcinków bez wiersza w paśmie (118 z 1226 km, 9,6% długości), 42 `thin` (2%). Podobnie w innych pasmach (am 9%, midday 8%, evening 6%). Wśród 133 bez wiersza tylko 20 ma `n_obs >= 100` w całym dniu; wybrany do kontroli `1621>495` (125 obs) ma w dniu 09-22 obserwacje tylko o 6, 7, 12 i 20, czyli rozkład podmiejski bez kursów popołudniowych.
+- **Realny defekt wizualny**: warstwa `seg-none` była rysowana na wierzchu, więc długi szary odcinek (linia pomijająca przystanki) zakrywał krótsze odcinki z danymi na tej samej ulicy.
+
+Poprawki na stronie testowej (`site-test/`): kolejność warstw (brak danych na spodzie, dane na wierzchu); popup zależny od pasma (przy `none`: "brak obserwacji w paśmie ...", n i dni oznaczone jako "cały dzień", linie jako "linie (cały dzień)", `seg_id`); lista innych odcinków pod kliknięciem; godziny pasm w liście wyboru (z `config/metrics.yaml` przez `config.json`); **narzędzia do debugowania**: wyszukiwarka po `seg_id` lub nazwie przystanku (przybliża i podświetla odcinek), pole z pełnymi właściwościami i współrzędnymi kliknięcia z przyciskiem "Kopiuj", `window.tiDebug` w konsoli. Do artefaktu dochodzą zwarte GeoJSON (4 MB). Schemat cech bez zmian (liczby n per pasmo nie są w kontrakcie; jeśli mają być na mapie, to zmiana schematu do uzgodnienia w M5).
+
 ## M3: bramka jakości, ranking, manifest (2026-09-29)
 
 **Status: kod i testy gotowe; bramka policzona na prawdziwym L1 i logach M0/M1; wartości wymiarów, bootstrap i wykrywanie odchyleń prędkości NIE były uruchomione na prawdziwych danych** (sesja w chmurze bez `data/obs/` i `data/static/`, patrz "Czego M3 nie zrobił"). Werdykt `milestone-reviewer`: PASS (warunkowy), na dole.
