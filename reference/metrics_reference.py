@@ -18,12 +18,13 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-# Pasma czasu lokalnego (godzina końca odcinka). Godziny 6, 9, 14, 18 należą tylko do all_day.
+# Pasma czasu lokalnego (godzina końca odcinka; godzina h = h:00-h+1:00). Tylko godzina 6 należy wyłącznie do all_day.
+# Musi być zgodne z config/metrics.yaml (test test_bands_config_matches_reference).
 BANDS = {
     "am_peak": (7, 8),
-    "midday": (10, 11, 12, 13),
-    "pm_peak": (15, 16, 17),
-    "evening": (19, 20, 21),
+    "midday": (9, 10, 11, 12, 13),
+    "pm_peak": (14, 15, 16, 17),
+    "evening": (18, 19, 20, 21),
 }
 DEFAULT_SPEED_EDGES_KMH = (15, 20, 25, 30)  # 5 klas = tokeny --speed-1..5 z design/; zamrożone (T18, M2, docs/adr/0006-*.md), niepodpięte jeszcze do src/ti/ (mapa to M4/M5)
 
@@ -303,8 +304,8 @@ def _self_test() -> None:
     assert [mode_from_route_type(t) for t in (1, 400, 2, 100, 5)] == ["other"] * 5
 
     # 5. pasma i godzina lokalna z obs_local
-    assert [band_of_hour(h) for h in (6, 7, 9, 10, 14, 15, 18, 19, 21)] == [
-        "shoulder", "am_peak", "shoulder", "midday", "shoulder", "pm_peak", "shoulder", "evening", "evening"]
+    assert [band_of_hour(h) for h in (6, 7, 9, 10, 14, 15, 18, 19, 21, 22)] == [
+        "shoulder", "am_peak", "midday", "midday", "pm_peak", "pm_peak", "evening", "evening", "evening", "shoulder"]
     assert int(hour_from_obs_local(pd.Series(["2026-09-24 06:00:03.358099+02:00"]))[0]) == 6
 
     # 6. klasy prędkości (5 klas) (krawędzie lewostronnie domknięte)

@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .config import holidays
+from .config import holidays, metrics_cfg
 from .paths import DATA, mr
 
 NAMED_BANDS = ("am_peak", "midday", "pm_peak", "evening")
@@ -27,6 +27,16 @@ def _tag_ok(l0: pd.DataFrame) -> pd.DataFrame:
     carries (M1's obs.py already applied that filter before writing L0). Every L0 row is "ok" by
     construction; tag it back on so callers can use the reference formulas unchanged."""
     return l0 if "seg_status" in l0.columns else l0.assign(seg_status="ok")
+
+
+def apply_config_bands(l0: pd.DataFrame) -> pd.DataFrame:
+    """Re-derives `band` from `hour` with the bands of config/metrics.yaml. L0 files keep the `band` that was
+    current at ingest; deriving it again on load means a change of the band table needs no re-ingest."""
+    if l0.empty or "hour" not in l0.columns:
+        return l0
+    hour_band = {int(h): name for name, hrs in metrics_cfg()["bands"].items() for h in hrs}
+    band = pd.to_numeric(l0["hour"], errors="coerce").map(hour_band).fillna("shoulder")
+    return l0.assign(band=band.astype("category"))
 
 
 def reference_day_l0(city: str, from_date: str, to_date: str) -> pd.DataFrame:
@@ -43,7 +53,7 @@ def reference_day_l0(city: str, from_date: str, to_date: str) -> pd.DataFrame:
         date = f.stem
         if not (from_date <= date <= to_date) or date in holi:
             continue
-        frames.append(pd.read_parquet(f))
+        frames.append(apply_config_bands(pd.read_parquet(f)))
     if not frames:
         return pd.DataFrame()
     d = pd.concat(frames, ignore_index=True)

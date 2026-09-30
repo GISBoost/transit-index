@@ -101,6 +101,10 @@ Zgłoszenie z testu ręcznego: w paśmie szczytu popołudniowego wiele odcinków
 
 Poprawki na stronie testowej (`site-test/`): kolejność warstw (brak danych na spodzie, dane na wierzchu); popup zależny od pasma (przy `none`: "brak obserwacji w paśmie ...", n i dni oznaczone jako "cały dzień", linie jako "linie (cały dzień)", `seg_id`); lista innych odcinków pod kliknięciem; godziny pasm w liście wyboru (z `config/metrics.yaml` przez `config.json`); **narzędzia do debugowania**: wyszukiwarka po `seg_id` lub nazwie przystanku (przybliża i podświetla odcinek), pole z pełnymi właściwościami i współrzędnymi kliknięcia z przyciskiem "Kopiuj", `window.tiDebug` w konsoli. Do artefaktu dochodzą zwarte GeoJSON (4 MB). Schemat cech bez zmian (liczby n per pasmo nie są w kontrakcie; jeśli mają być na mapie, to zmiana schematu do uzgodnienia w M5).
 
+### Zmiana pasm: przygotowanie (issue #5, 2026-09-30)
+
+Nowe pasma (07-09 / **09-14** / **14-18** / **18-22**, godzina 6 tylko `all_day`) wprowadzone w `config/metrics.yaml`, `reference/metrics_reference.py`, `docs/03`; pasmo w L0 jest teraz wyliczane z `hour` przy wczytywaniu (`aggregate.apply_config_bands`), więc **bez ponownego ingestu**. Testy (72 passed, 1 skipped) przechodzą na danych syntetycznych, m.in. zgodność config ↔ reference i przeliczenie starego `band`. **Przeliczenie pilotażu nie było robione** (sandbox bez L0); opis zadania dla sesji z danymi: `docs/prompts/2026-09-30-bands-recompute.md`. Decyzje do potwierdzenia: `method_version` bez zmian (draft do zamrożenia w listopadzie); W12 podąża za `midday` (okno 09-14).
+
 ### Przygotowanie do M5: telefon i budżet JS (2026-09-30)
 
 - Sprawdzenie strony testowej w emulacji telefonu (Chromium, 390x844 i 360x740, dotyk): **mapa miała wysokość 0 px** (`flex:1` nadpisywał `height:60vh`); poprawione (`flex:none`), mapa 506 px, dotknięcie odcinka działa. Bez przewijania poziomego, brak błędów JS. Cele dotykowe < 44 px (zoom 29 px, listy 33 px) zostawione na M5/M6.
