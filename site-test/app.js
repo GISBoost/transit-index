@@ -6,7 +6,16 @@
   maplibregl.addProtocol("pmtiles", protocol.tile);
   const esc = (x) => String(x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const $ = (id) => document.getElementById(id);
-  const state = { cfg: null, city: null, band: "all", map: null, errors: 0, tilesLoaded: 0 };
+  const state = { cfg: null, city: null, band: "all", map: null, errors: 0, tilesLoaded: 0, feats: null, featsCity: null, picked: null };
+  window.tiDebug = state;  // console access for debugging (state.map, state.feats, state.picked)
+  const BAND_KEY = { am: "am_peak", mid: "midday", pm: "pm_peak", eve: "evening" };
+  const BAND_NAME = { all: "cały dzień", am: "szczyt poranny", mid: "międzyszczyt", pm: "szczyt popołudniowy", eve: "wieczór" };
+  const hh = (h) => String(h).padStart(2, "0") + ":00";
+  // hours of a band from config/metrics.yaml (via config.json); "all" has no fixed hours
+  function bandHours(short) {
+    const hs = state.cfg.bands && state.cfg.bands[BAND_KEY[short]];
+    return hs && hs.length ? hh(Math.min(...hs)) + "–" + hh(Math.max(...hs) + 1) : "";
+  }
 
   function speedStep(field, classes) {
     const stops = [css("--speed-1")];
@@ -34,10 +43,12 @@
     const field = "v_" + state.band, qf = "q_" + state.band;
     const color = speedStep(field, state.cfg.speed_classes_kmh);
     const base = { type: "line", source: "segments", "source-layer": state.cfg.layer, layout: { "line-cap": "butt" } };
+    // draw order: no-data at the bottom, coloured data on top, so a long grey segment (e.g. a night line that
+    // skips stops) never hides shorter segments with data that run along the same street
     layers.push(
-      { ...base, id: "seg-ok", filter: ["==", ["get", qf], "ok"], paint: { "line-color": color, "line-width": widthExpr(), "line-offset": offsetExpr() } },
+      { ...base, id: "seg-none", filter: ["==", ["get", qf], "none"], paint: { "line-color": css("--speed-nodata"), "line-width": widthExpr(), "line-offset": offsetExpr() } },
       { ...base, id: "seg-thin", filter: ["==", ["get", qf], "thin"], paint: { "line-color": color, "line-width": widthExpr(), "line-offset": offsetExpr(), "line-dasharray": [2, 1.5] } },
-      { ...base, id: "seg-none", filter: ["==", ["get", qf], "none"], paint: { "line-color": css("--speed-nodata"), "line-width": widthExpr(), "line-offset": offsetExpr() } });
+      { ...base, id: "seg-ok", filter: ["==", ["get", qf], "ok"], paint: { "line-color": color, "line-width": widthExpr(), "line-offset": offsetExpr() } });
     return { version: 8, sources, layers };
   }
 
@@ -55,6 +66,55 @@
     const pct = (x) => x == null ? "n/d" : (100 * x).toFixed(1).replace(".", ",") + "%";
     $("info").innerHTML = `<dl><dt>Odcinki:</dt><dd>${c.segments}</dd><dt>Geometria prosta (długość):</dt><dd>${pct(c.straight_share_length)}</dd>` +
       `<dt>Kafle:</dt><dd>${(c.tiles_bytes / 1e6).toFixed(1).replace(".", ",")} MB</dd><dt>Podkład:</dt><dd>${c.basemap ? (c.basemap_bytes / 1e6).toFixed(1).replace(".", ",") + " MB" : "brak (tło jednolite)"}</dd></dl>`;
+  }
+
+  function popupHtml(p) {
+    const v = (k) => p[k] == null || p[k] === "null" ? "n/d" : String(p[k]).replace(".", ",");
+    const b = state.band, q = p["q_" + b], name = BAND_NAME[b] + (b === "all" ? "" : " (" + bandHours(b) + ")");
+    let speed;
+    if (q === "none") {
+      speed = b === "all" ? "brak wiarygodnej mediany (za mało obserwacji w całym dniu)"
+        : `<em>brak obserwacji w paśmie: ${esc(name)}</em>. Odcinek ma dane w innych porach dnia (cały dzień: n = ${v("n_all")}, dni = ${v("n_days")}); linie poniżej mogą tu nie jeździć w tym paśmie.`;
+    } else speed = `${v("v_" + b)} km/h [${esc(q)}], pasmo: ${esc(name)}`;
+    return `<strong>${esc(p.from_name)} → ${esc(p.to_name)}</strong><br>tryb: ${esc(p.mode)}<br>linie (cały dzień): ${esc(p.routes)}<br>długość: ${v("length_m")} m<br>` +
+      `prędkość (mediana): ${speed}<br>cały dzień: n = ${v("n_all")}, dni = ${v("n_days")}, q = ${esc(p.q_all)}<br>geometria: ${esc(p.geometry_quality)}<br><small>seg_id: ${esc(p.seg_id)}</small>`;
+  }
+
+  async function loadFeats() {
+    if (state.feats && state.featsCity === state.city.id) return state.feats;
+    const r = await fetch(state.city.geojson);
+    const txt = await new Response(r.body.pipeThrough(new DecompressionStream("gzip"))).text();
+    state.feats = JSON.parse(txt).features; state.featsCity = state.city.id;
+    return state.feats;
+  }
+
+  function highlight(f) {
+    const map = state.map, id = "hl";
+    const xs = f.geometry.coordinates.map((c) => c[0]), ys = f.geometry.coordinates.map((c) => c[1]);
+    if (map.getLayer(id)) map.removeLayer(id);
+    if (map.getSource(id)) map.removeSource(id);
+    map.addSource(id, { type: "geojson", data: f });
+    map.addLayer({ id, type: "line", source: id, paint: { "line-color": css("--accent"), "line-width": 6, "line-opacity": 0.55 } });
+    map.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: 80, maxZoom: 17 });
+    state.picked = { city: state.city.id, band: state.band, click_lng_lat: null, properties: f.properties };
+    $("picked").textContent = JSON.stringify(state.picked, null, 1);
+  }
+
+  async function search() {
+    const term = $("q").value.trim().toLowerCase(), ul = $("hits");
+    ul.innerHTML = "";
+    if (term.length < 2) return;
+    let feats;
+    try { feats = await loadFeats(); } catch (e) { ul.innerHTML = "<li>Nie udało się wczytać GeoJSON: " + esc(e.message) + "</li>"; return; }
+    const hits = feats.filter((f) => f.properties.seg_id.toLowerCase() === term || f.properties.from_name.toLowerCase().includes(term) || f.properties.to_name.toLowerCase().includes(term)).slice(0, 12);
+    hits.forEach((f) => {
+      const li = document.createElement("li"), btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = `${f.properties.from_name} → ${f.properties.to_name} (${f.properties.seg_id})`;
+      btn.addEventListener("click", () => highlight(f));
+      li.appendChild(btn); ul.appendChild(li);
+    });
+    if (!hits.length) ul.innerHTML = "<li>Brak wyników.</li>";
   }
 
   function attribution() {
@@ -76,12 +136,13 @@
     map.on("error", (e) => { state.errors++; console.warn("map error", e && e.error && e.error.message); });
     map.on("data", (e) => { if (e.tile) state.tilesLoaded++; });
     map.on("click", (e) => {
-      const f = map.queryRenderedFeatures(e.point, { layers: ["seg-ok", "seg-thin", "seg-none"] })[0];
-      if (!f) return;
-      const p = f.properties, v = (k) => p[k] == null || p[k] === "null" ? "n/d" : String(p[k]).replace(".", ",");
-      new maplibregl.Popup().setLngLat(e.lngLat).setHTML(
-        `<strong>${esc(p.from_name)} → ${esc(p.to_name)}</strong><br>tryb: ${esc(p.mode)}, linie: ${esc(p.routes)}<br>długość: ${v("length_m")} m<br>` +
-        `prędkość (mediana): ${v("v_" + state.band)} km/h [${esc(p["q_" + state.band])}]<br>n = ${v("n_all")}, dni = ${v("n_days")}<br>geometria: ${esc(p.geometry_quality)}`).addTo(map);
+      const seen = new Set(), hits = map.queryRenderedFeatures(e.point, { layers: ["seg-ok", "seg-thin", "seg-none"] }).filter((x) => !seen.has(x.properties.seg_id) && seen.add(x.properties.seg_id));
+      if (!hits.length) return;
+      const p = hits[0].properties;
+      const lngLat = [Number(e.lngLat.lng.toFixed(6)), Number(e.lngLat.lat.toFixed(6))];
+      state.picked = { city: state.city.id, band: state.band, click_lng_lat: lngLat, properties: p, also_under_click: hits.slice(1).map((x) => x.properties.seg_id) };
+      $("picked").textContent = JSON.stringify(state.picked, null, 1);
+      new maplibregl.Popup({ maxWidth: "340px" }).setLngLat(e.lngLat).setHTML(popupHtml(p) + (hits.length > 1 ? "<hr><small>Pod kliknięciem także: " + hits.slice(1, 6).map((x) => esc(x.properties.seg_id)).join(", ") + (hits.length > 6 ? "…" : "") + " (szukaj w polu Debug)</small>" : "")).addTo(map);
     });
     info();
     attribution();
@@ -115,6 +176,13 @@
     say(bad ? `WYNIK: PROBLEM (${bad}). Skopiuj ten raport do docs/progress.md.` : "WYNIK: OK. Sprawdź ponadto, że mapa rysuje odcinki po przesunięciu i przybliżeniu.");
   }
 
+  function labelBands() {
+    [...$("band").options].forEach((o) => {
+      const h = o.value === "all" ? "" : bandHours(o.value);
+      o.textContent = BAND_NAME[o.value] + (h ? " (" + h + ")" : " (godziny 6–22)");
+    });
+  }
+
   async function init() {
     state.cfg = await (await fetch("config.json")).json();
     const sel = $("city");
@@ -127,7 +195,9 @@
       legend(); state.map.setStyle(buildStyle(state.city));
     });
     $("run-range").addEventListener("click", rangeTest);
-    legend(); pick();
+    $("q").addEventListener("input", search);
+    $("copy").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("picked").textContent); $("copy").textContent = "Skopiowano"; setTimeout(() => { $("copy").textContent = "Kopiuj"; }, 1500); } catch (e) { $("copy").textContent = "Zaznacz i skopiuj ręcznie"; } });
+    legend(); labelBands(); pick();
   }
   init();
 })();

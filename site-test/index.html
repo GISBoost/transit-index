@@ -31,6 +31,16 @@
     <label><input type="checkbox" id="night"> tryb nocny</label>
     <div id="legend" aria-label="Legenda prędkości"></div>
     <section id="info"></section>
+    <section id="debug">
+      <h2>Debug odcinka</h2>
+      <label>Szukaj (seg_id lub nazwa przystanku)
+        <input id="q" type="search" placeholder="np. 65>2579 albo Kaliska" autocomplete="off">
+      </label>
+      <ul id="hits"></ul>
+      <p class="note">Kliknij odcinek na mapie: dane i współrzędne kliknięcia pojawią się poniżej (można skopiować).</p>
+      <pre id="picked">Nic nie wybrano.</pre>
+      <button id="copy" type="button">Kopiuj</button>
+    </section>
     <section id="attrib"></section>
     <section id="diag">
       <h2>Test zakresów bajtów</h2>
