@@ -2,7 +2,7 @@
   "city": "sofia",
   "window": [
     "2026-09-01",
-    "2026-12-18"
+    "2026-09-26"
   ],
   "n_days": 17,
   "modes": {
@@ -39,61 +39,61 @@
           "w11_n_headways": 25348
         },
         "evening": {
-          "w1_speed_kmh": 19.02,
-          "n_obs": 525713,
-          "w2_min_per_10km": 31.55,
-          "w6_vs_schedule_pct": -4.23,
+          "w1_speed_kmh": 18.34,
+          "n_obs": 727142,
+          "w2_min_per_10km": 32.72,
+          "w6_vs_schedule_pct": -6.29,
           "w10_punctuality": {
-            "n": 525713,
-            "early": 0.051646050221318476,
-            "on_time": 0.6547907318251593,
-            "late": 0.22040352816080258,
-            "very_late": 0.0731596897927196
+            "n": 727142,
+            "early": 0.0458177357379989,
+            "on_time": 0.5875908694587852,
+            "late": 0.24879184533419882,
+            "very_late": 0.11779954946901705
           },
-          "w11_ewt_min": 0.724,
-          "w11_n_headways": 34606
+          "w11_ewt_min": 0.806,
+          "w11_n_headways": 43636
         },
         "midday": {
-          "w1_speed_kmh": 17.71,
-          "n_obs": 674663,
-          "w2_min_per_10km": 33.88,
-          "w6_vs_schedule_pct": -6.74,
+          "w1_speed_kmh": 17.66,
+          "n_obs": 843161,
+          "w2_min_per_10km": 33.98,
+          "w6_vs_schedule_pct": -7.0,
           "w10_punctuality": {
-            "n": 674663,
-            "early": 0.0416771039763556,
-            "on_time": 0.6169243014660653,
-            "late": 0.2930574227429102,
-            "very_late": 0.04834117181466895
+            "n": 843161,
+            "early": 0.04020584443540439,
+            "on_time": 0.59470136782892,
+            "late": 0.2971164463251977,
+            "very_late": 0.06797634141047795
           },
-          "w11_ewt_min": 0.662,
-          "w11_n_headways": 39447
+          "w11_ewt_min": 0.698,
+          "w11_n_headways": 50088
         },
         "pm_peak": {
-          "w1_speed_kmh": 16.79,
-          "n_obs": 531026,
-          "w2_min_per_10km": 35.74,
-          "w6_vs_schedule_pct": -11.63,
+          "w1_speed_kmh": 16.99,
+          "n_obs": 705400,
+          "w2_min_per_10km": 35.31,
+          "w6_vs_schedule_pct": -10.53,
           "w10_punctuality": {
-            "n": 531026,
-            "early": 0.034316587135093196,
-            "on_time": 0.5439300523891486,
-            "late": 0.3343339120871671,
-            "very_late": 0.08741944838859114
+            "n": 705400,
+            "early": 0.037316416217748796,
+            "on_time": 0.5590161610433796,
+            "late": 0.3248965126169549,
+            "very_late": 0.07877091012191664
           },
-          "w11_ewt_min": 0.758,
-          "w11_n_headways": 27079
+          "w11_ewt_min": 0.725,
+          "w11_n_headways": 35497
         }
       },
       "w3_peak_penalty_pct": {
         "am_peak": {
-          "pct": 6.1,
+          "pct": 4.36,
           "n_obs": 317546,
           "n_segments": 2219
         },
         "pm_peak": {
-          "pct": 9.09,
-          "n_obs": 530989,
-          "n_segments": 2249
+          "pct": 5.89,
+          "n_obs": 705358,
+          "n_segments": 2250
         }
       },
       "w9_hourly_profile_kmh": {
@@ -152,60 +152,60 @@
           "w11_n_headways": 39169
         },
         "evening": {
-          "w1_speed_kmh": 15.57,
-          "n_obs": 147924,
-          "w2_min_per_10km": 38.54,
-          "w6_vs_schedule_pct": -5.12,
-          "w10_punctuality": {
-            "n": 147924,
-            "early": 0.1649157675563127,
-            "on_time": 0.7110678456504692,
-            "late": 0.11367323760850166,
-            "very_late": 0.010343149184716476
-          },
-          "w11_ewt_min": 0.482,
-          "w11_n_headways": 50559
-        },
-        "midday": {
-          "w1_speed_kmh": 14.77,
-          "n_obs": 205817,
-          "w2_min_per_10km": 40.62,
+          "w1_speed_kmh": 15.38,
+          "n_obs": 206578,
+          "w2_min_per_10km": 39.01,
           "w6_vs_schedule_pct": -4.71,
           "w10_punctuality": {
-            "n": 205817,
-            "early": 0.14948716578319576,
-            "on_time": 0.718512076261922,
-            "late": 0.12787087558364954,
-            "very_late": 0.004129882371232697
+            "n": 206578,
+            "early": 0.17834425737493828,
+            "on_time": 0.6982205268712061,
+            "late": 0.11205452661948513,
+            "very_late": 0.011380689134370552
           },
-          "w11_ewt_min": 0.394,
-          "w11_n_headways": 78721
+          "w11_ewt_min": 0.441,
+          "w11_n_headways": 75756
+        },
+        "midday": {
+          "w1_speed_kmh": 14.79,
+          "n_obs": 254105,
+          "w2_min_per_10km": 40.57,
+          "w6_vs_schedule_pct": -4.64,
+          "w10_punctuality": {
+            "n": 254105,
+            "early": 0.14998917770213102,
+            "on_time": 0.7213592806123453,
+            "late": 0.12501918498258593,
+            "very_late": 0.003632356702937762
+          },
+          "w11_ewt_min": 0.382,
+          "w11_n_headways": 97749
         },
         "pm_peak": {
-          "w1_speed_kmh": 14.89,
-          "n_obs": 160220,
-          "w2_min_per_10km": 40.3,
-          "w6_vs_schedule_pct": -4.18,
+          "w1_speed_kmh": 14.9,
+          "n_obs": 212244,
+          "w2_min_per_10km": 40.27,
+          "w6_vs_schedule_pct": -4.06,
           "w10_punctuality": {
-            "n": 160220,
-            "early": 0.18970166021720133,
-            "on_time": 0.7049681687679441,
-            "late": 0.09997503432779928,
-            "very_late": 0.005355136687055299
+            "n": 212244,
+            "early": 0.19242475641243098,
+            "on_time": 0.7027477808559959,
+            "late": 0.09916416954071729,
+            "very_late": 0.0056632931908558075
           },
-          "w11_ewt_min": 0.376,
-          "w11_n_headways": 57500
+          "w11_ewt_min": 0.364,
+          "w11_n_headways": 74188
         }
       },
       "w3_peak_penalty_pct": {
         "am_peak": {
-          "pct": -0.33,
+          "pct": -0.54,
           "n_obs": 96212,
           "n_segments": 312
         },
         "pm_peak": {
-          "pct": 1.2,
-          "n_obs": 160220,
+          "pct": 0.91,
+          "n_obs": 212244,
           "n_segments": 312
         }
       },
@@ -228,7 +228,7 @@
         "h21": 15.78
       },
       "w12_service_offer": {
-        "w12_departures_per_hour": 13.25,
+        "w12_departures_per_hour": 13.0,
         "n_days_with_value": 17
       }
     },
@@ -265,61 +265,61 @@
           "w11_n_headways": 64517
         },
         "evening": {
-          "w1_speed_kmh": 18.23,
-          "n_obs": 673637,
-          "w2_min_per_10km": 32.91,
-          "w6_vs_schedule_pct": -4.4,
+          "w1_speed_kmh": 17.67,
+          "n_obs": 933720,
+          "w2_min_per_10km": 33.96,
+          "w6_vs_schedule_pct": -5.91,
           "w10_punctuality": {
-            "n": 673637,
-            "early": 0.0765189560549673,
-            "on_time": 0.6671486275249132,
-            "late": 0.19696661555110542,
-            "very_late": 0.059365800869014024
+            "n": 933720,
+            "early": 0.07513815704922247,
+            "on_time": 0.612066786616973,
+            "late": 0.21853981921775265,
+            "very_late": 0.09425523711605192
           },
-          "w11_ewt_min": 0.586,
-          "w11_n_headways": 85165
+          "w11_ewt_min": 0.582,
+          "w11_n_headways": 119392
         },
         "midday": {
-          "w1_speed_kmh": 17.0,
-          "n_obs": 880480,
-          "w2_min_per_10km": 35.29,
-          "w6_vs_schedule_pct": -6.28,
+          "w1_speed_kmh": 16.98,
+          "n_obs": 1097266,
+          "w2_min_per_10km": 35.34,
+          "w6_vs_schedule_pct": -6.45,
           "w10_punctuality": {
-            "n": 880480,
-            "early": 0.06687829365800473,
-            "on_time": 0.6406709976376522,
-            "late": 0.2544441668180992,
-            "very_late": 0.03800654188624387
+            "n": 1097266,
+            "early": 0.06562948273253705,
+            "on_time": 0.6240328233992487,
+            "late": 0.2572621406295283,
+            "very_late": 0.05307555323868597
           },
-          "w11_ewt_min": 0.487,
-          "w11_n_headways": 118168
+          "w11_ewt_min": 0.494,
+          "w11_n_headways": 147837
         },
         "pm_peak": {
-          "w1_speed_kmh": 16.36,
-          "n_obs": 691246,
-          "w2_min_per_10km": 36.67,
-          "w6_vs_schedule_pct": -9.91,
+          "w1_speed_kmh": 16.51,
+          "n_obs": 917644,
+          "w2_min_per_10km": 36.34,
+          "w6_vs_schedule_pct": -9.09,
           "w10_punctuality": {
-            "n": 691246,
-            "early": 0.07033241422011845,
-            "on_time": 0.5812561664009629,
-            "late": 0.28001319356640036,
-            "very_late": 0.06839822581251827
+            "n": 917644,
+            "early": 0.07319178243414658,
+            "on_time": 0.5922601793288029,
+            "late": 0.2726863576724743,
+            "very_late": 0.06186168056457624
           },
-          "w11_ewt_min": 0.51,
-          "w11_n_headways": 84579
+          "w11_ewt_min": 0.493,
+          "w11_n_headways": 109685
         }
       },
       "w3_peak_penalty_pct": {
         "am_peak": {
-          "pct": 4.55,
+          "pct": 3.19,
           "n_obs": 413758,
           "n_segments": 2531
         },
         "pm_peak": {
-          "pct": 7.19,
-          "n_obs": 691209,
-          "n_segments": 2561
+          "pct": 4.71,
+          "n_obs": 917602,
+          "n_segments": 2562
         }
       },
       "w9_hourly_profile_kmh": {
