@@ -36,6 +36,13 @@ def main(argv: list[str] | None = None) -> int:
     g.add_argument("--to", dest="end", required=True)
     g.add_argument("--edition", default=DEFAULT_EDITION)
 
+    ge = sub.add_parser("geometry", help="M4: segment geometry + segments.geojson.gz + PMTiles per city (downloads/reduces statics as needed)")
+    ge.add_argument("--cities", nargs="*", default=None, help="default: all candidate cities")
+    ge.add_argument("--edition", default=DEFAULT_EDITION)
+    ge.add_argument("--from", dest="start", default=None)
+    ge.add_argument("--to", dest="end", default=None)
+    ge.add_argument("--no-accept", action="store_true", help="skip the z14+ acceptance check")
+
     m = sub.add_parser("metrics", help="city x mode x band headline values (reports/m2/metrics/<city>.json)")
     m.add_argument("--from", dest="start", required=True)
     m.add_argument("--to", dest="end", required=True)
@@ -85,6 +92,28 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{len(res['rankings'])} rankings; wrote {res['out']}")
         for n in res["notes"]:
             print("note:", n)
+    elif a.cmd == "geometry":
+        import json
+
+        from . import geometry, tiles
+
+        rp = geometry.report_path(a.edition)
+        for city in a.cities or candidate_cities():
+            print(f"== {city}", flush=True)
+            entry = tiles.run_city(city, a.edition, a.start, a.end)
+            if not a.no_accept:
+                entry["acceptance"] = tiles.acceptance(geometry.DATA / "editions" / a.edition / city / "segments.geojson.gz", geometry.DATA / "editions" / a.edition / "tiles" / f"{city}.pmtiles")
+            if not a.no_accept:  # segments >= min length that got no geometry vanish from the map too
+                acc = entry["acceptance"]
+                acc["lost_no_geometry"] = entry["no_geometry_long"]
+                acc["pass"] = acc["pass"] and entry["no_geometry_long"] == 0
+            # re-read just before writing: parallel invocations (one per city subset) share this file
+            rep = json.loads(rp.read_text(encoding="utf-8")) if rp.exists() else {"edition": a.edition, "cities": {}}
+            rep["cities"][city] = entry
+            rp.parent.mkdir(parents=True, exist_ok=True)
+            rp.write_text(json.dumps(rep, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+            acc = entry.get("acceptance", {}).get("pass")
+            print(f"   segments {entry['segments_in_tiles']}/{entry['segments_l1']} straight(length)={entry['geometry_straight_share_length']} accept={acc} {entry['bytes']}", flush=True)
     elif a.cmd == "metrics":
         from . import metrics
 

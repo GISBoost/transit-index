@@ -23,3 +23,5 @@ tmp/
 reports/tests/**/*.csv
 reports/tests/**/*.txt
 *.egg-info/
+_site/
+site-test/node_modules/

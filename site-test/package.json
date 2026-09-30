@@ -1,0 +1,9 @@
+{
+  "name": "transit-index-m4-test-site",
+  "private": true,
+  "description": "M4 test page: MapLibre + PMTiles range-request check. Not the M5 site.",
+  "dependencies": {
+    "maplibre-gl": "5.24.0",
+    "pmtiles": "4.5.0"
+  }
+}
