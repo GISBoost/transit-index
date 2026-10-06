@@ -60,7 +60,13 @@ def store(zip_path: Path) -> str:
                 p.replace(dest / p.name)
             tmp.rmdir()
         else:
-            tmp.replace(dest)
+            try:
+                tmp.replace(dest)
+            except OSError:
+                # Parallel ingest workers handed the same static (same SHA): the other one won the rename.
+                if not dest.exists():
+                    raise
+                shutil.rmtree(tmp, ignore_errors=True)
     except BaseException:
         # A crash or a hard kill mid-extraction (docs/progress.md M1 incident) must not leave a
         # `.tmp<pid>/` directory behind forever - clean it up and let the caller see the failure.
