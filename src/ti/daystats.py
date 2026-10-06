@@ -41,6 +41,12 @@ COLS = ["dist_m", "time_s", "n", "pu_n", "pu_early", "pu_on", "pu_late", "pu_vla
 KEYS = ["date", "mode", "kind", "key"]
 
 
+# Only these L0 columns are read: a full-width load of a big city (Warszawa, Rzym) peaked at the
+# 16 GB of a GitHub runner and got OOM-killed (docs/progress.md, 2026-10-06).
+USED_COLUMNS = ["service_date", "day_type", "in_area", "mode", "route_short_name", "seg_id", "hour", "seg_dist_m", "seg_time_s",
+                "delay_s", "is_first_stop", "headway_s", "sched_headway_s", "headway_spans_outage"]
+
+
 def day_stats_path(city: str, edition: str):
     return DATA / "editions" / edition / city / "day_stats.parquet"
 
@@ -211,7 +217,7 @@ def run(city: str, from_date: str, to_date: str, edition: str, valid_only: bool 
         date = f.stem
         if not (from_date <= date <= to_date) or date in holi or date in brk:
             continue
-        raw = aggregate.apply_config_bands(pd.read_parquet(f))
+        raw = aggregate.apply_config_bands(pd.read_parquet(f, columns=USED_COLUMNS))
         if raw.empty or not (raw.day_type.astype(str) == "WEEKDAY").any():
             continue
         cov[date] = band_coverage(raw)
