@@ -64,12 +64,12 @@ city_gate:                           # pilot thresholds; the annual edition need
 mode_min: {routes: 3, segments: 50}
 
 # M3 (docs/03 §7, §6). Anomalous-day detection is independent of config/calendars (school breaks are
-# deliberately empty there). mad_scale 1.0 = the literal "3 MAD" of the spec (raw MAD, ~2 sigma for
-# normal data); 1.4826 would make it ~3 sigma. Owner decision pending, see docs/progress.md (M3).
+# deliberately empty there). speed_outlier: a day whose city speed deviates from the median of the
+# surviving days by more than speed_max_dev_share is dropped (owner decision 2026-10-06; the earlier
+# 3-MAD rule gave +-0.8% on Lodz and dropped three consecutive ordinary days, docs/progress.md).
 anomaly:
-  mad_k: 3.0
-  mad_scale: 1.0
-  min_days_for_mad: 5                # fewer surviving days: MAD criterion is skipped, not applied
+  speed_max_dev_share: 0.10
+  min_days_for_median: 5             # fewer surviving days: the speed criterion is skipped, not applied
 
 # docs/03 §6 [PROPOSAL]: bootstrap over days, 200 draws, 90% interval; cities whose intervals
 # overlap in a ranking are marked indistinguishable.

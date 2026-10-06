@@ -47,7 +47,7 @@ Autor (2026-09-29): nie decydujemy o tych progach bez danych. Wartości w `confi
 
 | # | co | wartość tymczasowa | co trzeba zobaczyć przed decyzją | gdzie |
 |---|---|---|---|---|
-| M3-1 | skala MAD dla dni anomalnych (`anomaly.mad_scale`) | 1,0 = dosłowne "3 MAD" (ok. 2 sigma, odrzuca ok. 5% dobrych dni); alternatywa 1,4826 (ok. 3 sigma) | dzienne prędkości miast z `ti daystats`: które dni dostają `speed_outlier` przy obu wartościach i czy pokrywają się ze znanymi (Poznań 10.09, Rzym, Kraków; `docs/sensitivity-report.md` §3.2) | `config/metrics.yaml` `anomaly` |
+| M3-1 | ~~skala MAD dla dni anomalnych~~ **rozstrzygnięte 2026-10-06:** `speed_outlier` = odchyłka prędkości dnia od mediany dni > 10% (`anomaly.speed_max_dev_share`); MAD zostaje tylko jako diagnostyka | 3 MAD dawało ±0,8% w Łodzi i odrzucało 3 kolejne zwykłe dni | n/d | `config/metrics.yaml` `anomaly` |
 | M3-2 | minimalne `n` wymiaru (`dimension_gate.min_obs`) | 1000/1000/1000/200/0 (speed/peak_penalty/punctuality/regularity/service), niekalibrowane | rozkład `n_obs` per miasto i wymiar w prawdziwych rankingach; ile wpisów spadłoby do `limited` | `config/metrics.yaml` `dimension_gate` |
 | M3-3 | minimalna liczba dni ważnych miasta (`city_gate.limited.min_valid_days`, dziś 20) | 20 (test na 10 dniach: patrz `progress.md`, wpis M3) | liczba dni ważnych na koniec okna i wynik T7 przy >= 40 dniach (R4) | `config/metrics.yaml` `city_gate` |
 | M3-4 | mianownik pokrycia sieci (dziś: odcinki z jakąkolwiek obserwacją w L1, górne oszacowanie) | bez zmian | czy potrzebny jest mianownik z `stop_times` statyki, skoro wszystkie miasta mają 0,91-0,999 | `src/ti/coverage.py` |

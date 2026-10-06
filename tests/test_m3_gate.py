@@ -91,7 +91,7 @@ def test_trip_criterion_catches_healthy_looking_but_wrong_day():
     assert days[-1]["reason"] == "low_trip_count"
 
 
-def test_speed_outlier_beyond_k_mad():
+def test_speed_outlier_beyond_max_deviation():
     an = CFG["anomaly"]
     base = [18.0, 18.2, 17.8, 18.1, 17.9, 18.0, 18.2]
     days = _days(base + [27.3])  # the Poznań 10.09 shape: 27.3 against ~19.5
@@ -99,7 +99,7 @@ def test_speed_outlier_beyond_k_mad():
     assert days[-1]["reason"] == "speed_outlier" and stats["speed_mad"] > 0
     assert all(d["valid"] for d in days[:-1])
     med, mad = stats["speed_median"], stats["speed_mad"]
-    inside = _days(base + [med + an["mad_k"] * an["mad_scale"] * mad * 0.99])
+    inside = _days(base + [med * (1 + an["speed_max_dev_share"] * 0.99)])
     gate.flag_anomalies(inside)
     assert all(d["valid"] for d in inside)
 
@@ -109,7 +109,7 @@ def test_speed_criterion_skipped_without_daily_speeds_or_few_days():
     for d in days:
         d["speed_kmh"] = None
     assert any("speed_outlier" in s for s in gate.flag_anomalies(days)["skipped"])
-    few = _days([18.0, 30.0, 18.0][: CFG["anomaly"]["min_days_for_mad"] - 1])
+    few = _days([18.0, 30.0, 18.0][: CFG["anomaly"]["min_days_for_median"] - 1])
     gate.flag_anomalies(few)
     assert all(d["valid"] for d in few)
 

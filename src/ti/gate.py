@@ -123,9 +123,9 @@ def flag_anomalies(days: list[dict], cfg: dict | None = None) -> dict:
 
     1. `low_trip_count`: trips < `anomaly_min_trip_ratio` x median trips of the surviving days of the
        same `day_type` (the reference day is WEEKDAY only, so one group).
-    2. `speed_outlier`: |daily city speed - median| > `mad_k` x `mad_scale` x MAD, computed on the days
-       that survived criterion 1; skipped when fewer than `min_days_for_mad` days survive or no daily
-       speeds are available (recording gaps are already `recording_gap` in the day gate).
+    2. `speed_outlier`: |daily city speed - median| > `speed_max_dev_share` x median, computed on the
+       days that survived criterion 1; skipped when fewer than `min_days_for_median` days survive or no
+       daily speeds are available. The MAD stays in the statistics as a diagnostic only (recording gaps are already `recording_gap` in the day gate).
     """
     cfg = cfg or metrics_cfg()
     an, g = cfg["anomaly"], cfg["day_gate"]
@@ -144,19 +144,16 @@ def flag_anomalies(days: list[dict], cfg: dict | None = None) -> dict:
 
     alive = [d for d in days if d["valid"]]
     speeds = [d["speed_kmh"] for d in alive if d["speed_kmh"] is not None]
-    if len(speeds) < an["min_days_for_mad"]:
+    if len(speeds) < an["min_days_for_median"]:
         stats["skipped"].append(
             "speed_outlier: brak dziennych prędkości (uruchom `ti daystats` tam, gdzie jest L0)" if not speeds
-            else f"speed_outlier: {len(speeds)} dni z prędkością przy min_days_for_mad={an['min_days_for_mad']}")
+            else f"speed_outlier: {len(speeds)} dni z prędkością przy min_days_for_median={an['min_days_for_median']}")
         return stats
     arr = np.array(speeds, dtype=float)
     med = float(np.median(arr))
     mad = float(np.median(np.abs(arr - med)))
     stats["speed_median"], stats["speed_mad"] = med, mad
-    if mad == 0:
-        stats["skipped"].append("speed_outlier: MAD = 0")
-        return stats
-    limit = an["mad_k"] * an["mad_scale"] * mad
+    limit = an["speed_max_dev_share"] * med
     for d in alive:
         if d["speed_kmh"] is not None and abs(d["speed_kmh"] - med) > limit:
             d.update(valid=False, reason="speed_outlier",
