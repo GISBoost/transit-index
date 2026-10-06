@@ -2,6 +2,16 @@
 
 Jeden wpis na kamień milowy (M0–M7), najnowszy na górze. Wpis powstaje na końcu kamienia i jest uzupełniany o werdykt `milestone-reviewer`. Decyzje techniczne: `docs/adr/`, pytania do autora: `docs/decisions-needed.md`.
 
+## Przeniesienie ingest/aggregate/daystats/gate na GitHub Actions (2026-10-06)
+
+Workflow `.github/workflows/edition-pilot.yml` (tylko `workflow_dispatch`; PR #13): job per miasto (`ti ingest` -> `ti aggregate` -> `ti daystats`), potem jeden job `ti gate`; wynik jako artefakt `edition-<edycja>`. Poza Actions zostają `ti geometry` (kafle) i `ti metrics`. Runner startuje pusty: całe okno pobierane od zera.
+
+Test na Łodzi (okno 2026-09-01…10-02), run 37471628994 i weryfikacja poprawki 37472680195: **job miasta ok. 2 min, gate 30 s**. Wnioski:
+1. **Błąd wyścigu w `static_store.store()`** (ujawniony przez pusty magazyn na runnerze, lokalnie ukryty przez cache): przy `--workers 3` dwa procesy zapisujące tę samą statykę (ten sam SHA) kończyły się `OSError: Directory not empty`; w pierwszym przebiegu padło 8 z 32 dni Łodzi. Poprawione (przegrany proces uznaje cudzy zapis za sukces), gałąź `fix/static-store-race`. Bez testu jednostkowego (wymaga wielu procesów).
+2. **Nowe dni nie zwiększyły liczby dni ważnych Łodzi (nadal 15 z 24).** 09-28, 09-29, 09-30 odpadają jako `speed_outlier`: 17,12 / 17,06 / 17,11 km/h wobec mediany 17,26, limit ±0,14 km/h (≈0,8%). To skutek `anomaly.mad_scale: 1.0` (decyzja 1 z M3) przy bardzo małym rozrzucie dni Łodzi: kryterium odrzuca dobre dni. **Do decyzji autora przed publikacją**, bo przy obecnym ustawieniu miasta o stabilnej prędkości będą tracić dni tym bardziej, im dłużej zbieramy dane.
+3. 10-01 i 10-02 odpadają jako `recording_gap` (pasmo am_peak / midday: 0 obserwacji; 136 653 i 65 566 wierszy `ok` wobec ok. 164 000 normalnie): nagranie tych dni jest niepełne, to nie błąd potoku.
+4. W teście jednomiastowym pozostałe 15 miast ma w gate `low_network_coverage` tylko dlatego, że nie ma ich L1 w runnerze; nie interpretować.
+
 ## M4: geometria odcinków, kafle PMTiles, strona testowa (2026-09-29)
 
 **Status: geometria i kafle dla 16 miast gotowe i sprawdzone lokalnie; strona testowa i workflow napisane, ale workflow NIE był uruchomiony na GitHubie, a podkład (Protomaps) NIE został zbudowany ani sprawdzony** (sandbox nie ma dostępu do `build.protomaps.com`). Test zakresów bajtów w >= 2 przeglądarkach zostaje po Twojej stronie. Werdykt `milestone-reviewer`: na dole.

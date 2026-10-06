@@ -62,7 +62,11 @@ jobs:
       - name: L1
         run: ti aggregate --city "${{ matrix.city }}" --from "${{ inputs.start }}" --to "${{ inputs.end }}" --edition "${{ inputs.edition }}"
       - name: Day statistics
-        run: ti daystats --city "${{ matrix.city }}" --from "${{ inputs.start }}" --to "${{ inputs.end }}" --edition "${{ inputs.edition }}"
+        run: |
+          free -m | head -2
+          # sampler: if the runner kills the step (OOM), the last lines show how far memory had climbed
+          ( while true; do echo "mem $(date +%T) $(free -m | awk 'NR==2{print "used="$3" avail="$7}')"; sleep 10; done ) &
+          ti daystats --city "${{ matrix.city }}" --from "${{ inputs.start }}" --to "${{ inputs.end }}" --edition "${{ inputs.edition }}"
       - name: Memory / disk (for the next run's planning)
         if: always()
         run: free -m; df -h . | tail -1; du -sh data/obs data/static 2>/dev/null
